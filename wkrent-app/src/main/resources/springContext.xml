@@ -17,10 +17,10 @@
 	default-autowire="byName" default-lazy-init="true">
 
 	<!-- 将多个配置文件读取到容器中，交给Spring管理 -->
-	<bean id="propertyConfigurer" class="com.iflytek.ap.uoamp.web.config.PropertiesBean">
+	<bean id="propertyConfigurer" class="com.wkrent.app.config.PropertiesBean">
 		<property name="locations" >
 			<list>
-				<value>file:/iflytek/ap/uoamp/config/uoamp-web/application.properties</value>
+				<value>classpath*:application.properties</value>
 			</list>
 		</property>
 		<!-- 设置编码格式 -->
