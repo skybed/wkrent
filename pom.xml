@@ -7,7 +7,7 @@
   
 	<modules>
 		<module>/wkrent-common</module>
-		<module>/wkrent-service</module>
+		<module>/wkrent-business</module>
 		<module>/wkrent-web</module>
 		<module>/wkrent-app</module>
 	</modules>
