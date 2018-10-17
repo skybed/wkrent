@@ -39,7 +39,7 @@
 	</listener>
 	
 	<servlet>
-		<description>uoamp spring mvc servlet</description>
+		<description>wkrent spring mvc servlet</description>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>

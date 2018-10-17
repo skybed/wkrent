@@ -8,7 +8,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>wkrent-common</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
 	<description>蜗客租房公共依赖包</description>
 	
 	<properties>
