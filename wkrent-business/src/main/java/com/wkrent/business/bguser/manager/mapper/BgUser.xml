@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wkrent.business.bguser.manager.dao.BgUserDao">
-  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.WkrentBgUser">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.BgUser">
     <id column="bg_user_id" jdbcType="VARCHAR" property="bgUserId" />
     <result column="bg_user_account" jdbcType="VARCHAR" property="bgUserAccount" />
     <result column="bg_user_pwd" jdbcType="VARCHAR" property="bgUserPwd" />
@@ -30,6 +30,16 @@
     select 
     <include refid="Base_Column_List" />
     from wkrent_bg_user
+  </select>
+
+  <select id="findByUserAccount" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+      <include refid="Base_Column_List" />
+    from wkrent_bg_user
+    <where>
+      bg_user_account = ${userAccount}
+      AND isdelete = 'N'
+    </where>
   </select>
 
 </mapper>
