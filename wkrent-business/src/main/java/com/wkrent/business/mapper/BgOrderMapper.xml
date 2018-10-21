@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.dao.BgOrderMapper">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.BgOrder">
+    <id column="bg_order_id" jdbcType="VARCHAR" property="bgOrderId" />
+    <result column="bg_order_number" jdbcType="VARCHAR" property="bgOrderNumber" />
+    <result column="bg_order_create_time" jdbcType="TIMESTAMP" property="bgOrderCreateTime" />
+    <result column="bg_order_user_id" jdbcType="VARCHAR" property="bgOrderUserId" />
+    <result column="bg_order_room_id" jdbcType="VARCHAR" property="bgOrderRoomId" />
+    <result column="bg_order_status" jdbcType="CHAR" property="bgOrderStatus" />
+    <result column="bg_order_checkIn_date" jdbcType="DATE" property="bgOrderCheckinDate" />
+    <result column="bg_order_rent_tenancy" jdbcType="VARCHAR" property="bgOrderRentTenancy" />
+    <result column="bg_order_rent_deposit_flag" jdbcType="CHAR" property="bgOrderRentDepositFlag" />
+    <result column="bg_order_rent_deposit_money" jdbcType="DOUBLE" property="bgOrderRentDepositMoney" />
+    <result column="bg_order_rent_deposit_unit" jdbcType="CHAR" property="bgOrderRentDepositUnit" />
+    <result column="bg_order_rent_deposit_serialNum" jdbcType="VARCHAR" property="bgOrderRentDepositSerialnum" />
+    <result column="bg_order_rent_service_flag" jdbcType="CHAR" property="bgOrderRentServiceFlag" />
+    <result column="bg_order_rent_service_money" jdbcType="DOUBLE" property="bgOrderRentServiceMoney" />
+    <result column="bg_order_rent_service_unit" jdbcType="CHAR" property="bgOrderRentServiceUnit" />
+    <result column="bg_order_rent_service_seralNum" jdbcType="VARCHAR" property="bgOrderRentServiceSeralnum" />
+    <result column="bg_order_rent_flag" jdbcType="CHAR" property="bgOrderRentFlag" />
+    <result column="bg_order_rent_money" jdbcType="DOUBLE" property="bgOrderRentMoney" />
+    <result column="bg_order_rent_unit" jdbcType="CHAR" property="bgOrderRentUnit" />
+    <result column="bg_order_rent_serialNum" jdbcType="VARCHAR" property="bgOrderRentSerialnum" />
+    <result column="bg_order_rent_contract_flag" jdbcType="CHAR" property="bgOrderRentContractFlag" />
+    <result column="bg_order_rent_contract_serialNum" jdbcType="VARCHAR" property="bgOrderRentContractSerialnum" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bg_order_id, bg_order_number, bg_order_create_time, bg_order_user_id, bg_order_room_id, 
+    bg_order_status, bg_order_checkIn_date, bg_order_rent_tenancy, bg_order_rent_deposit_flag, 
+    bg_order_rent_deposit_money, bg_order_rent_deposit_unit, bg_order_rent_deposit_serialNum, 
+    bg_order_rent_service_flag, bg_order_rent_service_money, bg_order_rent_service_unit, 
+    bg_order_rent_service_seralNum, bg_order_rent_flag, bg_order_rent_money, bg_order_rent_unit, 
+    bg_order_rent_serialNum, bg_order_rent_contract_flag, bg_order_rent_contract_serialNum, 
+    is_delete, description, create_by, create_time, update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_order
+    where bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bg_order
+    where bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.BgOrder">
+    insert into bg_order (bg_order_id, bg_order_number, bg_order_create_time, 
+      bg_order_user_id, bg_order_room_id, bg_order_status, 
+      bg_order_checkIn_date, bg_order_rent_tenancy, bg_order_rent_deposit_flag, 
+      bg_order_rent_deposit_money, bg_order_rent_deposit_unit, 
+      bg_order_rent_deposit_serialNum, bg_order_rent_service_flag, 
+      bg_order_rent_service_money, bg_order_rent_service_unit, 
+      bg_order_rent_service_seralNum, bg_order_rent_flag, 
+      bg_order_rent_money, bg_order_rent_unit, bg_order_rent_serialNum, 
+      bg_order_rent_contract_flag, bg_order_rent_contract_serialNum, 
+      is_delete, description, create_by, 
+      create_time, update_by, update_time, 
+      remark)
+    values (#{bgOrderId,jdbcType=VARCHAR}, #{bgOrderNumber,jdbcType=VARCHAR}, #{bgOrderCreateTime,jdbcType=TIMESTAMP}, 
+      #{bgOrderUserId,jdbcType=VARCHAR}, #{bgOrderRoomId,jdbcType=VARCHAR}, #{bgOrderStatus,jdbcType=CHAR}, 
+      #{bgOrderCheckinDate,jdbcType=DATE}, #{bgOrderRentTenancy,jdbcType=VARCHAR}, #{bgOrderRentDepositFlag,jdbcType=CHAR}, 
+      #{bgOrderRentDepositMoney,jdbcType=DOUBLE}, #{bgOrderRentDepositUnit,jdbcType=CHAR}, 
+      #{bgOrderRentDepositSerialnum,jdbcType=VARCHAR}, #{bgOrderRentServiceFlag,jdbcType=CHAR}, 
+      #{bgOrderRentServiceMoney,jdbcType=DOUBLE}, #{bgOrderRentServiceUnit,jdbcType=CHAR}, 
+      #{bgOrderRentServiceSeralnum,jdbcType=VARCHAR}, #{bgOrderRentFlag,jdbcType=CHAR}, 
+      #{bgOrderRentMoney,jdbcType=DOUBLE}, #{bgOrderRentUnit,jdbcType=CHAR}, #{bgOrderRentSerialnum,jdbcType=VARCHAR}, 
+      #{bgOrderRentContractFlag,jdbcType=CHAR}, #{bgOrderRentContractSerialnum,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgOrder">
+    insert into bg_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bgOrderId != null">
+        bg_order_id,
+      </if>
+      <if test="bgOrderNumber != null">
+        bg_order_number,
+      </if>
+      <if test="bgOrderCreateTime != null">
+        bg_order_create_time,
+      </if>
+      <if test="bgOrderUserId != null">
+        bg_order_user_id,
+      </if>
+      <if test="bgOrderRoomId != null">
+        bg_order_room_id,
+      </if>
+      <if test="bgOrderStatus != null">
+        bg_order_status,
+      </if>
+      <if test="bgOrderCheckinDate != null">
+        bg_order_checkIn_date,
+      </if>
+      <if test="bgOrderRentTenancy != null">
+        bg_order_rent_tenancy,
+      </if>
+      <if test="bgOrderRentDepositFlag != null">
+        bg_order_rent_deposit_flag,
+      </if>
+      <if test="bgOrderRentDepositMoney != null">
+        bg_order_rent_deposit_money,
+      </if>
+      <if test="bgOrderRentDepositUnit != null">
+        bg_order_rent_deposit_unit,
+      </if>
+      <if test="bgOrderRentDepositSerialnum != null">
+        bg_order_rent_deposit_serialNum,
+      </if>
+      <if test="bgOrderRentServiceFlag != null">
+        bg_order_rent_service_flag,
+      </if>
+      <if test="bgOrderRentServiceMoney != null">
+        bg_order_rent_service_money,
+      </if>
+      <if test="bgOrderRentServiceUnit != null">
+        bg_order_rent_service_unit,
+      </if>
+      <if test="bgOrderRentServiceSeralnum != null">
+        bg_order_rent_service_seralNum,
+      </if>
+      <if test="bgOrderRentFlag != null">
+        bg_order_rent_flag,
+      </if>
+      <if test="bgOrderRentMoney != null">
+        bg_order_rent_money,
+      </if>
+      <if test="bgOrderRentUnit != null">
+        bg_order_rent_unit,
+      </if>
+      <if test="bgOrderRentSerialnum != null">
+        bg_order_rent_serialNum,
+      </if>
+      <if test="bgOrderRentContractFlag != null">
+        bg_order_rent_contract_flag,
+      </if>
+      <if test="bgOrderRentContractSerialnum != null">
+        bg_order_rent_contract_serialNum,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bgOrderId != null">
+        #{bgOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderNumber != null">
+        #{bgOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderCreateTime != null">
+        #{bgOrderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bgOrderUserId != null">
+        #{bgOrderUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRoomId != null">
+        #{bgOrderRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderStatus != null">
+        #{bgOrderStatus,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderCheckinDate != null">
+        #{bgOrderCheckinDate,jdbcType=DATE},
+      </if>
+      <if test="bgOrderRentTenancy != null">
+        #{bgOrderRentTenancy,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRentDepositFlag != null">
+        #{bgOrderRentDepositFlag,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentDepositMoney != null">
+        #{bgOrderRentDepositMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bgOrderRentDepositUnit != null">
+        #{bgOrderRentDepositUnit,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentDepositSerialnum != null">
+        #{bgOrderRentDepositSerialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRentServiceFlag != null">
+        #{bgOrderRentServiceFlag,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentServiceMoney != null">
+        #{bgOrderRentServiceMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bgOrderRentServiceUnit != null">
+        #{bgOrderRentServiceUnit,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentServiceSeralnum != null">
+        #{bgOrderRentServiceSeralnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRentFlag != null">
+        #{bgOrderRentFlag,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentMoney != null">
+        #{bgOrderRentMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bgOrderRentUnit != null">
+        #{bgOrderRentUnit,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentSerialnum != null">
+        #{bgOrderRentSerialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRentContractFlag != null">
+        #{bgOrderRentContractFlag,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentContractSerialnum != null">
+        #{bgOrderRentContractSerialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.BgOrder">
+    update bg_order
+    <set>
+      <if test="bgOrderNumber != null">
+        bg_order_number = #{bgOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderCreateTime != null">
+        bg_order_create_time = #{bgOrderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bgOrderUserId != null">
+        bg_order_user_id = #{bgOrderUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRoomId != null">
+        bg_order_room_id = #{bgOrderRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderStatus != null">
+        bg_order_status = #{bgOrderStatus,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderCheckinDate != null">
+        bg_order_checkIn_date = #{bgOrderCheckinDate,jdbcType=DATE},
+      </if>
+      <if test="bgOrderRentTenancy != null">
+        bg_order_rent_tenancy = #{bgOrderRentTenancy,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRentDepositFlag != null">
+        bg_order_rent_deposit_flag = #{bgOrderRentDepositFlag,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentDepositMoney != null">
+        bg_order_rent_deposit_money = #{bgOrderRentDepositMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bgOrderRentDepositUnit != null">
+        bg_order_rent_deposit_unit = #{bgOrderRentDepositUnit,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentDepositSerialnum != null">
+        bg_order_rent_deposit_serialNum = #{bgOrderRentDepositSerialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRentServiceFlag != null">
+        bg_order_rent_service_flag = #{bgOrderRentServiceFlag,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentServiceMoney != null">
+        bg_order_rent_service_money = #{bgOrderRentServiceMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bgOrderRentServiceUnit != null">
+        bg_order_rent_service_unit = #{bgOrderRentServiceUnit,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentServiceSeralnum != null">
+        bg_order_rent_service_seralNum = #{bgOrderRentServiceSeralnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRentFlag != null">
+        bg_order_rent_flag = #{bgOrderRentFlag,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentMoney != null">
+        bg_order_rent_money = #{bgOrderRentMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="bgOrderRentUnit != null">
+        bg_order_rent_unit = #{bgOrderRentUnit,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentSerialnum != null">
+        bg_order_rent_serialNum = #{bgOrderRentSerialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bgOrderRentContractFlag != null">
+        bg_order_rent_contract_flag = #{bgOrderRentContractFlag,jdbcType=CHAR},
+      </if>
+      <if test="bgOrderRentContractSerialnum != null">
+        bg_order_rent_contract_serialNum = #{bgOrderRentContractSerialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.BgOrder">
+    update bg_order
+    set bg_order_number = #{bgOrderNumber,jdbcType=VARCHAR},
+      bg_order_create_time = #{bgOrderCreateTime,jdbcType=TIMESTAMP},
+      bg_order_user_id = #{bgOrderUserId,jdbcType=VARCHAR},
+      bg_order_room_id = #{bgOrderRoomId,jdbcType=VARCHAR},
+      bg_order_status = #{bgOrderStatus,jdbcType=CHAR},
+      bg_order_checkIn_date = #{bgOrderCheckinDate,jdbcType=DATE},
+      bg_order_rent_tenancy = #{bgOrderRentTenancy,jdbcType=VARCHAR},
+      bg_order_rent_deposit_flag = #{bgOrderRentDepositFlag,jdbcType=CHAR},
+      bg_order_rent_deposit_money = #{bgOrderRentDepositMoney,jdbcType=DOUBLE},
+      bg_order_rent_deposit_unit = #{bgOrderRentDepositUnit,jdbcType=CHAR},
+      bg_order_rent_deposit_serialNum = #{bgOrderRentDepositSerialnum,jdbcType=VARCHAR},
+      bg_order_rent_service_flag = #{bgOrderRentServiceFlag,jdbcType=CHAR},
+      bg_order_rent_service_money = #{bgOrderRentServiceMoney,jdbcType=DOUBLE},
+      bg_order_rent_service_unit = #{bgOrderRentServiceUnit,jdbcType=CHAR},
+      bg_order_rent_service_seralNum = #{bgOrderRentServiceSeralnum,jdbcType=VARCHAR},
+      bg_order_rent_flag = #{bgOrderRentFlag,jdbcType=CHAR},
+      bg_order_rent_money = #{bgOrderRentMoney,jdbcType=DOUBLE},
+      bg_order_rent_unit = #{bgOrderRentUnit,jdbcType=CHAR},
+      bg_order_rent_serialNum = #{bgOrderRentSerialnum,jdbcType=VARCHAR},
+      bg_order_rent_contract_flag = #{bgOrderRentContractFlag,jdbcType=CHAR},
+      bg_order_rent_contract_serialNum = #{bgOrderRentContractSerialnum,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+  </update>
+</mapper>

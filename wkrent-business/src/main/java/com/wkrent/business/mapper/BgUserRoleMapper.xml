@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.dao.BgUserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.BgUserRole">
+    <id column="bg_user_role_id" jdbcType="VARCHAR" property="bgUserRoleId" />
+    <result column="bg_user_id" jdbcType="VARCHAR" property="bgUserId" />
+    <result column="bg_role_id" jdbcType="VARCHAR" property="bgRoleId" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bg_user_role_id, bg_user_id, bg_role_id, is_delete, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_user_role
+    where bg_user_role_id = #{bgUserRoleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bg_user_role
+    where bg_user_role_id = #{bgUserRoleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.BgUserRole">
+    insert into bg_user_role (bg_user_role_id, bg_user_id, bg_role_id, 
+      is_delete, remark)
+    values (#{bgUserRoleId,jdbcType=VARCHAR}, #{bgUserId,jdbcType=VARCHAR}, #{bgRoleId,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgUserRole">
+    insert into bg_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bgUserRoleId != null">
+        bg_user_role_id,
+      </if>
+      <if test="bgUserId != null">
+        bg_user_id,
+      </if>
+      <if test="bgRoleId != null">
+        bg_role_id,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bgUserRoleId != null">
+        #{bgUserRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgUserId != null">
+        #{bgUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoleId != null">
+        #{bgRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.BgUserRole">
+    update bg_user_role
+    <set>
+      <if test="bgUserId != null">
+        bg_user_id = #{bgUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoleId != null">
+        bg_role_id = #{bgRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bg_user_role_id = #{bgUserRoleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.BgUserRole">
+    update bg_user_role
+    set bg_user_id = #{bgUserId,jdbcType=VARCHAR},
+      bg_role_id = #{bgRoleId,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where bg_user_role_id = #{bgUserRoleId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.wkrent.business.bguser.manager.dao.BgUserDao;
 import com.wkrent.business.bguser.manager.service.BgUserService;
-import com.wkrent.common.entity.WkrentBgUser;
+import com.wkrent.common.entity.BgUser;
 
 @Service
 public class BgUserServiceImpl implements BgUserService {
@@ -15,7 +15,7 @@ public class BgUserServiceImpl implements BgUserService {
 	@Autowired
 	private BgUserDao bgUserDao;
 
-	public List<WkrentBgUser> getAllUser() {
+	public List<BgUser> getAllUser() {
 		return bgUserDao.getAllUserList();
 	}
 

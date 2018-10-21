@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.dao.AppAttentionMapper">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.AppAttention">
+    <id column="app_attention_id" jdbcType="VARCHAR" property="appAttentionId" />
+    <result column="app_user_id" jdbcType="VARCHAR" property="appUserId" />
+    <result column="app_room_id" jdbcType="VARCHAR" property="appRoomId" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    app_attention_id, app_user_id, app_room_id, is_delete, description, create_by, create_time, 
+    update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_attention
+    where app_attention_id = #{appAttentionId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from app_attention
+    where app_attention_id = #{appAttentionId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.AppAttention">
+    insert into app_attention (app_attention_id, app_user_id, app_room_id, 
+      is_delete, description, create_by, 
+      create_time, update_by, update_time, 
+      remark)
+    values (#{appAttentionId,jdbcType=VARCHAR}, #{appUserId,jdbcType=VARCHAR}, #{appRoomId,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.AppAttention">
+    insert into app_attention
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appAttentionId != null">
+        app_attention_id,
+      </if>
+      <if test="appUserId != null">
+        app_user_id,
+      </if>
+      <if test="appRoomId != null">
+        app_room_id,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appAttentionId != null">
+        #{appAttentionId,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserId != null">
+        #{appUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="appRoomId != null">
+        #{appRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.AppAttention">
+    update app_attention
+    <set>
+      <if test="appUserId != null">
+        app_user_id = #{appUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="appRoomId != null">
+        app_room_id = #{appRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where app_attention_id = #{appAttentionId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.AppAttention">
+    update app_attention
+    set app_user_id = #{appUserId,jdbcType=VARCHAR},
+      app_room_id = #{appRoomId,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where app_attention_id = #{appAttentionId,jdbcType=VARCHAR}
+  </update>
+</mapper>
