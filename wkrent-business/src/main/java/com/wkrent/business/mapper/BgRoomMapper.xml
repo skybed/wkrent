@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.dao.BgRoomMapper">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.BgRoom">
+    <id column="bg_room_id" jdbcType="VARCHAR" property="bgRoomId" />
+    <result column="bg_room_number" jdbcType="VARCHAR" property="bgRoomNumber" />
+    <result column="bg_room_name" jdbcType="VARCHAR" property="bgRoomName" />
+    <result column="bg_room_address_country" jdbcType="VARCHAR" property="bgRoomAddressCountry" />
+    <result column="bg_room_address_city" jdbcType="VARCHAR" property="bgRoomAddressCity" />
+    <result column="bg_room_address_detail" jdbcType="VARCHAR" property="bgRoomAddressDetail" />
+    <result column="bg_room_address_x" jdbcType="DOUBLE" property="bgRoomAddressX" />
+    <result column="bg_room_address_y" jdbcType="DOUBLE" property="bgRoomAddressY" />
+    <result column="bg_room_price" jdbcType="DOUBLE" property="bgRoomPrice" />
+    <result column="bg_room_price_unit" jdbcType="VARCHAR" property="bgRoomPriceUnit" />
+    <result column="bg_room_status" jdbcType="VARCHAR" property="bgRoomStatus" />
+    <result column="bg_room_max_appoint_num" jdbcType="TINYINT" property="bgRoomMaxAppointNum" />
+    <result column="bg_room_recommend" jdbcType="CHAR" property="bgRoomRecommend" />
+    <result column="bg_room_tips" jdbcType="VARCHAR" property="bgRoomTips" />
+    <result column="bg_room_merchant_id" jdbcType="VARCHAR" property="bgRoomMerchantId" />
+    <result column="bg_room_property" jdbcType="VARCHAR" property="bgRoomProperty" />
+    <result column="bg_room_type" jdbcType="VARCHAR" property="bgRoomType" />
+    <result column="bg_room_detail" jdbcType="VARCHAR" property="bgRoomDetail" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bg_room_id, bg_room_number, bg_room_name, bg_room_address_country, bg_room_address_city, 
+    bg_room_address_detail, bg_room_address_x, bg_room_address_y, bg_room_price, bg_room_price_unit, 
+    bg_room_status, bg_room_max_appoint_num, bg_room_recommend, bg_room_tips, bg_room_merchant_id, 
+    bg_room_property, bg_room_type, bg_room_detail, is_delete, description, create_by, 
+    create_time, update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_room
+    where bg_room_id = #{bgRoomId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bg_room
+    where bg_room_id = #{bgRoomId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.BgRoom">
+    insert into bg_room (bg_room_id, bg_room_number, bg_room_name, 
+      bg_room_address_country, bg_room_address_city, 
+      bg_room_address_detail, bg_room_address_x, bg_room_address_y, 
+      bg_room_price, bg_room_price_unit, bg_room_status, 
+      bg_room_max_appoint_num, bg_room_recommend, bg_room_tips, 
+      bg_room_merchant_id, bg_room_property, bg_room_type, 
+      bg_room_detail, is_delete, description, 
+      create_by, create_time, update_by, 
+      update_time, remark)
+    values (#{bgRoomId,jdbcType=VARCHAR}, #{bgRoomNumber,jdbcType=VARCHAR}, #{bgRoomName,jdbcType=VARCHAR}, 
+      #{bgRoomAddressCountry,jdbcType=VARCHAR}, #{bgRoomAddressCity,jdbcType=VARCHAR}, 
+      #{bgRoomAddressDetail,jdbcType=VARCHAR}, #{bgRoomAddressX,jdbcType=DOUBLE}, #{bgRoomAddressY,jdbcType=DOUBLE}, 
+      #{bgRoomPrice,jdbcType=DOUBLE}, #{bgRoomPriceUnit,jdbcType=VARCHAR}, #{bgRoomStatus,jdbcType=VARCHAR}, 
+      #{bgRoomMaxAppointNum,jdbcType=TINYINT}, #{bgRoomRecommend,jdbcType=CHAR}, #{bgRoomTips,jdbcType=VARCHAR}, 
+      #{bgRoomMerchantId,jdbcType=VARCHAR}, #{bgRoomProperty,jdbcType=VARCHAR}, #{bgRoomType,jdbcType=VARCHAR}, 
+      #{bgRoomDetail,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgRoom">
+    insert into bg_room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bgRoomId != null">
+        bg_room_id,
+      </if>
+      <if test="bgRoomNumber != null">
+        bg_room_number,
+      </if>
+      <if test="bgRoomName != null">
+        bg_room_name,
+      </if>
+      <if test="bgRoomAddressCountry != null">
+        bg_room_address_country,
+      </if>
+      <if test="bgRoomAddressCity != null">
+        bg_room_address_city,
+      </if>
+      <if test="bgRoomAddressDetail != null">
+        bg_room_address_detail,
+      </if>
+      <if test="bgRoomAddressX != null">
+        bg_room_address_x,
+      </if>
+      <if test="bgRoomAddressY != null">
+        bg_room_address_y,
+      </if>
+      <if test="bgRoomPrice != null">
+        bg_room_price,
+      </if>
+      <if test="bgRoomPriceUnit != null">
+        bg_room_price_unit,
+      </if>
+      <if test="bgRoomStatus != null">
+        bg_room_status,
+      </if>
+      <if test="bgRoomMaxAppointNum != null">
+        bg_room_max_appoint_num,
+      </if>
+      <if test="bgRoomRecommend != null">
+        bg_room_recommend,
+      </if>
+      <if test="bgRoomTips != null">
+        bg_room_tips,
+      </if>
+      <if test="bgRoomMerchantId != null">
+        bg_room_merchant_id,
+      </if>
+      <if test="bgRoomProperty != null">
+        bg_room_property,
+      </if>
+      <if test="bgRoomType != null">
+        bg_room_type,
+      </if>
+      <if test="bgRoomDetail != null">
+        bg_room_detail,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bgRoomId != null">
+        #{bgRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomNumber != null">
+        #{bgRoomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomName != null">
+        #{bgRoomName,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomAddressCountry != null">
+        #{bgRoomAddressCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomAddressCity != null">
+        #{bgRoomAddressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomAddressDetail != null">
+        #{bgRoomAddressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomAddressX != null">
+        #{bgRoomAddressX,jdbcType=DOUBLE},
+      </if>
+      <if test="bgRoomAddressY != null">
+        #{bgRoomAddressY,jdbcType=DOUBLE},
+      </if>
+      <if test="bgRoomPrice != null">
+        #{bgRoomPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="bgRoomPriceUnit != null">
+        #{bgRoomPriceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomStatus != null">
+        #{bgRoomStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomMaxAppointNum != null">
+        #{bgRoomMaxAppointNum,jdbcType=TINYINT},
+      </if>
+      <if test="bgRoomRecommend != null">
+        #{bgRoomRecommend,jdbcType=CHAR},
+      </if>
+      <if test="bgRoomTips != null">
+        #{bgRoomTips,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomMerchantId != null">
+        #{bgRoomMerchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomProperty != null">
+        #{bgRoomProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomType != null">
+        #{bgRoomType,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomDetail != null">
+        #{bgRoomDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.BgRoom">
+    update bg_room
+    <set>
+      <if test="bgRoomNumber != null">
+        bg_room_number = #{bgRoomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomName != null">
+        bg_room_name = #{bgRoomName,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomAddressCountry != null">
+        bg_room_address_country = #{bgRoomAddressCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomAddressCity != null">
+        bg_room_address_city = #{bgRoomAddressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomAddressDetail != null">
+        bg_room_address_detail = #{bgRoomAddressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomAddressX != null">
+        bg_room_address_x = #{bgRoomAddressX,jdbcType=DOUBLE},
+      </if>
+      <if test="bgRoomAddressY != null">
+        bg_room_address_y = #{bgRoomAddressY,jdbcType=DOUBLE},
+      </if>
+      <if test="bgRoomPrice != null">
+        bg_room_price = #{bgRoomPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="bgRoomPriceUnit != null">
+        bg_room_price_unit = #{bgRoomPriceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomStatus != null">
+        bg_room_status = #{bgRoomStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomMaxAppointNum != null">
+        bg_room_max_appoint_num = #{bgRoomMaxAppointNum,jdbcType=TINYINT},
+      </if>
+      <if test="bgRoomRecommend != null">
+        bg_room_recommend = #{bgRoomRecommend,jdbcType=CHAR},
+      </if>
+      <if test="bgRoomTips != null">
+        bg_room_tips = #{bgRoomTips,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomMerchantId != null">
+        bg_room_merchant_id = #{bgRoomMerchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomProperty != null">
+        bg_room_property = #{bgRoomProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomType != null">
+        bg_room_type = #{bgRoomType,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomDetail != null">
+        bg_room_detail = #{bgRoomDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bg_room_id = #{bgRoomId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.BgRoom">
+    update bg_room
+    set bg_room_number = #{bgRoomNumber,jdbcType=VARCHAR},
+      bg_room_name = #{bgRoomName,jdbcType=VARCHAR},
+      bg_room_address_country = #{bgRoomAddressCountry,jdbcType=VARCHAR},
+      bg_room_address_city = #{bgRoomAddressCity,jdbcType=VARCHAR},
+      bg_room_address_detail = #{bgRoomAddressDetail,jdbcType=VARCHAR},
+      bg_room_address_x = #{bgRoomAddressX,jdbcType=DOUBLE},
+      bg_room_address_y = #{bgRoomAddressY,jdbcType=DOUBLE},
+      bg_room_price = #{bgRoomPrice,jdbcType=DOUBLE},
+      bg_room_price_unit = #{bgRoomPriceUnit,jdbcType=VARCHAR},
+      bg_room_status = #{bgRoomStatus,jdbcType=VARCHAR},
+      bg_room_max_appoint_num = #{bgRoomMaxAppointNum,jdbcType=TINYINT},
+      bg_room_recommend = #{bgRoomRecommend,jdbcType=CHAR},
+      bg_room_tips = #{bgRoomTips,jdbcType=VARCHAR},
+      bg_room_merchant_id = #{bgRoomMerchantId,jdbcType=VARCHAR},
+      bg_room_property = #{bgRoomProperty,jdbcType=VARCHAR},
+      bg_room_type = #{bgRoomType,jdbcType=VARCHAR},
+      bg_room_detail = #{bgRoomDetail,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where bg_room_id = #{bgRoomId,jdbcType=VARCHAR}
+  </update>
+</mapper>

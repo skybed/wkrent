@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.dao.BgPicAttachMapper">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.BgPicAttach">
+    <id column="pic_attach_id" jdbcType="VARCHAR" property="picAttachId" />
+    <result column="pic_attach_name" jdbcType="VARCHAR" property="picAttachName" />
+    <result column="pic_attach_type" jdbcType="CHAR" property="picAttachType" />
+    <result column="pic_attach_url" jdbcType="VARCHAR" property="picAttachUrl" />
+    <result column="pic_attach_file_volume" jdbcType="CHAR" property="picAttachFileVolume" />
+    <result column="pic_attach_file_type" jdbcType="CHAR" property="picAttachFileType" />
+    <result column="pic_attach_owner" jdbcType="VARCHAR" property="picAttachOwner" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pic_attach_id, pic_attach_name, pic_attach_type, pic_attach_url, pic_attach_file_volume, 
+    pic_attach_file_type, pic_attach_owner, is_delete, description, create_by, create_time, 
+    update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_pic_attach
+    where pic_attach_id = #{picAttachId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bg_pic_attach
+    where pic_attach_id = #{picAttachId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.BgPicAttach">
+    insert into bg_pic_attach (pic_attach_id, pic_attach_name, pic_attach_type, 
+      pic_attach_url, pic_attach_file_volume, pic_attach_file_type, 
+      pic_attach_owner, is_delete, description, 
+      create_by, create_time, update_by, 
+      update_time, remark)
+    values (#{picAttachId,jdbcType=VARCHAR}, #{picAttachName,jdbcType=VARCHAR}, #{picAttachType,jdbcType=CHAR}, 
+      #{picAttachUrl,jdbcType=VARCHAR}, #{picAttachFileVolume,jdbcType=CHAR}, #{picAttachFileType,jdbcType=CHAR}, 
+      #{picAttachOwner,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgPicAttach">
+    insert into bg_pic_attach
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="picAttachId != null">
+        pic_attach_id,
+      </if>
+      <if test="picAttachName != null">
+        pic_attach_name,
+      </if>
+      <if test="picAttachType != null">
+        pic_attach_type,
+      </if>
+      <if test="picAttachUrl != null">
+        pic_attach_url,
+      </if>
+      <if test="picAttachFileVolume != null">
+        pic_attach_file_volume,
+      </if>
+      <if test="picAttachFileType != null">
+        pic_attach_file_type,
+      </if>
+      <if test="picAttachOwner != null">
+        pic_attach_owner,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="picAttachId != null">
+        #{picAttachId,jdbcType=VARCHAR},
+      </if>
+      <if test="picAttachName != null">
+        #{picAttachName,jdbcType=VARCHAR},
+      </if>
+      <if test="picAttachType != null">
+        #{picAttachType,jdbcType=CHAR},
+      </if>
+      <if test="picAttachUrl != null">
+        #{picAttachUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picAttachFileVolume != null">
+        #{picAttachFileVolume,jdbcType=CHAR},
+      </if>
+      <if test="picAttachFileType != null">
+        #{picAttachFileType,jdbcType=CHAR},
+      </if>
+      <if test="picAttachOwner != null">
+        #{picAttachOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.BgPicAttach">
+    update bg_pic_attach
+    <set>
+      <if test="picAttachName != null">
+        pic_attach_name = #{picAttachName,jdbcType=VARCHAR},
+      </if>
+      <if test="picAttachType != null">
+        pic_attach_type = #{picAttachType,jdbcType=CHAR},
+      </if>
+      <if test="picAttachUrl != null">
+        pic_attach_url = #{picAttachUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picAttachFileVolume != null">
+        pic_attach_file_volume = #{picAttachFileVolume,jdbcType=CHAR},
+      </if>
+      <if test="picAttachFileType != null">
+        pic_attach_file_type = #{picAttachFileType,jdbcType=CHAR},
+      </if>
+      <if test="picAttachOwner != null">
+        pic_attach_owner = #{picAttachOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pic_attach_id = #{picAttachId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.BgPicAttach">
+    update bg_pic_attach
+    set pic_attach_name = #{picAttachName,jdbcType=VARCHAR},
+      pic_attach_type = #{picAttachType,jdbcType=CHAR},
+      pic_attach_url = #{picAttachUrl,jdbcType=VARCHAR},
+      pic_attach_file_volume = #{picAttachFileVolume,jdbcType=CHAR},
+      pic_attach_file_type = #{picAttachFileType,jdbcType=CHAR},
+      pic_attach_owner = #{picAttachOwner,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where pic_attach_id = #{picAttachId,jdbcType=VARCHAR}
+  </update>
+</mapper>

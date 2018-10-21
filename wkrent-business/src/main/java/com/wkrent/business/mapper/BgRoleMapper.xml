@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.dao.BgRoleMapper">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.BgRole">
+    <id column="bg_role_id" jdbcType="VARCHAR" property="bgRoleId" />
+    <result column="bg_role_name" jdbcType="VARCHAR" property="bgRoleName" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="is_active" jdbcType="CHAR" property="isActive" />
+    <result column="descrption" jdbcType="VARCHAR" property="descrption" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bg_role_id, bg_role_name, is_delete, is_active, descrption, create_by, create_time, 
+    update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_role
+    where bg_role_id = #{bgRoleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bg_role
+    where bg_role_id = #{bgRoleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.BgRole">
+    insert into bg_role (bg_role_id, bg_role_name, is_delete, 
+      is_active, descrption, create_by, 
+      create_time, update_by, update_time, 
+      remark)
+    values (#{bgRoleId,jdbcType=VARCHAR}, #{bgRoleName,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, 
+      #{isActive,jdbcType=CHAR}, #{descrption,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgRole">
+    insert into bg_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bgRoleId != null">
+        bg_role_id,
+      </if>
+      <if test="bgRoleName != null">
+        bg_role_name,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="isActive != null">
+        is_active,
+      </if>
+      <if test="descrption != null">
+        descrption,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bgRoleId != null">
+        #{bgRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoleName != null">
+        #{bgRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="isActive != null">
+        #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="descrption != null">
+        #{descrption,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.BgRole">
+    update bg_role
+    <set>
+      <if test="bgRoleName != null">
+        bg_role_name = #{bgRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="isActive != null">
+        is_active = #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="descrption != null">
+        descrption = #{descrption,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bg_role_id = #{bgRoleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.BgRole">
+    update bg_role
+    set bg_role_name = #{bgRoleName,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      is_active = #{isActive,jdbcType=CHAR},
+      descrption = #{descrption,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where bg_role_id = #{bgRoleId,jdbcType=VARCHAR}
+  </update>
+</mapper>
