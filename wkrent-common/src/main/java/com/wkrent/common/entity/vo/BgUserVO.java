@@ -14,32 +14,89 @@ public class BgUserVO implements Serializable {
 	 */
 	private static final long serialVersionUID = -1778772042681681344L;
 
-	private String bgUserId;
+    /**
+     * 后台用户id,唯一标识
+     */
+    private String bgUserId;
 
+    /**
+     * 后台用户账号
+     */
     private String bgUserAccount;
 
+    /**
+     * 后台用户登录密码
+     */
     private String bgUserPwd;
 
+    /**
+     * 后台用户名
+     */
     private String bgUserName;
 
+    /**
+     * 后台用户性别 0-男 1-女
+     */
     private String bgUserSex;
 
+    /**
+     * 后台用户联系方式
+     */
     private String bgUserPhone;
 
+    /**
+     * 后台用户联系邮箱
+     */
     private String bgUserEmail;
 
+    /**
+     * 后台用户工号
+     */
     private String bgUserEmpId;
 
+    /**
+     * 后台用户部门
+     */
     private String bgUserDept;
 
+    /**
+     * 描述
+     */
     private String description;
 
-    private String isactive;
+    /**
+     * 是否删除 0-否 1-是
+     */
+    private String isDelete;
 
+    /**
+     * 是否启用 0-否 1-是
+     */
+    private String isActive;
+
+    /**
+     * 创建者
+     */
     private String createBy;
 
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
+    /**
+     * 更新者
+     */
+    private String updateBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+
+    /**
+     * 备注 预留字段
+     */
     private String remark;
 
     /**
@@ -61,6 +118,16 @@ public class BgUserVO implements Serializable {
      * 角色id
      */
     private String roleId;
+
+    /**
+     * 角色名称
+     */
+    private String roleName;
+
+    /**
+     * 性别字符串: 男/女
+     */
+    private String bgUserSexStr;
 
     public String getBgUserId() {
         return bgUserId;
@@ -142,14 +209,6 @@ public class BgUserVO implements Serializable {
         this.description = description;
     }
 
-    public String getIsactive() {
-        return isactive;
-    }
-
-    public void setIsactive(String isactive) {
-        this.isactive = isactive;
-    }
-
     public String getCreateBy() {
         return createBy;
     }
@@ -198,11 +257,59 @@ public class BgUserVO implements Serializable {
         this.endDate = endDate;
     }
 
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     public String getRoleId() {
         return roleId;
     }
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getBgUserSexStr() {
+        return bgUserSexStr;
+    }
+
+    public void setBgUserSexStr(String bgUserSexStr) {
+        this.bgUserSexStr = bgUserSexStr;
     }
 }

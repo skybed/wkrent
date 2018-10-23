@@ -35,6 +35,16 @@ public class Page
     private int currentPage;
 
     /**
+     * 开始行
+     */
+    private int startRow;
+
+    /**
+     * 结束行
+     */
+    private int endRow;
+
+    /**
      * 排序信息
      */
     private List<Sort> sortList;
@@ -99,6 +109,28 @@ public class Page
     public void setSortList(List<Sort> sortList)
     {
         this.sortList = sortList;
+    }
+
+    public int getStartRow() {
+        if(this.pageSize != 0 && this.currentPage >= 1){
+            return pageSize * (currentPage - 1);
+        }
+        return startRow;
+    }
+
+    public void setStartRow(int startRow) {
+        this.startRow = startRow;
+    }
+
+    public int getEndRow() {
+        if(this.pageSize != 0 && this.currentPage >= 1){
+            return pageSize * currentPage;
+        }
+        return endRow;
+    }
+
+    public void setEndRow(int endRow) {
+        this.endRow = endRow;
     }
 }
 
