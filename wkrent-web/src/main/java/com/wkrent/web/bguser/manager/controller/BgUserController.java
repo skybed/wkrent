@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 @Controller
-@RequestMapping("/bguser")
+@RequestMapping("/bgUser")
 public class BgUserController extends BaseController {
 
     @Autowired
@@ -35,11 +35,13 @@ public class BgUserController extends BaseController {
     }
 
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
+    @ResponseBody
     public PageResult<BgUserVO> findByCondition(@RequestBody BgUserVO bgUserVO){
         return bgUserService.findByCondition(bgUserVO);
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @ResponseBody
     public BaseAjaxVO insert(@RequestBody BgUserVO bgUserVO, HttpSession session){
         BaseAjaxVO baseAjaxVO;
         try {
@@ -59,6 +61,7 @@ public class BgUserController extends BaseController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
     public BaseAjaxVO update(@RequestBody BgUserVO bgUserVO, HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
@@ -76,6 +79,7 @@ public class BgUserController extends BaseController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     public BaseAjaxVO delete(@RequestBody String userId, HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
@@ -93,6 +97,7 @@ public class BgUserController extends BaseController {
     }
 
     @RequestMapping(value = "/lockAccount", method = RequestMethod.POST)
+    @ResponseBody
     public BaseAjaxVO lockAccount(@RequestBody String userId, HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
@@ -110,6 +115,7 @@ public class BgUserController extends BaseController {
     }
 
     @RequestMapping(value = "/unlockAccount", method = RequestMethod.POST)
+    @ResponseBody
     public BaseAjaxVO unlockAccount(@RequestBody String userId, HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
