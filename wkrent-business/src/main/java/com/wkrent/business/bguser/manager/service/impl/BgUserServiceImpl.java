@@ -1,24 +1,24 @@
 package com.wkrent.business.bguser.manager.service.impl;
 
 import com.wkrent.business.bguser.manager.dao.BgUserDao;
+import com.wkrent.business.bguser.manager.service.BgUserRoleService;
 import com.wkrent.business.bguser.manager.service.BgUserService;
 import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.po.BgUser;
+import com.wkrent.common.entity.po.BgUserRole;
 import com.wkrent.common.entity.vo.BgUserVO;
 import com.wkrent.common.exception.WkRentException;
 import com.wkrent.common.util.BeanUtil;
 import com.wkrent.common.util.OperatorUtil;
 import com.wkrent.common.util.UUIDUtil;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Administrator
@@ -29,12 +29,14 @@ public class BgUserServiceImpl implements BgUserService {
     @Autowired
     private BgUserDao bgUserDao;
 
-    private final Logger log = LoggerFactory.getLogger(BgUserServiceImpl.class);
+    @Autowired
+    private BgUserRoleService bgUserRoleService;
 
     /**
      * 查询所有用户信息
      * @return 用户信息
      */
+    @Override
     public List<BgUser> getAllUser() {
         return bgUserDao.getAllUserList();
     }
@@ -85,7 +87,7 @@ public class BgUserServiceImpl implements BgUserService {
         if(checkUserInfo(bgUserVO)){
             //校验用户账号是否存在
             BgUser existUser = findByUserAccount(bgUserVO.getBgUserAccount());
-            if(existUser == null){
+            if(existUser != null){
                 throw new WkRentException("新增用户失败，用户账号已存在！");
             }
             BgUser bgUser = BeanUtil.copyBean(bgUserVO, BgUser.class);
@@ -95,16 +97,29 @@ public class BgUserServiceImpl implements BgUserService {
             if(result != 1){
                 throw new WkRentException("新增用户失败，服务器异常！");
             }
+            insertUserRoleInfo(bgUserVO.getRoleId(), bgUser.getBgUserId());
             ajaxVO.setResult(bgUser);
         }
         return ajaxVO;
     }
 
     /**
+     * 新增用户角色信息
+     * @param roleId 角色id
+     * @param userId 用户id
+     */
+    private void insertUserRoleInfo(String roleId, String userId) {
+        BgUserRole bgUserRole = new BgUserRole();
+        bgUserRole.setBgRoleId(roleId);
+        bgUserRole.setBgUserId(userId);
+        bgUserRoleService.insert(bgUserRole);
+    }
+
+    /**
      * 根据用户账号修改用户信息
      *
      * @param bgUserVO 待修改用户信息
-     * @return 修改条数
+     * @param loginAccount 登录账号
      */
     @Override
     public void update(BgUserVO bgUserVO, String loginAccount) {
@@ -116,6 +131,9 @@ public class BgUserServiceImpl implements BgUserService {
             if(result != 1){
                 throw new WkRentException("更新用户信息失败，用户信息已变更！");
             }
+            //删除已有账户角色信息后新增账户角色信息
+            bgUserRoleService.deleteByUserId(bgUser.getBgUserId());
+            insertUserRoleInfo(bgUserVO.getRoleId(), bgUser.getBgUserId());
         }
     }
 
@@ -135,7 +153,7 @@ public class BgUserServiceImpl implements BgUserService {
         }
         BgUser updateUser = new BgUser();
         updateUser.setBgUserId(userId);
-        updateUser.setIsdelete(Constants.STR_FALSE);
+        updateUser.setIsDelete(Constants.STR_FALSE);
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateUser, loginAccount);
         int result = bgUserDao.delete(updateUser);
         if(result != 1){
@@ -146,7 +164,8 @@ public class BgUserServiceImpl implements BgUserService {
     /**
      * 根据id锁定用户
      *
-     * @param userId
+     * @param userId 用户Id
+     * @param loginAccount 登录用户账号
      */
     @Override
     public void lockAccount(String userId, String loginAccount) {
@@ -158,12 +177,12 @@ public class BgUserServiceImpl implements BgUserService {
             throw new WkRentException("锁定用户失败，用户信息已被删除");
         }
         //用户已被锁定，不能再次锁定
-        if (Constants.STR_FALSE.equals(bgUser.getIsactive())) {
+        if (Constants.STR_FALSE.equals(bgUser.getIsActive())) {
             throw new WkRentException("锁定用户失败，用户信息已被锁定");
         }
         BgUser updateUser = new BgUser();
         updateUser.setBgUserId(userId);
-        updateUser.setIsactive(Constants.STR_FALSE);
+        updateUser.setIsActive(Constants.STR_FALSE);
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateUser, loginAccount);
         int result = bgUserDao.updateUserStatus(updateUser);
         if(result != 1){
@@ -174,7 +193,8 @@ public class BgUserServiceImpl implements BgUserService {
     /**
      * 根据id解锁用户
      *
-     * @param userId
+     * @param userId 用户Id
+     * @param loginAccount 登录账号
      */
     @Override
     public void unlockAccount(String userId, String loginAccount) {
@@ -186,12 +206,12 @@ public class BgUserServiceImpl implements BgUserService {
             throw new WkRentException("解锁用户失败，用户信息已被删除");
         }
         //用户已被锁定，不能再次锁定
-        if (Constants.STR_TRUE.equals(bgUser.getIsactive())) {
+        if (Constants.STR_TRUE.equals(bgUser.getIsActive())) {
             throw new WkRentException("解锁用户失败，用户信息已被解锁");
         }
         BgUser updateUser = new BgUser();
         updateUser.setBgUserId(userId);
-        updateUser.setIsactive(Constants.STR_TRUE);
+        updateUser.setIsActive(Constants.STR_TRUE);
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateUser, loginAccount);
         int result = bgUserDao.updateUserStatus(updateUser);
         if(result != 1){
@@ -221,7 +241,7 @@ public class BgUserServiceImpl implements BgUserService {
         if(StringUtils.isBlank(bgUserVO.getBgUserEmpId())){
             throw new WkRentException("保存用户信息失败，用户员工工号不能为空");
         }
-        if(StringUtils.isBlank(bgUserVO.getRoleId())){
+        if (StringUtils.isBlank(bgUserVO.getRoleId())) {
             throw new WkRentException("保存用户信息失败，用户角色信息不能为空");
         }
         if(StringUtils.isBlank(bgUserVO.getBgUserDept())){
