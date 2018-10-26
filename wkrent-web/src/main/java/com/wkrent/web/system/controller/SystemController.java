@@ -1,6 +1,6 @@
 package com.wkrent.web.system.controller;
 
-import com.wkrent.business.bguser.manager.service.BgUserService;
+import com.wkrent.business.bg.usermanager.service.BgUserService;
 import com.wkrent.common.entity.po.BgUser;
 import com.wkrent.common.util.Md5Utils;
 import org.slf4j.Logger;
