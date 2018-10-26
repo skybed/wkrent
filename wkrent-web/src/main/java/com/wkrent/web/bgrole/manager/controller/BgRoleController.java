@@ -7,17 +7,22 @@ import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.vo.BgRoleVO;
 import com.wkrent.common.exception.WkRentException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpSession;
 
 /**
  * @author Administrator
  */
+@Api(value = "bgRole", tags = "角色接口")
 @Controller
 @RequestMapping("/bgRole")
 public class BgRoleController extends BaseController {
@@ -26,7 +31,9 @@ public class BgRoleController extends BaseController {
     private BgRoleService bgRoleService;
 
 
+    @ApiOperation(value = "条件查询后台角色", notes = "条件查询后台角色", httpMethod = "POST", response = BgRoleVO.class)
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
+    @ResponseBody
     public PageResult<BgRoleVO> findByCondition(@RequestBody BgRoleVO bgRoleVO){
         return bgRoleService.findByCondition(bgRoleVO);
     }
@@ -68,7 +75,7 @@ public class BgRoleController extends BaseController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public BaseAjaxVO delete(@RequestBody String roleId, HttpSession session){
+    public BaseAjaxVO delete(@RequestBody String roleId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgRoleService.delete(roleId, getLoginAccount(session));

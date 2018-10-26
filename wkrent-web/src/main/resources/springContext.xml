@@ -31,7 +31,7 @@
 	<context:component-scan base-package="com.wkrent">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	
+
 	<bean id="wkrentdb" class="com.alibaba.druid.pool.DruidDataSource">
 		<property name="driverClassName">
 			<value>${jdbc.db.driver}</value>
@@ -97,5 +97,5 @@
 
 	<!-- 定义aspectj -->
 	<aop:aspectj-autoproxy />
-	
+
 </beans>

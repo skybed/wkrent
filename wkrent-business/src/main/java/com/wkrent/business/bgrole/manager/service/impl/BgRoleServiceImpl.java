@@ -1,6 +1,5 @@
 package com.wkrent.business.bgrole.manager.service.impl;
 
-import com.google.common.collect.Lists;
 import com.wkrent.business.bgrole.manager.dao.BgRoleDao;
 import com.wkrent.business.bgrole.manager.service.BgRoleAuthService;
 import com.wkrent.business.bgrole.manager.service.BgRoleService;

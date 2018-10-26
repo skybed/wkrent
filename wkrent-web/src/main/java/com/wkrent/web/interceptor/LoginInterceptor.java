@@ -51,13 +51,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         log.info("url:"+url);
 
         String userAccount =  (String)request.getSession().getAttribute("userAccount");
-        if(userAccount == null){
-            log.info("Interceptor：跳转到login页面！");
-            request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
-            return false;
-        }else{
-            return true;
-        }
+        //TODO 暂时不用拦截
+        return true;
+//        if(userAccount == null){
+//            log.info("Interceptor：跳转到login页面！");
+//            request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
+//            return false;
+//        }else{
+//            return true;
+//        }
     }
 
     /**

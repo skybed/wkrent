@@ -1,6 +1,8 @@
 package com.wkrent.common.entity.vo;
 
 import com.wkrent.common.entity.paging.Page;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,6 +10,7 @@ import java.util.Date;
 /**
  * @author Administrator
  */
+@ApiModel
 public class BgUserVO implements Serializable {
     /**
 	 * 
@@ -17,6 +20,7 @@ public class BgUserVO implements Serializable {
     /**
      * 后台用户id,唯一标识
      */
+    @ApiModelProperty
     private String bgUserId;
 
     /**

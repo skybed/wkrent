@@ -7,6 +7,8 @@
 package com.wkrent.common.entity.vo;
 
 import com.wkrent.common.entity.paging.Page;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +19,7 @@ import java.util.List;
  * @author skybed
  *
  */
+@ApiModel(value = "角色入参 or 返回信息")
 public class BgRoleVO implements Serializable {
 	
     /**
@@ -27,11 +30,13 @@ public class BgRoleVO implements Serializable {
     /**
      * 角色id,唯一标识
      */
+    @ApiModelProperty(value = "角色id")
     private String bgRoleId;
 
     /**
      * 角色名
      */
+    @ApiModelProperty(value = "角色名称")
     private String bgRoleName;
 
     /**

@@ -8,6 +8,8 @@ import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.vo.BgUserVO;
 import com.wkrent.common.exception.WkRentException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Administrator
  */
+@Api
 @Controller
 @RequestMapping("/bgUser")
 public class BgUserController extends BaseController {
@@ -34,6 +37,7 @@ public class BgUserController extends BaseController {
         return JSON.toJSONString(bgUserService.getAllUser());
     }
 
+    @ApiOperation(value = "条件查询用户信息", notes = "条件查询用户信息")
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
     @ResponseBody
     public PageResult<BgUserVO> findByCondition(@RequestBody BgUserVO bgUserVO){
