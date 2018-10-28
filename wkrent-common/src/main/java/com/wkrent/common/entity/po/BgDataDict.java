@@ -1,6 +1,6 @@
 /*
 *
-* BgRole.java
+* BgDataDict.java
 * Copyright(C) 2017-2018 skybed
 * @date 2018-10-21
 */
@@ -10,26 +10,26 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 角色表
+ * 数据字典枚举类型表
  * @author skybed
  *
  */
-public class BgRole implements Serializable {
+public class BgDataDict implements Serializable {
 	
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 7818968737237159554L;
+	private static final long serialVersionUID = -5369227689370844939L;
 
     /**
-     * 角色id,唯一标识
+     * 后台数据字典id,唯一标识
      */
-    private String bgRoleId;
+    private String bgDataDictId;
 
     /**
-     * 角色名
+     * 数据字典类型
      */
-    private String bgRoleName;
+    private String bgDataDictType;
 
     /**
      * 是否删除 0-否 1-是
@@ -37,12 +37,7 @@ public class BgRole implements Serializable {
     private String isDelete;
 
     /**
-     * 是否启用 0-否 1-是
-     */
-    private String isActive;
-
-    /**
-     * 角色描述
+     * 描述
      */
     private String description;
 
@@ -73,34 +68,34 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @return bg_role_id 角色id,唯一标识
+     * @return bg_data_dict_id 后台数据字典id,唯一标识
      */
-    public String getBgRoleId() {
-        return bgRoleId;
+    public String getBgDataDictId() {
+        return bgDataDictId;
     }
 
     /**
      * 
-     * @param bgRoleId 角色id,唯一标识
+     * @param bgDataDictId 后台数据字典id,唯一标识
      */
-    public void setBgRoleId(String bgRoleId) {
-        this.bgRoleId = bgRoleId == null ? null : bgRoleId.trim();
+    public void setBgDataDictId(String bgDataDictId) {
+        this.bgDataDictId = bgDataDictId == null ? null : bgDataDictId.trim();
     }
 
     /**
      * 
-     * @return bg_role_name 角色名
+     * @return bg_data_dict_type 数据字典类型
      */
-    public String getBgRoleName() {
-        return bgRoleName;
+    public String getBgDataDictType() {
+        return bgDataDictType;
     }
 
     /**
      * 
-     * @param bgRoleName 角色名
+     * @param bgDataDictType 数据字典类型
      */
-    public void setBgRoleName(String bgRoleName) {
-        this.bgRoleName = bgRoleName == null ? null : bgRoleName.trim();
+    public void setBgDataDictType(String bgDataDictType) {
+        this.bgDataDictType = bgDataDictType == null ? null : bgDataDictType.trim();
     }
 
     /**
@@ -121,23 +116,7 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @return is_active 是否启用 0-否 1-是
-     */
-    public String getIsActive() {
-        return isActive;
-    }
-
-    /**
-     * 
-     * @param isActive 是否启用 0-否 1-是
-     */
-    public void setIsActive(String isActive) {
-        this.isActive = isActive == null ? null : isActive.trim();
-    }
-
-    /**
-     * 
-     * @return description 角色描述
+     * @return description 描述
      */
     public String getDescription() {
         return description;
@@ -145,7 +124,7 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @param description 角色描述
+     * @param description 描述
      */
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();

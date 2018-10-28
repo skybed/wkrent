@@ -15,6 +15,7 @@
 
     <mvc:annotation-driven/>
 
+    <!-- swagger 扫描配置 -->
     <bean class="com.wkrent.web.config.SwaggerConfig" />
     <!-- 将无法mapping到Controller的path交给default servlet handler处理 -->
     <mvc:default-servlet-handler/>

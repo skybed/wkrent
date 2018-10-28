@@ -1,43 +1,57 @@
 /*
 *
-* BgRole.java
+* BgMenu.java
 * Copyright(C) 2017-2018 skybed
 * @date 2018-10-21
 */
 package com.wkrent.common.entity.vo;
-
-import com.wkrent.common.entity.paging.Page;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 角色表
+ * 菜单表
  * @author skybed
  *
  */
-@ApiModel(value = "角色入参 or 返回信息")
-public class BgRoleVO implements Serializable {
-	
+public class BgMenuVO implements Serializable {
+
+    private static final long serialVersionUID = -7144636941664819150L;
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7818968737237159554L;
+     * 菜单Id,唯一标识
+     */
+    private String bgMenuId;
 
     /**
-     * 角色id,唯一标识
+     * 菜单名
      */
-    @ApiModelProperty(value = "角色id")
-    private String bgRoleId;
+    private String bgMenuName;
 
     /**
-     * 角色名
+     * 菜单图标
      */
-    @ApiModelProperty(value = "角色名称")
-    private String bgRoleName;
+    private String bgMenuIcon;
+
+    /**
+     * 菜单地址
+     */
+    private String bgMenuUrl;
+
+    /**
+     * 父节点菜单Id
+     */
+    private String bgMenuParentId;
+
+    /**
+     * 菜单类型 0-菜单 1-按钮
+     */
+    private String bgMenuType;
+
+    /**
+     * 菜单排序
+     */
+    private String bgMenuSort;
 
     /**
      * 是否删除 0-否 1-是
@@ -50,7 +64,7 @@ public class BgRoleVO implements Serializable {
     private String isActive;
 
     /**
-     * 角色描述
+     * 菜单描述
      */
     private String description;
 
@@ -80,55 +94,120 @@ public class BgRoleVO implements Serializable {
     private String remark;
 
     /**
-     * 权限idList
+     * 子级菜单List
      */
-    private List<String> authList;
-
-    /**
-     * 开始时间
-     */
-    private Date startDate;
-
-    /**
-     * 结束时间
-     */
-    private Date endDate;
-
-    /**
-     * 分页信息
-     */
-    private Page page;
+    private List<BgMenuVO> childMenuList;
 
     /**
      * 
-     * @return bg_role_id 角色id,唯一标识
+     * @return bg_menu_id 菜单Id,唯一标识
      */
-    public String getBgRoleId() {
-        return bgRoleId;
+    public String getBgMenuId() {
+        return bgMenuId;
     }
 
     /**
      * 
-     * @param bgRoleId 角色id,唯一标识
+     * @param bgMenuId 菜单Id,唯一标识
      */
-    public void setBgRoleId(String bgRoleId) {
-        this.bgRoleId = bgRoleId == null ? null : bgRoleId.trim();
+    public void setBgMenuId(String bgMenuId) {
+        this.bgMenuId = bgMenuId == null ? null : bgMenuId.trim();
     }
 
     /**
      * 
-     * @return bg_role_name 角色名
+     * @return bg_menu_name 菜单名
      */
-    public String getBgRoleName() {
-        return bgRoleName;
+    public String getBgMenuName() {
+        return bgMenuName;
     }
 
     /**
      * 
-     * @param bgRoleName 角色名
+     * @param bgMenuName 菜单名
      */
-    public void setBgRoleName(String bgRoleName) {
-        this.bgRoleName = bgRoleName == null ? null : bgRoleName.trim();
+    public void setBgMenuName(String bgMenuName) {
+        this.bgMenuName = bgMenuName == null ? null : bgMenuName.trim();
+    }
+
+    /**
+     * 
+     * @return bg_menu_icon 菜单图标
+     */
+    public String getBgMenuIcon() {
+        return bgMenuIcon;
+    }
+
+    /**
+     * 
+     * @param bgMenuIcon 菜单图标
+     */
+    public void setBgMenuIcon(String bgMenuIcon) {
+        this.bgMenuIcon = bgMenuIcon == null ? null : bgMenuIcon.trim();
+    }
+
+    /**
+     * 
+     * @return bg_menu_url 菜单地址
+     */
+    public String getBgMenuUrl() {
+        return bgMenuUrl;
+    }
+
+    /**
+     * 
+     * @param bgMenuUrl 菜单地址
+     */
+    public void setBgMenuUrl(String bgMenuUrl) {
+        this.bgMenuUrl = bgMenuUrl == null ? null : bgMenuUrl.trim();
+    }
+
+    /**
+     * 
+     * @return bg_menu_parent_id 父节点菜单Id
+     */
+    public String getBgMenuParentId() {
+        return bgMenuParentId;
+    }
+
+    /**
+     * 
+     * @param bgMenuParentId 父节点菜单Id
+     */
+    public void setBgMenuParentId(String bgMenuParentId) {
+        this.bgMenuParentId = bgMenuParentId == null ? null : bgMenuParentId.trim();
+    }
+
+    /**
+     * 
+     * @return bg_menu_type 菜单类型 0-菜单 1-按钮
+     */
+    public String getBgMenuType() {
+        return bgMenuType;
+    }
+
+    /**
+     * 
+     * @param bgMenuType 菜单类型 0-菜单 1-按钮
+     */
+    public void setBgMenuType(String bgMenuType) {
+        this.bgMenuType = bgMenuType == null ? null : bgMenuType.trim();
+    }
+
+    /**
+     * 
+     * @return bg_menu_sort 菜单排序
+     */
+    public String getBgMenuSort() {
+        return bgMenuSort;
+    }
+
+    /**
+     * 
+     * @param bgMenuSort 菜单排序
+     */
+    public void setBgMenuSort(String bgMenuSort) {
+        this.bgMenuSort = bgMenuSort == null ? null : bgMenuSort.trim();
     }
 
     /**
@@ -165,7 +244,7 @@ public class BgRoleVO implements Serializable {
 
     /**
      * 
-     * @return description 角色描述
+     * @return description 菜单描述
      */
     public String getDescription() {
         return description;
@@ -173,7 +252,7 @@ public class BgRoleVO implements Serializable {
 
     /**
      * 
-     * @param description 角色描述
+     * @param description 菜单描述
      */
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
@@ -259,35 +338,11 @@ public class BgRoleVO implements Serializable {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public List<String> getAuthList() {
-        return authList;
+    public List<BgMenuVO> getChildMenuList() {
+        return childMenuList;
     }
 
-    public void setAuthList(List<String> authList) {
-        this.authList = authList;
-    }
-
-    public Page getPage() {
-        return page;
-    }
-
-    public void setPage(Page page) {
-        this.page = page;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setChildMenuList(List<BgMenuVO> childMenuList) {
+        this.childMenuList = childMenuList;
     }
 }

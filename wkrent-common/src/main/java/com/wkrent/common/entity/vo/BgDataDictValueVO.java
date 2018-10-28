@@ -1,38 +1,51 @@
 /*
 *
-* BgRole.java
+* BgDataDictValue.java
 * Copyright(C) 2017-2018 skybed
 * @date 2018-10-21
 */
-package com.wkrent.common.entity.po;
+package com.wkrent.common.entity.vo;
+
+import com.wkrent.common.entity.paging.Page;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
- * 角色表
+ * 数据字典
  * @author skybed
  *
  */
-public class BgRole implements Serializable {
+public class BgDataDictValueVO implements Serializable {
 	
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 7818968737237159554L;
+	private static final long serialVersionUID = -5801113974059232853L;
 
     /**
-     * 角色id,唯一标识
+     * 数据字典值id,唯一标识
      */
-    private String bgRoleId;
+    private String bgDataDictValueId;
 
     /**
-     * 角色名
+     * 数据字典type
      */
-    private String bgRoleName;
+    private String bgDataDictId;
 
     /**
-     * 是否删除 0-否 1-是
+     * 数据字典类型
+     */
+    private String bgDataDictType;
+
+    /**
+     * 数据字典值
+     */
+    private String bgDataDictValue;
+
+    /**
+     * 是否删除 0-否1-是
      */
     private String isDelete;
 
@@ -42,7 +55,7 @@ public class BgRole implements Serializable {
     private String isActive;
 
     /**
-     * 角色描述
+     * 描述
      */
     private String description;
 
@@ -72,40 +85,51 @@ public class BgRole implements Serializable {
     private String remark;
 
     /**
-     * 
-     * @return bg_role_id 角色id,唯一标识
+     * 枚举值idList
      */
-    public String getBgRoleId() {
-        return bgRoleId;
+    private List<String> dataDictValueIdList;
+
+    /**
+     * 分页信息
+     */
+    private Page page;
+
+    /**
+     * 
+     * @return bg_data_dict_value_id 数据字典值id,唯一标识
+     */
+    public String getBgDataDictValueId() {
+        return bgDataDictValueId;
     }
 
     /**
      * 
-     * @param bgRoleId 角色id,唯一标识
+     * @param bgDataDictValueId 数据字典值id,唯一标识
      */
-    public void setBgRoleId(String bgRoleId) {
-        this.bgRoleId = bgRoleId == null ? null : bgRoleId.trim();
+    public void setBgDataDictValueId(String bgDataDictValueId) {
+        this.bgDataDictValueId = bgDataDictValueId == null ? null : bgDataDictValueId.trim();
+    }
+
+
+    /**
+     * 
+     * @return bg_data_dict_value 数据字典值
+     */
+    public String getBgDataDictValue() {
+        return bgDataDictValue;
     }
 
     /**
      * 
-     * @return bg_role_name 角色名
+     * @param bgDataDictValue 数据字典值
      */
-    public String getBgRoleName() {
-        return bgRoleName;
+    public void setBgDataDictValue(String bgDataDictValue) {
+        this.bgDataDictValue = bgDataDictValue == null ? null : bgDataDictValue.trim();
     }
 
     /**
      * 
-     * @param bgRoleName 角色名
-     */
-    public void setBgRoleName(String bgRoleName) {
-        this.bgRoleName = bgRoleName == null ? null : bgRoleName.trim();
-    }
-
-    /**
-     * 
-     * @return is_delete 是否删除 0-否 1-是
+     * @return is_detele 是否删除 0-否1-是
      */
     public String getIsDelete() {
         return isDelete;
@@ -113,7 +137,7 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @param isDelete 是否删除 0-否 1-是
+     * @param isDelete 是否删除 0-否1-是
      */
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
@@ -137,7 +161,7 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @return description 角色描述
+     * @return description 描述
      */
     public String getDescription() {
         return description;
@@ -145,7 +169,7 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @param description 角色描述
+     * @param description 描述
      */
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
@@ -229,5 +253,37 @@ public class BgRole implements Serializable {
      */
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getBgDataDictType() {
+        return bgDataDictType;
+    }
+
+    public void setBgDataDictType(String bgDataDictType) {
+        this.bgDataDictType = bgDataDictType;
+    }
+
+    public List<String> getDataDictValueIdList() {
+        return dataDictValueIdList;
+    }
+
+    public void setDataDictValueIdList(List<String> dataDictValueIdList) {
+        this.dataDictValueIdList = dataDictValueIdList;
+    }
+
+    public String getBgDataDictId() {
+        return bgDataDictId;
+    }
+
+    public void setBgDataDictId(String bgDataDictId) {
+        this.bgDataDictId = bgDataDictId;
+    }
+
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
     }
 }

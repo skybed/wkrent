@@ -1,6 +1,6 @@
 /*
 *
-* BgRole.java
+* BgDataDictValue.java
 * Copyright(C) 2017-2018 skybed
 * @date 2018-10-21
 */
@@ -10,29 +10,34 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 角色表
+ * 数据字典枚举值表
  * @author skybed
  *
  */
-public class BgRole implements Serializable {
+public class BgDataDictValue implements Serializable {
 	
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 7818968737237159554L;
+	private static final long serialVersionUID = -5801113974059232853L;
 
     /**
-     * 角色id,唯一标识
+     * 数据字典值id,唯一标识
      */
-    private String bgRoleId;
+    private String bgDataDictValueId;
 
     /**
-     * 角色名
+     * 数据字典type
      */
-    private String bgRoleName;
+    private String bgDataDictId;
 
     /**
-     * 是否删除 0-否 1-是
+     * 数据字典值
+     */
+    private String bgDataDictValue;
+
+    /**
+     * 是否删除 0-否1-是
      */
     private String isDelete;
 
@@ -42,7 +47,7 @@ public class BgRole implements Serializable {
     private String isActive;
 
     /**
-     * 角色描述
+     * 描述
      */
     private String description;
 
@@ -73,39 +78,55 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @return bg_role_id 角色id,唯一标识
+     * @return bg_data_dict_value_id 数据字典值id,唯一标识
      */
-    public String getBgRoleId() {
-        return bgRoleId;
+    public String getBgDataDictValueId() {
+        return bgDataDictValueId;
     }
 
     /**
      * 
-     * @param bgRoleId 角色id,唯一标识
+     * @param bgDataDictValueId 数据字典值id,唯一标识
      */
-    public void setBgRoleId(String bgRoleId) {
-        this.bgRoleId = bgRoleId == null ? null : bgRoleId.trim();
+    public void setBgDataDictValueId(String bgDataDictValueId) {
+        this.bgDataDictValueId = bgDataDictValueId == null ? null : bgDataDictValueId.trim();
     }
 
     /**
      * 
-     * @return bg_role_name 角色名
+     * @return bg_data_dict_id 数据字典type
      */
-    public String getBgRoleName() {
-        return bgRoleName;
+    public String getBgDataDictId() {
+        return bgDataDictId;
     }
 
     /**
      * 
-     * @param bgRoleName 角色名
+     * @param bgDataDictId 数据字典type
      */
-    public void setBgRoleName(String bgRoleName) {
-        this.bgRoleName = bgRoleName == null ? null : bgRoleName.trim();
+    public void setBgDataDictId(String bgDataDictId) {
+        this.bgDataDictId = bgDataDictId == null ? null : bgDataDictId.trim();
     }
 
     /**
      * 
-     * @return is_delete 是否删除 0-否 1-是
+     * @return bg_data_dict_value 数据字典值
+     */
+    public String getBgDataDictValue() {
+        return bgDataDictValue;
+    }
+
+    /**
+     * 
+     * @param bgDataDictValue 数据字典值
+     */
+    public void setBgDataDictValue(String bgDataDictValue) {
+        this.bgDataDictValue = bgDataDictValue == null ? null : bgDataDictValue.trim();
+    }
+
+    /**
+     * 
+     * @return is_detele 是否删除 0-否1-是
      */
     public String getIsDelete() {
         return isDelete;
@@ -113,7 +134,7 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @param isDelete 是否删除 0-否 1-是
+     * @param isDelete 是否删除 0-否1-是
      */
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
@@ -137,7 +158,7 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @return description 角色描述
+     * @return description 描述
      */
     public String getDescription() {
         return description;
@@ -145,7 +166,7 @@ public class BgRole implements Serializable {
 
     /**
      * 
-     * @param description 角色描述
+     * @param description 描述
      */
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
