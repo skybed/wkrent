@@ -4,21 +4,19 @@
        xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
 		http://www.springframework.org/schema/context 
-		http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc 
-		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
     <!-- 自动扫描且只扫描@Controller -->
     <context:component-scan base-package="com.wkrent" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven />
 
-    <!-- swagger 扫描配置 -->
-    <bean class="com.wkrent.web.config.SwaggerConfig" />
     <!-- 将无法mapping到Controller的path交给default servlet handler处理 -->
-    <mvc:default-servlet-handler/>
+    <mvc:default-servlet-handler />
 
     <!-- 解析jsp -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -44,14 +42,17 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**" />
+            <mvc:exclude-mapping path="/webjars/**" />
+            <mvc:exclude-mapping path="/swagger-ui.html" />
             <bean class="com.wkrent.web.interceptor.LoginInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <mvc:resources mapping="*.html" location="swagger/resources"/>
-    <mvc:resources mapping="/**" location="swagger/"/>
 
-    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars"/>
-    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
+    <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
+    <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
+
+    <!-- swagger 扫描配置 -->
+    <bean class="com.wkrent.web.config.SwaggerConfig" />
 
 </beans>

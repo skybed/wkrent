@@ -8,7 +8,6 @@ import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.vo.BgDataDictValueVO;
 import com.wkrent.common.exception.WkRentException;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +31,7 @@ public class HouseTypeController extends BaseController{
     private BgDataDictValueService bgDataDictValueService;
 
 
-    @ApiOperation(value = "条件查询房屋类型", notes = "条件查询房屋类型")
+//    @ApiOperation(value = "条件查询房屋类型", notes = "条件查询房屋类型")
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
     @ResponseBody
     public PageResult<BgDataDictValueVO> findByCondition(@RequestBody BgDataDictValueVO dataDictValueVO){
@@ -40,7 +39,7 @@ public class HouseTypeController extends BaseController{
         return bgDataDictValueService.findByCondition(dataDictValueVO);
     }
 
-    @ApiOperation(value = "查询房屋类型", notes = "查询房屋类型")
+//    @ApiOperation(value = "查询房屋类型", notes = "查询房屋类型")
     @RequestMapping(value = "/queryList", method = RequestMethod.POST)
     @ResponseBody
     public List<BgDataDictValueVO> queryList(){

@@ -48,25 +48,12 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	<servlet-mapping>
-		<servlet-name>spring</servlet-name>
-		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>/swagger-ui.html</url-pattern>
-	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<servlet-mapping>
-		<servlet-name>spring</servlet-name>
-		<url-pattern>/v2/api-docs</url-pattern>
-	</servlet-mapping>
 	<!-- 配置session超时时间，单位分钟 -->
 	<session-config>
 		<session-timeout>120</session-timeout>
