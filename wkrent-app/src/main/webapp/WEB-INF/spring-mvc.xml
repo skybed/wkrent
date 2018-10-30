@@ -8,4 +8,28 @@
 		http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
+	<!-- 自动扫描且只扫描@Controller -->
+	<context:component-scan base-package="com.wkrent" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+	<mvc:annotation-driven />
+	
+	<!-- 将无法mapping到Controller的path交给default servlet handler处理 -->
+	<mvc:default-servlet-handler />
+
+	<!-- 配置多文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+		<property name="maxUploadSize">
+			<!-- 上传文件大小限制为10M，10*1024*1024 -->
+			<value>10485760</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+	</bean>
+
 </beans>

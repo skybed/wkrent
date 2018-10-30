@@ -1,0 +1,216 @@
+Afghanistan**阿富汗**AF**93**0.610
+Albania**阿尔巴尼亚**AL**355**0.651
+Algeria**阿尔及利亚**DZ**213**1.136
+American Samoa**美属萨摩亚**AS**1684**0.754
+Andorra**安道尔**AD**376**0.447
+Angola**安哥拉**AO**244**0.301
+Anguilla**安圭拉**AI**1264**0.312
+Antigua and Barbuda**安提瓜和巴布达**AG**1268**0.536
+Argentina**阿根廷**AR**54**0.207
+Armenia**亚美尼亚**AM**374**0.558
+Aruba**阿鲁巴**AW**297**0.380
+Australia**澳大利亚**AU**61**0.385
+Austria**奥地利**AT**43**0.883
+Azerbaijan**阿塞拜疆**AZ**994**1.003
+Bahamas**巴哈马**BS**1242**0.268
+Bahrain**巴林**BH**973**0.145
+Bangladesh**孟加拉国**BD**880**0.580
+Barbados**巴巴多斯**BB**1246**0.358
+Belarus**白俄罗斯**BY**375**0.504
+Belgium**比利时**BE**32**0.566
+Belize**伯利兹**BZ**501**0.226
+Benin**贝宁**BJ**229**0.398
+Bermuda**百慕大群岛**BM**1441**0.376
+Bhutan**不丹**BT**975**0.264
+Bolivia**玻利维亚**BO**591**0.445
+Bosnia and Herzegovina**波斯尼亚和黑塞哥维那**BA**387**0.529
+Botswana**博茨瓦纳**BW**267**0.293
+Brazil**巴西**BR**55**0.114
+Brunei**文莱**BN**673**0.118
+Bulgaria**保加利亚**BG**359**0.506
+Burkina Faso**布基纳法索**BF**226**0.506
+Burundi**布隆迪**BI**257**0.263
+Cambodia**柬埔寨**KH**855**0.308
+Cameroon**喀麦隆**CM**237**0.376
+Canada**加拿大**CA**1**0.053
+Cape Verde**开普**CV**238**0.596
+Cayman Islands**开曼群岛**KY**1345**0.317
+Central African Republic**中非共和国**CF**236**0.434
+Chad**乍得**TD**235**0.393
+Chile**智利**CL**56**0.392
+Colombia**哥伦比亚**CO**57**0.180
+Comoros**科摩罗**KM**269**0.270
+Cook Islands**库克群岛**CK**682**0.276
+Costa Rica**哥斯达黎加**CR**506**0.328
+Croatia**克罗地亚**HR**385**0.549
+Cuba**古巴**CU**53**0.504
+Curacao**库拉索**CW**599**0.443
+Cyprus**塞浦路斯**CY**357**0.254
+Czech**捷克**CZ**420**0.433
+Democratic Republic of the Congo**刚果民主共和国**CD**243**0.336
+Denmark**丹麦**DK**45**0.365
+Djibouti**吉布提**DJ**253**0.759
+Dominica**多米尼加**DM**1767**0.377
+Dominican Republic**多米尼加共和国**DO**1809**0.530
+Ecuador**厄瓜多尔**EC**593**0.733
+Egypt**埃及**EG**20**0.338
+El Salvador**萨尔瓦多**SV**503**0.394
+Equatorial Guinea**赤道几内亚**GQ**240**0.460
+Eritrea**厄立特里亚**ER**291**0.096
+Estonia**爱沙尼亚**EE**372**0.782
+Ethiopia**埃塞俄比亚**ET**251**0.230
+Faroe Islands**法罗群岛**FO**298**0.109
+Fiji**斐济**FJ**679**0.252
+Finland**芬兰**FI**358**0.953
+France**法国**FR**33**0.532
+French Guiana**法属圭亚那**GF**594**0.600
+French Polynesia**法属波利尼西亚**PF**689**0.855
+Gabon**加蓬**GA**241**0.355
+Gambia**冈比亚**GM**220**0.270
+Georgia**格鲁吉亚**GE**995**0.488
+Germany**德国**DE**49**0.595
+Ghana**加纳**GH**233**0.086
+Gibraltar**直布罗陀**GI**350**0.138
+Greece**希腊**GR**30**0.601
+Greenland**格陵兰岛**GL**299**0.084
+Grenada**格林纳达**GD**1473**0.335
+Guadeloupe**瓜德罗普岛**GP**590**1.901
+Guam**关岛**GU**1671**0.120
+Guatemala**瓜地马拉**GT**502**0.288
+Guinea**几内亚**GN**224**0.606
+Guinea-Bissau**几内亚比绍共和国**GW**245**0.671
+Guyana**圭亚那**GY**592**0.498
+Haiti**海地**HT**509**0.582
+Honduras**洪都拉斯**HN**504**0.442
+Hong Kong**中国香港**HK**852**0.268
+China**中国**CN**86**0.06
+Hungary**匈牙利**HU**36**0.821
+Iceland**冰岛**IS**354**0.228
+India**印度**IN**91**0.044
+Indonesia**印度尼西亚**ID**62**0.350
+Iran**伊朗**IR**98**0.231
+Iraq**伊拉克**IQ**964**0.600
+Ireland**爱尔兰**IE**353**0.565
+Israel**以色列**IL**972**0.093
+Italy**意大利**IT**39**0.565
+Ivory Coast**象牙海岸**CI**225**0.562
+Jamaica**牙买加**JM**1876**0.257
+Japan**日本**JP**81**0.514
+Jordan**约旦**JO**962**0.600
+Kazakhstan**哈萨克斯坦**KZ**7**0.504
+Kenya**肯尼亚**KE**254**0.206
+Kiribati**基里巴斯**KI**686**0.350
+Kuwait**科威特**KW**965**0.355
+Kyrgyzstan**吉尔吉斯斯坦**KG**996**0.560
+Laos**老挝**LA**856**0.280
+Latvia**拉脱维亚**LV**371**0.398
+Lebanon**黎巴嫩**LB**961**0.240
+Lesotho**莱索托**LS**266**0.404
+Liberia**利比里亚**LR**231**0.464
+Libya**利比亚**LY**218**0.282
+Liechtenstein**列支敦士登**LI**423**0.204
+Lithuania**立陶宛**LT**370**0.287
+Luxembourg**卢森堡**LU**352**0.107
+Macau**中国澳门**MO**853**0.183
+Macedonia**马其顿**MK**389**0.208
+Madagascar**马达加斯加**MG**261**0.504
+Malawi**马拉维**MW**265**0.334
+Malaysia**马来西亚**MY**60**0.228
+Maldives**马尔代夫**MV**960**0.234
+Mali**马里**ML**223**1.322
+Malta**马耳他**MT**356**0.125
+Martinique**马提尼克**MQ**596**0.600
+Mauritania**毛里塔尼亚**MR**222**0.549
+Mauritius**毛里求斯**MU**230**0.282
+Mayotte**马约特**YT**269**0.504
+Mexico**墨西哥**MX**52**0.145
+Moldova**摩尔多瓦**MD**373**0.654
+Monaco**摩纳哥**MC**377**0.546
+Mongolia**蒙古**MN**976**0.569
+Montenegro**黑山**ME**382**0.246
+Montserrat**蒙特塞拉特岛**MS**1664**0.393
+Morocco**摩洛哥**MA**212**0.467
+Mozambique**莫桑比克**MZ**258**0.216
+Myanmar**缅甸**MM**95**0.560
+Namibia**纳米比亚**NA**264**0.366
+Nepal**尼泊尔**NP**977**0.706
+Netherlands**荷兰**NL**31**1.073
+New Caledonia**新喀里多尼亚**NC**687**1.556
+New Zealand**新西兰**NZ**64**0.600
+Nicaragua**尼加拉瓜**NI**505**0.498
+Niger**尼日尔**NE**227**0.528
+Nigeria**尼日利亚**NG**234**0.269
+Norway**挪威**NO**47**0.538
+Oman**阿曼**OM**968**0.515
+Pakistan**巴基斯坦**PK**92**0.186
+Palau**帕劳**PW**680**0.587
+Palestine**巴勒斯坦**BL**970**0.221
+Panama**巴拿马**PA**507**0.496
+Papua New Guinea**巴布亚新几内亚**PG**675**0.475
+Paraguay**巴拉圭**PY**595**0.210
+Peru**秘鲁**PE**51**0.346
+Philippines**菲律宾**PH**63**0.109
+Poland**波兰**PL**48**0.282
+Portugal**葡萄牙**PT**351**0.358
+Puerto Rico**波多黎各**PR**1787**0.387
+Qatar**卡塔尔**QA**974**0.254
+Republic Of The Congo**刚果共和国**CG**242**0.496
+Réunion Island**留尼汪**RE**262**1.446
+Romania**罗马尼亚**RO**40**0.510
+Russia**俄罗斯**RU**7**0.350
+Rwanda**卢旺达**RW**250**0.183
+Saint Kitts and Nevis**圣基茨和尼维斯**KN**1869**0.518
+Saint Lucia**圣露西亚**LC**1758**0.284
+Saint Pierre and Miquelon**圣彼埃尔和密克隆岛**PM**508**0.504
+Saint Vincent and The Grenadines**圣文森特和格林纳丁斯**VC**1784**0.425
+Samoa**萨摩亚**WS**685**0.264
+San Marino**圣马力诺**SM**378**0.402
+Sao Tome and Principe**圣多美和普林西比**ST**239**0.788
+Saudi Arabia**沙特阿拉伯**SA**966**0.245
+Senegal**塞内加尔**SN**221**0.493
+Serbia**塞尔维亚**RS**381**0.274
+Seychelles**塞舌尔**SC**248**0.442
+Sierra Leone**塞拉利昂**SL**232**0.254
+Singapore**新加坡**SG**65**0.261
+Saint Maarten (Dutch Part)**圣马丁岛（荷兰部分）**SX**1721**0.527
+Slovakia**斯洛伐克**SK**421**0.685
+Slovenia**斯洛文尼亚**SI**386**0.263
+Solomon Islands**所罗门群岛**SB**677**0.208
+Somalia**索马里**SO**252**0.599
+South Africa**南非**ZA**27**0.219
+South Korea**韩国**KR**82**0.119
+Spain**西班牙**ES**34**0.583
+Sri Lanka**斯里兰卡**LK**94**0.416
+Sudan**苏丹**SD**249**0.345
+Suriname**苏里南**SR**597**0.238
+Swaziland**斯威士兰**SZ**268**0.469
+Sweden**瑞典**SE**46**0.667
+Switzerland**瑞士**CH**41**0.488
+Syria**叙利亚**SY**963**0.504
+Taiwan**中国台湾**TW**886**0.266
+Tajikistan**塔吉克斯坦**TJ**992**0.600
+Tanzania**坦桑尼亚**TZ**255**0.319
+Thailand**泰国**TH**66**0.131
+Timor-Leste**东帝汶**TL**670**0.450
+Togo**多哥**TG**228**0.239
+Tonga**汤加**TO**676**0.255
+Trinidad and Tobago**特立尼达和多巴哥**TT**1868**0.263
+Tunisia**突尼斯**TN**216**0.861
+Turkey**土耳其**TR**90**0.118
+Turkmenistan**土库曼斯坦**TM**993**0.403
+Turks and Caicos Islands**特克斯和凯科斯群岛**TC**1649**0.282
+Uganda**乌干达**UG**256**0.533
+Ukraine**乌克兰**UA**380**0.504
+United Arab Emirates**阿拉伯联合酋长国**AE**971**0.285
+United Kingdom**英国**GB**44**0.280
+United States**美国**US**1**0.053
+Uruguay**乌拉圭**UY**598**0.570
+Uzbekistan**乌兹别克斯坦**UZ**998**0.968
+Vanuatu**瓦努阿图**VU**678**0.419
+Venezuela**委内瑞拉**VE**58**0.216
+Vietnam**越南**VN**84**0.279
+Virgin Islands, British**英属处女群岛**VG**1340**0.290
+Virgin Islands, US**美属维尔京群岛**VI**1284**0.329
+Yemen**也门**YE**967**0.195
+Zambia**赞比亚**ZM**260**0.335
+Zimbabwe**津巴布韦**ZW**263**0.200
