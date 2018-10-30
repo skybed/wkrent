@@ -17,7 +17,7 @@ public class ResultData implements Serializable {
 	
 	//数据
 	private String data;
-	
+
 	public ResultData() {
 		super();
 	}
