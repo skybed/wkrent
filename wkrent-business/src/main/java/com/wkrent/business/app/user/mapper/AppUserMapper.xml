@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.app.user.dao.AppUserDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.AppUser">
+    <id column="app_user_id" jdbcType="VARCHAR" property="appUserId" />
+    <result column="app_user_number" jdbcType="VARCHAR" property="appUserNumber" />
+    <result column="app_user_name" jdbcType="VARCHAR" property="appUserName" />
+    <result column="app_user_phone" jdbcType="VARCHAR" property="appUserPhone" />
+    <result column="app_user_email" jdbcType="VARCHAR" property="appUserEmail" />
+    <result column="app_user_sex" jdbcType="CHAR" property="appUserSex" />
+    <result column="app_user_birthday" jdbcType="VARCHAR" property="appUserBirthday" />
+    <result column="app_user_age" jdbcType="TINYINT" property="appUserAge" />
+    <result column="app_user_country" jdbcType="VARCHAR" property="appUserCountry" />
+    <result column="app_user_city" jdbcType="VARCHAR" property="appUserCity" />
+    <result column="app_user_wechat_openId" jdbcType="VARCHAR" property="appUserWechatOpenid" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    app_user_id, app_user_number, app_user_name, app_user_phone, app_user_email, app_user_sex, 
+    app_user_birthday, app_user_age, app_user_country, app_user_city, app_user_wechat_openId, 
+    is_delete, description, create_by, create_time, update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_user
+    where app_user_id = #{appUserId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from app_user
+    where app_user_id = #{appUserId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.AppUser">
+    insert into app_user (app_user_id, app_user_number, app_user_name, 
+      app_user_phone, app_user_email, app_user_sex, 
+      app_user_birthday, app_user_age, app_user_country, 
+      app_user_city, app_user_wechat_openId, is_delete, 
+      description, create_by, create_time, 
+      update_by, update_time, remark
+      )
+    values (#{appUserId,jdbcType=VARCHAR}, #{appUserNumber,jdbcType=VARCHAR}, #{appUserName,jdbcType=VARCHAR}, 
+      #{appUserPhone,jdbcType=VARCHAR}, #{appUserEmail,jdbcType=VARCHAR}, #{appUserSex,jdbcType=CHAR}, 
+      #{appUserBirthday,jdbcType=VARCHAR}, #{appUserAge,jdbcType=TINYINT}, #{appUserCountry,jdbcType=VARCHAR}, 
+      #{appUserCity,jdbcType=VARCHAR}, #{appUserWechatOpenid,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, 
+      #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.AppUser">
+    insert into app_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appUserId != null">
+        app_user_id,
+      </if>
+      <if test="appUserNumber != null">
+        app_user_number,
+      </if>
+      <if test="appUserName != null">
+        app_user_name,
+      </if>
+      <if test="appUserPhone != null">
+        app_user_phone,
+      </if>
+      <if test="appUserEmail != null">
+        app_user_email,
+      </if>
+      <if test="appUserSex != null">
+        app_user_sex,
+      </if>
+      <if test="appUserBirthday != null">
+        app_user_birthday,
+      </if>
+      <if test="appUserAge != null">
+        app_user_age,
+      </if>
+      <if test="appUserCountry != null">
+        app_user_country,
+      </if>
+      <if test="appUserCity != null">
+        app_user_city,
+      </if>
+      <if test="appUserWechatOpenid != null">
+        app_user_wechat_openId,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appUserId != null">
+        #{appUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserNumber != null">
+        #{appUserNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserName != null">
+        #{appUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserPhone != null">
+        #{appUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserEmail != null">
+        #{appUserEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserSex != null">
+        #{appUserSex,jdbcType=CHAR},
+      </if>
+      <if test="appUserBirthday != null">
+        #{appUserBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserAge != null">
+        #{appUserAge,jdbcType=TINYINT},
+      </if>
+      <if test="appUserCountry != null">
+        #{appUserCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserCity != null">
+        #{appUserCity,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserWechatOpenid != null">
+        #{appUserWechatOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.AppUser">
+    update app_user
+    <set>
+      <if test="appUserNumber != null">
+        app_user_number = #{appUserNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserName != null">
+        app_user_name = #{appUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserPhone != null">
+        app_user_phone = #{appUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserEmail != null">
+        app_user_email = #{appUserEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserSex != null">
+        app_user_sex = #{appUserSex,jdbcType=CHAR},
+      </if>
+      <if test="appUserBirthday != null">
+        app_user_birthday = #{appUserBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserAge != null">
+        app_user_age = #{appUserAge,jdbcType=TINYINT},
+      </if>
+      <if test="appUserCountry != null">
+        app_user_country = #{appUserCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserCity != null">
+        app_user_city = #{appUserCity,jdbcType=VARCHAR},
+      </if>
+      <if test="appUserWechatOpenid != null">
+        app_user_wechat_openId = #{appUserWechatOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where app_user_id = #{appUserId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.AppUser">
+    update app_user
+    set app_user_number = #{appUserNumber,jdbcType=VARCHAR},
+      app_user_name = #{appUserName,jdbcType=VARCHAR},
+      app_user_phone = #{appUserPhone,jdbcType=VARCHAR},
+      app_user_email = #{appUserEmail,jdbcType=VARCHAR},
+      app_user_sex = #{appUserSex,jdbcType=CHAR},
+      app_user_birthday = #{appUserBirthday,jdbcType=VARCHAR},
+      app_user_age = #{appUserAge,jdbcType=TINYINT},
+      app_user_country = #{appUserCountry,jdbcType=VARCHAR},
+      app_user_city = #{appUserCity,jdbcType=VARCHAR},
+      app_user_wechat_openId = #{appUserWechatOpenid,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where app_user_id = #{appUserId,jdbcType=VARCHAR}
+  </update>
+  
+   <select id="selectByUserPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_user
+    where app_user_phone = #{phone,jdbcType=VARCHAR} and is_delete = '0'
+  </select>
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.app.user.dao.AppPhoneCodeHistoryDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.AppPhoneCodeHistory">
+    <id column="phone_code_history_id" jdbcType="VARCHAR" property="phoneCodeHistoryId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_validate" jdbcType="CHAR" property="isValidate" />
+    <result column="validate_time" jdbcType="TIMESTAMP" property="validateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    phone_code_history_id, phone, code, create_time, is_validate, validate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_phone_code_history
+    where phone_code_history_id = #{phoneCodeHistoryId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from app_phone_code_history
+    where phone_code_history_id = #{phoneCodeHistoryId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.AppPhoneCodeHistory">
+    insert into app_phone_code_history (phone_code_history_id, phone, code, 
+      create_time, is_validate, validate_time
+      )
+    values (#{phoneCodeHistoryId,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{isValidate,jdbcType=CHAR}, #{validateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.AppPhoneCodeHistory">
+    insert into app_phone_code_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="phoneCodeHistoryId != null">
+        phone_code_history_id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isValidate != null">
+        is_validate,
+      </if>
+      <if test="validateTime != null">
+        validate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="phoneCodeHistoryId != null">
+        #{phoneCodeHistoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValidate != null">
+        #{isValidate,jdbcType=CHAR},
+      </if>
+      <if test="validateTime != null">
+        #{validateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.AppPhoneCodeHistory">
+    update app_phone_code_history
+    <set>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValidate != null">
+        is_validate = #{isValidate,jdbcType=CHAR},
+      </if>
+      <if test="validateTime != null">
+        validate_time = #{validateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where phone_code_history_id = #{phoneCodeHistoryId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.AppPhoneCodeHistory">
+    update app_phone_code_history
+    set phone = #{phone,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_validate = #{isValidate,jdbcType=CHAR},
+      validate_time = #{validateTime,jdbcType=TIMESTAMP}
+    where phone_code_history_id = #{phoneCodeHistoryId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="validatePhoneCode" parameterType="java.lang.String">
+    update app_phone_code_history
+    set is_validate = '1',
+      validate_time = DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s') 
+    where phone_code_history_id = #{historyId,jdbcType=VARCHAR}
+  </update>
+</mapper>

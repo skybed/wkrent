@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.dao.BgDataDictValueMapper">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.BgDataDictValue">
+    <id column="bg_data_dict_value_id" jdbcType="VARCHAR" property="bgDataDictValueId" />
+    <result column="bg_data_dict_id" jdbcType="VARCHAR" property="bgDataDictId" />
+    <result column="bg_data_dict_value" jdbcType="VARCHAR" property="bgDataDictValue" />
+    <result column="is_detele" jdbcType="CHAR" property="isDetele" />
+    <result column="is_active" jdbcType="CHAR" property="isActive" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bg_data_dict_value_id, bg_data_dict_id, bg_data_dict_value, is_detele, is_active, 
+    description, create_by, create_time, update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_data_dict_value
+    where bg_data_dict_value_id = #{bgDataDictValueId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bg_data_dict_value
+    where bg_data_dict_value_id = #{bgDataDictValueId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.BgDataDictValue">
+    insert into bg_data_dict_value (bg_data_dict_value_id, bg_data_dict_id, 
+      bg_data_dict_value, is_detele, is_active, 
+      description, create_by, create_time, 
+      update_by, update_time, remark
+      )
+    values (#{bgDataDictValueId,jdbcType=VARCHAR}, #{bgDataDictId,jdbcType=VARCHAR}, 
+      #{bgDataDictValue,jdbcType=VARCHAR}, #{isDetele,jdbcType=CHAR}, #{isActive,jdbcType=CHAR}, 
+      #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgDataDictValue">
+    insert into bg_data_dict_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bgDataDictValueId != null">
+        bg_data_dict_value_id,
+      </if>
+      <if test="bgDataDictId != null">
+        bg_data_dict_id,
+      </if>
+      <if test="bgDataDictValue != null">
+        bg_data_dict_value,
+      </if>
+      <if test="isDetele != null">
+        is_detele,
+      </if>
+      <if test="isActive != null">
+        is_active,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bgDataDictValueId != null">
+        #{bgDataDictValueId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgDataDictId != null">
+        #{bgDataDictId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgDataDictValue != null">
+        #{bgDataDictValue,jdbcType=VARCHAR},
+      </if>
+      <if test="isDetele != null">
+        #{isDetele,jdbcType=CHAR},
+      </if>
+      <if test="isActive != null">
+        #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.BgDataDictValue">
+    update bg_data_dict_value
+    <set>
+      <if test="bgDataDictId != null">
+        bg_data_dict_id = #{bgDataDictId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgDataDictValue != null">
+        bg_data_dict_value = #{bgDataDictValue,jdbcType=VARCHAR},
+      </if>
+      <if test="isDetele != null">
+        is_detele = #{isDetele,jdbcType=CHAR},
+      </if>
+      <if test="isActive != null">
+        is_active = #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bg_data_dict_value_id = #{bgDataDictValueId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.BgDataDictValue">
+    update bg_data_dict_value
+    set bg_data_dict_id = #{bgDataDictId,jdbcType=VARCHAR},
+      bg_data_dict_value = #{bgDataDictValue,jdbcType=VARCHAR},
+      is_detele = #{isDetele,jdbcType=CHAR},
+      is_active = #{isActive,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where bg_data_dict_value_id = #{bgDataDictValueId,jdbcType=VARCHAR}
+  </update>
+</mapper>
