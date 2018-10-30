@@ -17,6 +17,7 @@ public class PropertiesBean extends PropertyPlaceholderConfigurer {
 
 	@Override
 	protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props) throws BeansException {
+
 		super.processProperties(beanFactoryToProcess, props);
 		Map<String, String> resolvePrperties = new HashMap<String, String>();
 		for (Object key : props.keySet()) {

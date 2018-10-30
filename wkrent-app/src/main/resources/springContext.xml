@@ -21,76 +21,10 @@
 		<property name="locations" >
 			<list>
 				<value>classpath*:application.properties</value>
-				<value>classpath*:app-config.properties</value>
 			</list>
 		</property>
 		<!-- 设置编码格式 -->
         <property name="fileEncoding" value="UTF-8" />
-	</bean>
-	
-	<!-- 使用annotation 自动注册bean,并检查@Autowired,@Service等的属性已被注入 -->
-	<context:component-scan base-package="com.wkrent">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-	
-	<bean id="wkrentdb" class="com.alibaba.druid.pool.DruidDataSource">
-		<property name="driverClassName">
-			<value>${jdbc.db.driver}</value>
-		</property>
-		<property name="url">
-			<value>${jdbc.db.url}</value>
-		</property>
-		<property name="username">
-			<value>${jdbc.db.user}</value>
-		</property>
-		<property name="password">
-			<value>${jdbc.db.pwd}</value>
-		</property>
-		<property name="initialSize">
-			<value>${jdbc.db.initialSize}</value>
-		</property>
-		<property name="maxActive">
-			<value>${jdbc.db.maxActive}</value>
-		</property>
-		<property name="minIdle">
-			<value>${jdbc.db.minIdle}</value>
-		</property>
-		<property name="maxWait">
-			<value>${jdbc.db.maxWait}</value>
-		</property>
-		<property name="timeBetweenEvictionRunsMillis">
-			<value>${jdbc.db.timeBetweenEvictionRunsMillis}</value>
-		</property>
-		<property name="minEvictableIdleTimeMillis">
-			<value>${jdbc.db.minEvictableIdleTimeMillis}</value>
-		</property>
-		<property name="testWhileIdle">
-			<value>${jdbc.db.testWhileIdle}</value>
-		</property>
-		<property name="testOnBorrow">
-			<value>${jdbc.db.testOnBorrow}</value>
-		</property>
-		<property name="testOnReturn">
-			<value>${jdbc.db.testOnReturn}</value>
-		</property>
-		<property name="validationQuery">
-			<value>${jdbc.db.validationQuery}</value>
-		</property>
-	</bean>
-
-	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
-	<bean id="sessionFactoryManage" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="wkrentdb" />
-		<property name="mapperLocations">
-			<list>
-                <value>classpath*:com/wkrent/business/**/mapper/*.xml</value>
-            </list>
-		</property>
-	</bean>
-
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.wkrent.business.**.dao" />
-		<property name="sqlSessionFactoryBeanName" value="sessionFactoryManage"></property>
 	</bean>
 	
 	<!-- 使用annotation定义事务 -->
