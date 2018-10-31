@@ -34,7 +34,7 @@ public class RegionController {
 	@ResponseBody
 	public String initRegionInfo(HttpServletRequest request) {
 		
-		File file = new File("E:\\sts_space\\wkrent\\wkrent-app\\src\\main\\resources\\region.txt");  
+		File file = new File("/sts_space/wkrent/wkrent-app/src/main/resources/region.txt");  
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(file));

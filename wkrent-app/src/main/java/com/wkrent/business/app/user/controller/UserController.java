@@ -375,6 +375,46 @@ public class UserController {
 	}
 	
 	/**
+	 * 更换头像
+	 * @param request
+	 * @param userId
+	 * @param picId
+	 * @return
+	 */
+	@RequestMapping(value = "/editUserPhoto.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editUserPhoto(HttpServletRequest request, String userId, String picId) {
+		ResultData resultData = new ResultData();
+		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
+		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//必填项不能为空
+		if(StringUtils.isNotEmpty(userId)) {
+			//判断用户id是否存在
+			AppUser user = appUserService.getUserById(userId);
+			if(user != null) {
+				//将该用户旧头像删除
+				List<BgPicAttach> picAttachs = appImageService.selectByOwnerId(userId);
+				if(picAttachs != null && picAttachs.size() > 0) {
+					appImageService.deletePicAttach(picAttachs.get(0).getPicAttachId());
+				}
+				
+				//关联新头像
+				appImageService.updatePicAttachOwner(picId, userId);
+				
+				resultData.setData("");
+			} else {
+				resultData.setCode(Constant.RESULT_USER_NOT_REGISTER_CODE);
+				resultData.setMsg(Constant.RESULT_USER_NOT_REGISTER_MSG);
+			}
+		} else {
+			resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);
+			resultData.setMsg(Constant.RESULT_REQUIRE_PARAM_MSG);
+		}
+		return JSON.toJSONString(resultData);
+	}
+	
+	/**
 	 * 修改手机号
 	 * @param request
 	 * @param userId

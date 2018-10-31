@@ -1,13 +1,16 @@
 package com.wkrent.business.app.image.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
@@ -22,6 +25,7 @@ import com.alibaba.fastjson.JSON;
 import com.wkrent.business.app.picture.service.AppImageService;
 import com.wkrent.business.app.util.UUIDUtil;
 import com.wkrent.common.constants.Constant;
+import com.wkrent.common.entity.BgPicAttach;
 import com.wkrent.common.obj.ResultData;
 import com.wkrent.common.util.PropertiesUtils;
 
@@ -79,6 +83,13 @@ public class AppImageController {
                 uploadfile.transferTo(new File(filePath));
                 
                 //写附件表
+                BgPicAttach picAttach = new BgPicAttach();
+                picAttach.setPicAttachId(fileUUID);
+                picAttach.setPicAttachName(filename);
+                picAttach.setIsDelete("0");
+                picAttach.setPicAttachFileType(prefix);
+                picAttach.setPicAttachFileVolume("" + uploadfile.getSize());
+                appImageService.savePicAttach(picAttach);
                 
                 map.put("fileId", fileUUID);
 
@@ -91,6 +102,12 @@ public class AppImageController {
 	}
 
 
+	/**
+	 * 上传多文件
+	 * @param request
+	 * @param uploadfiles
+	 * @return
+	 */
 	@RequestMapping(value = "/uploadPictures.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String uploadPictures(HttpServletRequest request, MultipartFile[] uploadfiles) {
@@ -131,6 +148,15 @@ public class AppImageController {
                 try {
                 	// 转存文件
                 	file.transferTo(new File(filePath));
+                	
+                	 BgPicAttach picAttach = new BgPicAttach();
+                     picAttach.setPicAttachId(fileUUID);
+                     picAttach.setPicAttachName(filename);
+                     picAttach.setIsDelete("0");
+                     picAttach.setPicAttachFileType(prefix);
+                     picAttach.setPicAttachFileVolume("" + file.getSize());
+                     appImageService.savePicAttach(picAttach);
+                     
                 	idsList.add(fileUUID);
                 } catch (IOException e) {
                 	Logger.getRootLogger().error("批量上传图片抛异常，异常信息为：" + e.getMessage(), e);
@@ -140,6 +166,58 @@ public class AppImageController {
         }
         resultData.setData(JSON.toJSONString(map));
 		return JSON.toJSONString(resultData);
+	}
+	
+	/**
+	 * 获取文件流
+	 * @param request
+	 * @param response
+	 * @param picId
+	 * @return
+	 */
+	@RequestMapping(value="/getPicture.do", method = RequestMethod.GET)
+	public void getPicture(HttpServletRequest request, HttpServletResponse response, String picId) {
+		BgPicAttach picAttach = appImageService.selectById(picId);
+		if(picAttach != null) {
+			String path = UPLOAD_DIRECTORY + "/" + picId + "." + picAttach.getPicAttachFileType();
+			File file = new File(path);
+			
+			//如果文件存在  
+			if(file.exists()) {
+				FileInputStream inputStream = null;
+				OutputStream stream = null;
+				try {
+					inputStream = new FileInputStream(file);
+					byte[] data = new byte[(int)file.length()];
+					inputStream.read(data);
+					
+					//设置返回内容格式
+					response.setContentType("image/" + picAttach.getPicAttachFileType());
+	
+					stream = response.getOutputStream();
+					stream.write(data);
+					stream.flush();
+				} catch (Exception e) {
+					Logger.getRootLogger().error("读图片抛异常，异常信息为：" + e.getMessage(), e);
+				} finally {
+					try {
+						if(stream != null) {
+							stream.close();
+						}
+					} catch (IOException e) {
+						Logger.getRootLogger().error("读图片关闭OutputStream抛异常，异常信息为：" + e.getMessage(), e);
+					}
+					
+					try {
+						if(inputStream != null) {
+							inputStream.close();
+						}
+					} catch (IOException e) {
+						Logger.getRootLogger().error("读图片关闭InputStream抛异常，异常信息为：" + e.getMessage(), e);
+					}
+				}
+			}
+		}
 	}
 	
 }
