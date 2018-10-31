@@ -121,4 +121,23 @@
       </if>
     </trim>
   </insert>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_pic_attach
+    where pic_attach_id = #{picAttachId,jdbcType=VARCHAR} and is_delete = '0';
+  </select>
+  
+  <update id="deletePicAttach" parameterType="java.lang.String">
+    update bg_pic_attach 
+    set is_delete = '1' 
+    where pic_attach_id = #{picId,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="updatePicAttachOwner">
+    update bg_pic_attach 
+    set pic_attach_owner = #{ownerId,jdbcType=VARCHAR} 
+    where pic_attach_id = #{picId,jdbcType=VARCHAR}
+  </update>
 </mapper>

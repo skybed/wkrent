@@ -23,4 +23,19 @@ public class AppImageServiceImpl implements AppImageService {
 	public void savePicAttach(BgPicAttach bgPicAttach) {
 		appImageDao.insertSelective(bgPicAttach);
 	}
+
+	@Override
+	public BgPicAttach selectById(String picId) {
+		return appImageDao.selectByPrimaryKey(picId);
+	}
+
+	@Override
+	public void deletePicAttach(String picId) {
+		appImageDao.deletePicAttach(picId);
+	}
+
+	@Override
+	public void updatePicAttachOwner(String picId, String ownerId) {
+		appImageDao.updatePicAttachOwner(picId, ownerId);
+	}
 }

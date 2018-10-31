@@ -10,4 +10,9 @@ public interface AppImageService {
 
 	public void savePicAttach(BgPicAttach bgPicAttach);
 	
+	public BgPicAttach selectById(String picId);
+	
+	public void deletePicAttach(String picId);
+	
+	public void updatePicAttachOwner(String picId, String ownerId);
 }
