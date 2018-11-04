@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.bg.merchantmanagement.dao.BgMerchantDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.BgMerchant">
+    <id column="bg_merchant_id" jdbcType="VARCHAR" property="bgMerchantId" />
+    <result column="bg_merchant_number" jdbcType="VARCHAR" property="bgMerchantNumber" />
+    <result column="bg_merchant_code" jdbcType="VARCHAR" property="bgMerchantCode" />
+    <result column="bg_merchant_name" jdbcType="VARCHAR" property="bgMerchantName" />
+    <result column="bg_merchant_address" jdbcType="VARCHAR" property="bgMerchantAddress" />
+    <result column="bg_merchant_phone" jdbcType="VARCHAR" property="bgMerchantPhone" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="is_active" jdbcType="CHAR" property="isActive" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bg_merchant_id, bg_merchant_number, bg_merchant_code, bg_merchant_name, bg_merchant_address, 
+    bg_merchant_phone, is_delete, is_active, description, create_by, create_time, update_by, 
+    update_time, remark
+  </sql>
+
+  <sql id="Base_Condition_Where">
+    <where>
+      is_delete = '0'
+      <if test="bgMerchantCode != null and bgMerchantCode !=''">
+        AND bg_merchant_code = #{bgMerchantCode,jdbcType=VARCHAR}
+      </if>
+      <if test="bgMerchantName != null and bgMerchantName !=''">
+        AND bg_merchant_name = #{bgMerchantName,jdbcType=VARCHAR}
+      </if>
+      <if test="isActive != null and isActive !=''">
+        AND is_active = #{isActive,jdbcType=VARCHAR}
+      </if>
+      <if test="startDate != null">
+        AND create_time <![CDATA[ >= ]]> #{startDate,jdbcType=DATE}
+      </if>
+      <if test="endDate != null">
+        AND create_time <![CDATA[ <= ]]> #{endDate,jdbcType=DATE}
+      </if>
+    </where>
+  </sql>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_merchant
+    where bg_merchant_id = #{bgMerchantId,jdbcType=VARCHAR}
+    AND is_delete = '0'
+  </select>
+
+  <update id="deleteByPrimaryKey" parameterType="com.wkrent.common.entity.po.BgMerchant">
+    update bg_merchant
+    set is_delete = #{isDelete, jdbcType=VARCHAR},
+    update_by = #{updateBy, jdbcType=VARCHAR},
+    update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      AND bg_merchant_id = #{bgMerchantId,jdbcType=VARCHAR}
+    </where>
+  </update>
+
+  <insert id="insert" parameterType="com.wkrent.common.entity.po.BgMerchant">
+    insert into bg_merchant (bg_merchant_id, bg_merchant_number, bg_merchant_code, 
+      bg_merchant_name, bg_merchant_address, bg_merchant_phone, 
+      is_delete, is_active, description, 
+      create_by, create_time, update_by, 
+      update_time, remark)
+    values (#{bgMerchantId,jdbcType=VARCHAR}, #{bgMerchantNumber,jdbcType=VARCHAR}, #{bgMerchantCode,jdbcType=VARCHAR}, 
+      #{bgMerchantName,jdbcType=VARCHAR}, #{bgMerchantAddress,jdbcType=VARCHAR}, #{bgMerchantPhone,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=CHAR}, #{isActive,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.wkrent.common.entity.po.BgMerchant">
+    update bg_merchant
+    set bg_merchant_name = #{bgMerchantName,jdbcType=VARCHAR},
+      is_active = #{isActive,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    where bg_merchant_id = #{bgMerchantId,jdbcType=VARCHAR}
+    AND is_delete = '0'
+  </update>
+
+  <!-- 根据条件查询商家信息(分页) -->
+  <select id="findByCondition" parameterType="com.wkrent.common.entity.vo.BgMerchantVO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_merchant
+    <include refid="Base_Condition_Where" />
+    ORDER BY create_time,bg_merchant_id
+    LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
+  </select>
+
+  <!-- 根据条件查询总条数 -->
+  <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.BgMerchantVO" resultType="java.lang.Integer">
+    select
+    count(bg_merchant_id)
+    from bg_merchant
+    <include refid="Base_Condition_Where" />
+  </select>
+
+  <update id="updateStatus" parameterType="com.wkrent.common.entity.po.BgMerchant">
+    update bg_merchant
+    set is_active = #{isActive,jdbcType=CHAR},
+    update_by = #{updateBy,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
+    <where>
+      bg_merchant_id = #{bgMerchantId,jdbcType=VARCHAR}
+      AND is_delete = '0'
+      AND is_active != #{isActive,jdbcType=CHAR}
+    </where>
+  </update>
+
+  <select id="findByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_merchant
+    <where>
+      is_delete= '0' AND  bg_merchant_name = #{bgMerchantName,jdbcType=VARCHAR}
+    </where>
+  </select>
+</mapper>

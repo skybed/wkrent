@@ -6,7 +6,7 @@
 */
 package com.wkrent.business.dao;
 
-import com.wkrent.common.entity.BgPicAttach;
+import com.wkrent.common.entity.po.BgPicAttach;
 
 public interface BgPicAttachMapper {
     /**

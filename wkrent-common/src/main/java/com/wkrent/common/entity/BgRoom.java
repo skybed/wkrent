@@ -21,80 +21,135 @@ public class BgRoom implements Serializable {
 	 */
 	private static final long serialVersionUID = -1662427978475676801L;
 
-	// 后台房源id,唯一标识
+    /**
+     *后台房源id,唯一标识
+     */
     private String bgRoomId;
 
-    // 房源编号
+    /**
+     * 房源编号
+     */
     private String bgRoomNumber;
 
-    // 房源名称
+    /**
+     *房源名称
+     */
     private String bgRoomName;
 
-    // 所属国籍
+    /**
+     * 所属国籍
+     */
     private String bgRoomAddressCountry;
 
-    // 所属城市
+    /**
+     * 所属城市
+     */
     private String bgRoomAddressCity;
 
-    // 详细地址
+    /**
+     * 详细地址
+     */
     private String bgRoomAddressDetail;
 
-    // 经度
+    /**
+     * 经度
+     */
     private Double bgRoomAddressX;
 
-    // 纬度
+    /**
+     * 纬度
+     */
     private Double bgRoomAddressY;
 
-    // 价格
+    /**
+     * 价格
+     */
     private Double bgRoomPrice;
 
-    // 单位 0-周 1-月 2-年
+    /**
+     * 单位 0-周 1-月 2-年
+     */
     private String bgRoomPriceUnit;
 
-    // 房源状态 1-出租中 2-已被预订 3-房源锁定 4-待签租房合同 5-已出租 6-已下架
+    /**
+     * 房源状态 1-出租中 2-已被预订 3-房源锁定 4-待签租房合同 5-已出租 6-已下架
+     */
     private String bgRoomStatus;
 
-    // 最大预约数
+    /**
+     * 最大预约数
+     */
     private Byte bgRoomMaxAppointNum;
 
-    // 是否推荐房源 0-否 1-是
+    /**
+     * 是否推荐房源 0-否 1-是
+     */
     private String bgRoomRecommend;
 
-    // 房源标签 多个英文逗号隔开
+    /**
+     * 房源标签 多个英文逗号隔开
+     */
     private String bgRoomTips;
 
-    // 所属商家
+    /**
+     * 所属商家
+     */
     private String bgRoomMerchantId;
 
-    // 房屋性质 来源数据字典
+    /**
+     * 房屋性质 来源数据字典
+     */
     private String bgRoomProperty;
 
-    // 房屋类型 来源数据字典
+    /**
+     * 房屋类型 来源数据字典
+     */
     private String bgRoomType;
 
-    // 房屋详情
+    /**
+     * 房屋详情
+     */
     private String bgRoomDetail;
 
-    // 是否删除 0-否 1-是
+    /**
+     * 是否删除 0-否 1-是
+     */
     private String isDelete;
 
-    // 描述
+    /**
+     * 描述
+     */
     private String description;
 
-    // 创建者
+    /**
+     * 创建者
+     */
     private String createBy;
 
-    // 创建时间
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
-    // 更新者
+    /**
+     * 更新者
+     */
     private String updateBy;
 
-    // 更新时间
+    /**
+     * 更新时间
+     */
     private Date updateTime;
 
-    // 备注 预留字段
+    /**
+     * 备注 预留字段
+     */
     private String remark;
+
+    /**
+     * 是否上架 0：否； 1：是
+     */
+    private String isStores;
 
     /**
      * 
@@ -494,5 +549,13 @@ public class BgRoom implements Serializable {
      */
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getIsStores() {
+        return isStores;
+    }
+
+    public void setIsStores(String isStores) {
+        this.isStores = isStores;
     }
 }

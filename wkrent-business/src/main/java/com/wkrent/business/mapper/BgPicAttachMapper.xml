@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wkrent.business.dao.BgPicAttachMapper">
-  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.BgPicAttach">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.BgPicAttach">
     <id column="pic_attach_id" jdbcType="VARCHAR" property="picAttachId" />
     <result column="pic_attach_name" jdbcType="VARCHAR" property="picAttachName" />
     <result column="pic_attach_type" jdbcType="CHAR" property="picAttachType" />
@@ -32,7 +32,7 @@
     delete from bg_pic_attach
     where pic_attach_id = #{picAttachId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.wkrent.common.entity.BgPicAttach">
+  <insert id="insert" parameterType="com.wkrent.common.entity.po.BgPicAttach">
     insert into bg_pic_attach (pic_attach_id, pic_attach_name, pic_attach_type, 
       pic_attach_url, pic_attach_file_volume, pic_attach_file_type, 
       pic_attach_owner, is_delete, description, 
@@ -44,7 +44,7 @@
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgPicAttach">
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.po.BgPicAttach">
     insert into bg_pic_attach
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="picAttachId != null">
@@ -135,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.BgPicAttach">
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.po.BgPicAttach">
     update bg_pic_attach
     <set>
       <if test="picAttachName != null">
@@ -180,7 +180,7 @@
     </set>
     where pic_attach_id = #{picAttachId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.BgPicAttach">
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.po.BgPicAttach">
     update bg_pic_attach
     set pic_attach_name = #{picAttachName,jdbcType=VARCHAR},
       pic_attach_type = #{picAttachType,jdbcType=CHAR},

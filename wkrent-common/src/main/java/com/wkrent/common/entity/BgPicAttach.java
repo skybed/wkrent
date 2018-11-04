@@ -21,46 +21,74 @@ public class BgPicAttach implements Serializable {
 	 */
 	private static final long serialVersionUID = 5444827541269317896L;
 
-	// 附件id,唯一标识
+    /**
+     * 附件id,唯一标识
+     */
     private String picAttachId;
 
-    // 附件名
+    /**
+     * 附件名
+     */
     private String picAttachName;
 
-    // 附件类型
+    /**
+     * 附件类型
+     */
     private String picAttachType;
 
-    // 附件地址
+    /**
+     * 附件地址
+     */
     private String picAttachUrl;
 
-    // 附件大小
+    /**
+     * 附件大小
+     */
     private String picAttachFileVolume;
 
-    // 附件类型 比如jpg png等
+    /**
+     * 附件类型 比如jpg png等
+     */
     private String picAttachFileType;
 
-    // 附件归属id
+    /**
+     * 附件归属id
+     */
     private String picAttachOwner;
 
-    // 是否删除 0-否 1-是
+    /**
+     * 是否删除 0-否 1-是
+     */
     private String isDelete;
 
-    // 描述
+    /**
+     * 描述
+     */
     private String description;
 
-    // 创建者
+    /**
+     * 创建者
+     */
     private String createBy;
 
-    // 创建时间
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
-    // 更新者
+    /**
+     * 更新者
+     */
     private String updateBy;
 
-    // 更新时间
+    /**
+     * 更新时间
+     */
     private Date updateTime;
 
-    // 备注 预留字段
+    /**
+     * 备注 预留字段
+     */
     private String remark;
 
     /**

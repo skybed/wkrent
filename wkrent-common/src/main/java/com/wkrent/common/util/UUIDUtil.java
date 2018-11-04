@@ -1,5 +1,10 @@
 package com.wkrent.common.util;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -32,5 +37,19 @@ public class UUIDUtil {
         String uuid = UUID.randomUUID().toString();
         //去掉“-”符号
         return uuid.replaceAll("-", "");
+    }
+
+    public static String getCodeInfo(String startChar, int number){
+
+        StringBuilder buffer = new StringBuilder();
+        if(StringUtils.isNotBlank(startChar)){
+            buffer.append(startChar);
+        }
+        buffer.append(new SimpleDateFormat("yyyyMMddHHmm").format(new Date()));
+        Random random = new Random();
+        for(int i = 0; i < number; i++){
+            buffer.append(random.nextInt(10));
+        }
+        return buffer.toString();
     }
 }
