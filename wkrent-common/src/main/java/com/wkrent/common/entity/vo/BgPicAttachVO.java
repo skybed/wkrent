@@ -6,6 +6,8 @@
 */
 package com.wkrent.common.entity.vo;
 
+import io.swagger.annotations.ApiModel;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ import java.util.Date;
  * @author skybed
  *
  */
+@ApiModel
 public class BgPicAttachVO implements Serializable {
 	
     /**

@@ -10,12 +10,14 @@ import com.wkrent.common.entity.vo.BgUserVO;
 import com.wkrent.common.exception.WkRentException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,7 +25,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Administrator
  */
-@Api
+@Api(value = "bgUser", tags = "后台用户（平台账号接口）")
 @Controller
 @RequestMapping("/bgUser")
 public class BgUserController extends BaseController {
@@ -40,13 +42,16 @@ public class BgUserController extends BaseController {
     @ApiOperation(value = "条件查询用户信息", notes = "条件查询用户信息")
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
     @ResponseBody
-    public PageResult<BgUserVO> findByCondition(@RequestBody BgUserVO bgUserVO){
+    public PageResult<BgUserVO> findByCondition(@RequestBody @ApiParam(name = "bgUserVO", value = "查询条件")
+                                                            BgUserVO bgUserVO){
         return bgUserService.findByCondition(bgUserVO);
     }
 
+    @ApiOperation(value = "新增平台账号信息", notes = "新增平台账号信息")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO insert(@RequestBody BgUserVO bgUserVO, HttpSession session){
+    public BaseAjaxVO insert(@RequestBody @ApiParam(name = "bgUserVO", value = "待新增数据")
+                                         BgUserVO bgUserVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO;
         try {
             baseAjaxVO = bgUserService.insert(bgUserVO, getLoginAccount(session));
@@ -64,9 +69,11 @@ public class BgUserController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "修改平台账号信息", notes = "修改平台账号信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO update(@RequestBody BgUserVO bgUserVO, HttpSession session){
+    public BaseAjaxVO update(@RequestBody @ApiParam(name = "bgUserVO", value = "待修改账号")
+                                         BgUserVO bgUserVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgUserService.update(bgUserVO, getLoginAccount(session));
@@ -82,9 +89,11 @@ public class BgUserController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "删除平台账号信息", notes = "删除平台账号信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody String userId, HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "userId", value = "账号id")
+                                         String userId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgUserService.delete(userId, getLoginAccount(session));
@@ -100,9 +109,11 @@ public class BgUserController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "锁定平台账号信息", notes = "锁定平台账号信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/lockAccount", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO lockAccount(@RequestBody String userId, HttpSession session){
+    public BaseAjaxVO lockAccount(@RequestBody @ApiParam(name = "userId", value = "账号id")
+                                              String userId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgUserService.lockAccount(userId, getLoginAccount(session));
@@ -118,9 +129,11 @@ public class BgUserController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "解锁平台账号信息", notes = "解锁平台账号信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/unlockAccount", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO unlockAccount(@RequestBody String userId, HttpSession session){
+    public BaseAjaxVO unlockAccount(@RequestBody @ApiParam(name = "userId", value = "账号id")
+                                                String userId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgUserService.unlockAccount(userId, getLoginAccount(session));

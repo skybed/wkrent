@@ -1,9 +1,12 @@
 package com.wkrent.common.entity.base;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * @author Administrator
  * ajax请求返回信息
  */
+@ApiModel
 public class BaseAjaxVO {
 
     /**

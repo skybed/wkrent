@@ -8,6 +8,8 @@ import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.vo.BgDataDictValueVO;
 import com.wkrent.common.exception.WkRentException;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,15 +33,16 @@ public class HouseTypeController extends BaseController{
     private BgDataDictValueService bgDataDictValueService;
 
 
-//    @ApiOperation(value = "条件查询房屋类型", notes = "条件查询房屋类型")
+    @ApiOperation(value = "条件查询房屋类型", notes = "条件查询房屋类型")
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
     @ResponseBody
-    public PageResult<BgDataDictValueVO> findByCondition(@RequestBody BgDataDictValueVO dataDictValueVO){
+    public PageResult<BgDataDictValueVO> findByCondition(@RequestBody @ApiParam(name = "dataDictValueVO", value = "查询条件")
+                                                                     BgDataDictValueVO dataDictValueVO){
         dataDictValueVO.setBgDataDictType(Constants.DICT_TYPE_HOUSE_TYPE);
         return bgDataDictValueService.findByCondition(dataDictValueVO);
     }
 
-//    @ApiOperation(value = "查询房屋类型", notes = "查询房屋类型")
+    @ApiOperation(value = "查询房屋类型", notes = "查询房屋类型")
     @RequestMapping(value = "/queryList", method = RequestMethod.POST)
     @ResponseBody
     public List<BgDataDictValueVO> queryList(){
@@ -52,9 +55,11 @@ public class HouseTypeController extends BaseController{
      * @param session 用户登录session
      * @return 操作结果
      */
+    @ApiOperation(value = "新增房屋类型", notes = "新增房屋类型", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO insert(@RequestBody BgDataDictValueVO dataDictValueVO, @ApiIgnore HttpSession session){
+    public BaseAjaxVO insert(@RequestBody @ApiParam(name = "dataDictValueVO", value = "新增房屋类型信息")
+                                         BgDataDictValueVO dataDictValueVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO;
         try {
             //设置枚举类型为房屋类型
@@ -80,9 +85,11 @@ public class HouseTypeController extends BaseController{
      * @param session 用户登录session
      * @return 操作结果
      */
+    @ApiOperation(value = "修改房屋类型", notes = "修改房屋类型", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO update(@RequestBody BgDataDictValueVO dataDictValueVO, @ApiIgnore HttpSession session){
+    public BaseAjaxVO update(@RequestBody @ApiParam(name = "dataDictValueVO", value = "修改房屋类型信息")
+                                         BgDataDictValueVO dataDictValueVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             //设置枚举类型为房屋类型
@@ -106,9 +113,11 @@ public class HouseTypeController extends BaseController{
      * @param session 用户登录session
      * @return 操作结果
      */
+    @ApiOperation(value = "删除房屋类型", notes = "删除房屋类型", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody List<String> dataDictIdList, HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "dataDictIdList", value = "房屋类型idList")
+                                         List<String> dataDictIdList, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgDataDictValueService.delete(dataDictIdList, getLoginAccount(session));

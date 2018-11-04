@@ -11,6 +11,7 @@ import com.wkrent.common.entity.vo.BgPicAttachVO;
 import com.wkrent.common.exception.WkRentException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,23 +35,27 @@ public class MerchantController extends BaseController{
     @Autowired
     private BgMerchantService bgMerchantService;
 
-    @ApiOperation(value = "条件查询商家信息", notes = "条件查询商家信息", httpMethod = "POST", response = BgMerchantVO.class)
+    @ApiOperation(value = "条件查询商家信息", notes = "条件查询商家信息", httpMethod = "POST", response = PageResult.class)
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
     @ResponseBody
-    public PageResult<BgMerchantVO> findByCondition(@RequestBody BgMerchantVO merchantVO){
+    public PageResult<BgMerchantVO> findByCondition(@RequestBody @ApiParam(name = "merchantVO", value = "查询条件")
+                                                                BgMerchantVO merchantVO){
         return bgMerchantService.findByCondition(merchantVO);
     }
 
     @ApiOperation(value = "根据id查询商家信息", notes = "根据id查询商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/findByMerchantId", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO findByMerchantId(@RequestBody String merchantId){
+    public BaseAjaxVO findByMerchantId(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
+                                                   String merchantId){
         return bgMerchantService.findByMerchantId(merchantId);
     }
 
+    @ApiOperation(value = "新增商家信息", notes = "新增商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO insert(@RequestBody BgMerchantVO merchantVO, HttpSession session){
+    public BaseAjaxVO insert(@RequestBody @ApiParam(name = "merchantVO", value = "待新增商家信息")
+                                         BgMerchantVO merchantVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO;
         try {
             baseAjaxVO = bgMerchantService.insert(merchantVO, getLoginAccount(session));
@@ -68,9 +73,11 @@ public class MerchantController extends BaseController{
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "修改商家信息", notes = "修改商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO update(@RequestBody BgMerchantVO merchantVO, HttpSession session){
+    public BaseAjaxVO update(@RequestBody @ApiParam(name = "merchantVO", value = "待修改商家信息")
+                                         BgMerchantVO merchantVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgMerchantService.update(merchantVO, getLoginAccount(session));
@@ -86,9 +93,11 @@ public class MerchantController extends BaseController{
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "删除商家信息", notes = "删除商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody String merchantId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
+                                         String merchantId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgMerchantService.delete(merchantId, getLoginAccount(session));
@@ -104,9 +113,11 @@ public class MerchantController extends BaseController{
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "禁用商家信息", notes = "禁用商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/disable", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO disable(@RequestBody String merchantId, HttpSession session){
+    public BaseAjaxVO disable(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
+                                          String merchantId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgMerchantService.disable(merchantId, getLoginAccount(session));
@@ -122,9 +133,11 @@ public class MerchantController extends BaseController{
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "启用商家信息", notes = "启用商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/enable", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO enable(@RequestBody String merchantId, HttpSession session){
+    public BaseAjaxVO enable(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
+                                         String merchantId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgMerchantService.enable(merchantId, getLoginAccount(session));
@@ -145,6 +158,7 @@ public class MerchantController extends BaseController{
      * @param merchantId 商家id
      * @return 未被删除营业执照附件信息
      */
+    @ApiOperation(value = "根据商家id查询营业执照信息", notes = "根据商家id查询营业执照信息", httpMethod = "POST")
     @RequestMapping(value = "/queryFileById", method = RequestMethod.POST)
     @ResponseBody
     public List<BgPicAttachVO> queryFileById(@RequestBody String merchantId){

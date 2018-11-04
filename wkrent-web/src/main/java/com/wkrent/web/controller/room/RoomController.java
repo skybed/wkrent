@@ -9,12 +9,14 @@ import com.wkrent.common.entity.vo.BgRoomVO;
 import com.wkrent.common.exception.WkRentException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpSession;
 
@@ -40,13 +42,16 @@ public class RoomController extends BaseController{
     @ApiOperation(value = "根据id查询房源信息", notes = "根据id查询房源信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/findByRoomId", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO findByRoomId(@RequestBody String roomId){
+    public BaseAjaxVO findByRoomId(@RequestBody @ApiParam(name = "roomId", value = "房源id")
+                                               String roomId){
         return bgRoomService.findByRoomId(roomId);
     }
 
+    @ApiOperation(value = "新增房源信息", notes = "新增房源信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO insert(@RequestBody BgRoomVO roomVO, HttpSession session){
+    public BaseAjaxVO insert(@RequestBody @ApiParam(name = "roomVO", value = "待新增房源信息")
+                                         BgRoomVO roomVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO;
         try {
             baseAjaxVO = bgRoomService.insert(roomVO, getLoginAccount(session));
@@ -64,9 +69,11 @@ public class RoomController extends BaseController{
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "修改房源信息", notes = "修改房源信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO update(@RequestBody BgRoomVO roomVO, HttpSession session){
+    public BaseAjaxVO update(@RequestBody @ApiParam(name = "roomVO", value = "待修改房源信息")
+                                         BgRoomVO roomVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgRoomService.update(roomVO, getLoginAccount(session));
@@ -82,9 +89,11 @@ public class RoomController extends BaseController{
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "房源运营管理", notes = "房源运营管理", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO manage(@RequestBody BgRoomVO roomVO, HttpSession session){
+    public BaseAjaxVO manage(@RequestBody @ApiParam(name = "roomVO", value = "运营管理房源")
+                                         BgRoomVO roomVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgRoomService.updateRoomStatusById(roomVO, getLoginAccount(session));

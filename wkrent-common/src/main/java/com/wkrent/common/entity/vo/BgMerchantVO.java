@@ -7,6 +7,7 @@
 package com.wkrent.common.entity.vo;
 
 import com.wkrent.common.entity.paging.Page;
+import io.swagger.annotations.ApiModel;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author skybed
  *
  */
+@ApiModel
 public class BgMerchantVO implements Serializable {
 	
     /**

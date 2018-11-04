@@ -9,6 +9,7 @@ import com.wkrent.common.entity.vo.BgRoleVO;
 import com.wkrent.common.exception.WkRentException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,13 +35,18 @@ public class BgRoleController extends BaseController {
     @ApiOperation(value = "条件查询后台角色", notes = "条件查询后台角色", httpMethod = "POST", response = BgRoleVO.class)
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
     @ResponseBody
-    public PageResult<BgRoleVO> findByCondition(@RequestBody BgRoleVO bgRoleVO){
+    public PageResult<BgRoleVO> findByCondition(@RequestBody
+                                                    @ApiParam(name = "bgRoleVO", value = "查询条件")
+                                                            BgRoleVO bgRoleVO){
         return bgRoleService.findByCondition(bgRoleVO);
     }
 
+    @ApiOperation(value = "新增角色信息", notes = "新增角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO insert(@RequestBody BgRoleVO bgRoleVO, HttpSession session){
+    public BaseAjaxVO insert(@RequestBody @ApiParam(name = "bgRoleVO", value = "新增角色信息")
+                                         BgRoleVO bgRoleVO,
+                             @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO;
         try {
             baseAjaxVO = bgRoleService.insert(bgRoleVO, getLoginAccount(session));
@@ -58,9 +64,11 @@ public class BgRoleController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "修改角色信息", notes = "修改角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO update(@RequestBody BgRoleVO bgRoleVO, HttpSession session){
+    public BaseAjaxVO update(@RequestBody @ApiParam(name = "bgRoleVO", value = "待更新角色信息")
+                                         BgRoleVO bgRoleVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgRoleService.update(bgRoleVO, getLoginAccount(session));
@@ -76,9 +84,11 @@ public class BgRoleController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "删除角色信息", notes = "删除角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody String roleId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "roleId", value = "角色Id")
+                                         String roleId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgRoleService.delete(roleId, getLoginAccount(session));
@@ -94,9 +104,11 @@ public class BgRoleController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "禁用角色信息", notes = "禁用角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/disable", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO disable(@RequestBody String roleId, HttpSession session){
+    public BaseAjaxVO disable(@RequestBody @ApiParam(name = "roleId", value = "角色Id")
+                                          String roleId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgRoleService.disable(roleId, getLoginAccount(session));
@@ -112,9 +124,11 @@ public class BgRoleController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "启用角色信息", notes = "启用角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/enable", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO enable(@RequestBody String roleId, HttpSession session){
+    public BaseAjaxVO enable(@RequestBody @ApiParam(name = "roleId", value = "角色Id")
+                                         String roleId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             bgRoleService.enable(roleId, getLoginAccount(session));

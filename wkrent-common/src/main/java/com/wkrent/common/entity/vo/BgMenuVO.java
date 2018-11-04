@@ -6,6 +6,8 @@
 */
 package com.wkrent.common.entity.vo;
 
+import io.swagger.annotations.ApiModel;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
  * @author skybed
  *
  */
+@ApiModel
 public class BgMenuVO implements Serializable {
 
     private static final long serialVersionUID = -7144636941664819150L;
