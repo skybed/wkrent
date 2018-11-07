@@ -26,8 +26,8 @@
   <sql id="Base_Condition_Where">
     <where>
       is_delete = '0'
-      <if test="bgMerchantCode != null and bgMerchantCode !=''">
-        AND bg_merchant_code = #{bgMerchantCode,jdbcType=VARCHAR}
+      <if test="bgMerchantNumber != null and bgMerchantNumber !=''">
+        AND bg_merchant_number = #{bgMerchantNumber,jdbcType=VARCHAR}
       </if>
       <if test="bgMerchantName != null and bgMerchantName !=''">
         AND bg_merchant_name = #{bgMerchantName,jdbcType=VARCHAR}

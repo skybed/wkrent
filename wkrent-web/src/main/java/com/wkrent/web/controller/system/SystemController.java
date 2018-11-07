@@ -1,6 +1,8 @@
 package com.wkrent.web.controller.system;
 
 import com.wkrent.business.bg.usermanagement.service.BgUserService;
+import com.wkrent.common.entity.base.BaseAjaxVO;
+import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.po.BgUser;
 import com.wkrent.common.util.Md5Utils;
 import io.swagger.annotations.Api;
@@ -43,26 +45,29 @@ public class SystemController {
 
     @ApiOperation(value = "初始化登录页面", notes = "初始化登录页面", httpMethod = "POST")
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(@ApiIgnore HttpServletRequest request,
-                        @ApiParam(name = "userAccount", value = "平台账号")
+    public BaseAjaxVO login(@ApiIgnore HttpServletRequest request,
+                            @ApiParam(name = "userAccount", value = "平台账号")
                                 String userAccount,
-                        @ApiParam(name = "password", value = "账号密码")
+                            @ApiParam(name = "password", value = "账号密码")
                                     String password) {
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         BgUser user = bgUserService.findByUserAccount(userAccount);
         if(user!=null){
             if(user.getBgUserPwd().equals(Md5Utils.encryptPassword(userAccount, password, Md5Utils.SALT))){
                 request.getSession().setAttribute("userId", user.getBgUserId());
                 request.getSession().setAttribute("userAccount", userAccount);
-                return "index";
+                return baseAjaxVO;
             }else{
                 log.info("密码错误");
-                request.getSession().setAttribute("message", "用户名密码错误，请重新登录");
-                return "login";
+                baseAjaxVO.setCode(Constants.FAILED_CODE);
+                baseAjaxVO.setText("密码错误，请重新输入");
+                return baseAjaxVO;
             }
         }else{
             log.info("用户名不存在");
-            request.getSession().setAttribute("message", "用户名不存在，请重新登录");
-            return "login";
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText("密码错误，请重新输入");
+            return baseAjaxVO;
         }
     }
 }

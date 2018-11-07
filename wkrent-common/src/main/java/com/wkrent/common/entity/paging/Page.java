@@ -22,8 +22,6 @@ public class Page
      */
     private int pageSize;
 
-    private int recordsTotal;
-
     /**
      *总页数
      */
@@ -69,16 +67,6 @@ public class Page
     public void setPageSize(int pageSize)
     {
         this.pageSize = pageSize;
-    }
-
-    public int getRecordsTotal()
-    {
-        return this.recordsTotal;
-    }
-
-    public void setRecordsTotal(int recordsTotal)
-    {
-        this.recordsTotal = recordsTotal;
     }
 
     public int getPageTotal()
