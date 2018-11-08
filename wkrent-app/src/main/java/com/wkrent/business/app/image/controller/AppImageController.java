@@ -29,6 +29,10 @@ import com.wkrent.common.entity.BgPicAttach;
 import com.wkrent.common.obj.ResultData;
 import com.wkrent.common.util.PropertiesUtils;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "imageoperate", tags = "图片操作")
 @Controller
 @RequestMapping("/app/api")
 public class AppImageController {
@@ -45,6 +49,7 @@ public class AppImageController {
 	 * @param uploadfile
 	 * @return
 	 */
+	@ApiOperation(value = "上传文件", notes = "上传文件", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/uploadPicture.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String uploadPicture(HttpServletRequest request, MultipartFile uploadfile) {
@@ -108,6 +113,7 @@ public class AppImageController {
 	 * @param uploadfiles
 	 * @return
 	 */
+	@ApiOperation(value = "上传多文件", notes = "上传多文件", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/uploadPictures.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String uploadPictures(HttpServletRequest request, MultipartFile[] uploadfiles) {
@@ -175,6 +181,7 @@ public class AppImageController {
 	 * @param picId
 	 * @return
 	 */
+	@ApiOperation(value = "获取文件流", notes = "获取文件流", httpMethod = "GET")
 	@RequestMapping(value="/getPicture.do", method = RequestMethod.GET)
 	public void getPicture(HttpServletRequest request, HttpServletResponse response, String picId) {
 		BgPicAttach picAttach = appImageService.selectById(picId);
