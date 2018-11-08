@@ -31,10 +31,10 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${jdbc.driver.version}</version>
 		</dependency>
-		<dependency>  
-		    <groupId>com.alibaba</groupId>  
-		    <artifactId>druid</artifactId>  
-		    <version>${druid.version}</version>  
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		    <version>${druid.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.aliyun</groupId>
