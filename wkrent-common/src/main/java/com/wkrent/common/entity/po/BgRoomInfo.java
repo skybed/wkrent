@@ -33,7 +33,7 @@ public class BgRoomInfo implements Serializable {
     /**
      * 当前预约数
      */
-    private Byte bgRoomAppointNum;
+    private Integer bgRoomAppointNum;
 
     /**
      * 总浏览数
@@ -76,7 +76,7 @@ public class BgRoomInfo implements Serializable {
      * 
      * @return bg_room_appoint_num 当前预约数
      */
-    public Byte getBgRoomAppointNum() {
+    public Integer getBgRoomAppointNum() {
         return bgRoomAppointNum;
     }
 
@@ -84,7 +84,7 @@ public class BgRoomInfo implements Serializable {
      * 
      * @param bgRoomAppointNum 当前预约数
      */
-    public void setBgRoomAppointNum(Byte bgRoomAppointNum) {
+    public void setBgRoomAppointNum(Integer bgRoomAppointNum) {
         this.bgRoomAppointNum = bgRoomAppointNum;
     }
 

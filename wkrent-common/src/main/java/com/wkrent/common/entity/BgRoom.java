@@ -79,7 +79,7 @@ public class BgRoom implements Serializable {
     /**
      * 最大预约数
      */
-    private Byte bgRoomMaxAppointNum;
+    private Integer bgRoomMaxAppointNum;
 
     /**
      * 是否推荐房源 0-否 1-是
@@ -331,7 +331,7 @@ public class BgRoom implements Serializable {
      * 
      * @return bg_room_max_appoint_num 最大预约数
      */
-    public Byte getBgRoomMaxAppointNum() {
+    public Integer getBgRoomMaxAppointNum() {
         return bgRoomMaxAppointNum;
     }
 
@@ -339,7 +339,7 @@ public class BgRoom implements Serializable {
      * 
      * @param bgRoomMaxAppointNum 最大预约数
      */
-    public void setBgRoomMaxAppointNum(Byte bgRoomMaxAppointNum) {
+    public void setBgRoomMaxAppointNum(Integer bgRoomMaxAppointNum) {
         this.bgRoomMaxAppointNum = bgRoomMaxAppointNum;
     }
 

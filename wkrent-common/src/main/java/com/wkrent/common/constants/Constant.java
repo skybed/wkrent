@@ -3,6 +3,11 @@ package com.wkrent.common.constants;
 public class Constant {
 	
 	/**
+	 * 自定义加密措施
+	 */
+	public static final String MD5_PWD = "WKRENT#PWD";
+	
+	/**
 	 * 状态码 200
 	 */
 	public static final String RESULT_SUCCESS_CODE = "200";
@@ -53,6 +58,56 @@ public class Constant {
 	public static final String RESULT_USER_NOT_REGISTER_MSG = "该用户未注册，请注册后登陆！";
 	
 	/**
+	 * 状态码 404
+	 */
+	public static final String RESULT_ORDER_NOT_EXISTS_CODE = "404";
+	
+	/**
+	 * 该订单不存在，请检查后重试
+	 */
+	public static final String RESULT_ORDER_NOT_EXISTS_MSG = "该订单不存在，请检查后重试！";
+	
+	/**
+	 * 状态码 405
+	 */
+	public static final String RESULT_ORDER_CANNOT_DELETE_CODE = "405";
+	
+	/**
+	 * 该订单当前状态不能删除！
+	 */
+	public static final String RESULT_ORDER_CANNOT_DELETE_MSG = "该订单当前状态不能删除！";
+	
+	/**
+	 * 状态码 406
+	 */
+	public static final String RESULT_ORDER_CANNOT_CANCEL_CODE = "406";
+	
+	/**
+	 * 该订单当前状态不能取消预约！
+	 */
+	public static final String RESULT_ORDER_CANNOT_CANCEL_MSG = "该订单当前状态不能取消预约！";
+	
+	/**
+	 * 状态码 407
+	 */
+	public static final String RESULT_ATTENTION_NOT_EXISTS_CODE = "407";
+	
+	/**
+	 * 该收藏不存在，请检查后重试！
+	 */
+	public static final String RESULT_ATTENTION_NOT_EXISTS_MSG = "该收藏不存在，请检查后重试！";
+	
+	/**
+	 * 状态码 408
+	 */
+	public static final String RESULT_RENTROOM_NOT_EXISTS_CODE = "408";
+	
+	/**
+	 * 该房源不存在，请检查后重试！
+	 */
+	public static final String RESULT_RENTROOM_NOT_EXISTS_MSG = "该房源不存在，请检查后重试！";
+	
+	/**
 	 * 状态码 300
 	 */
 	public static final String RESULT_REQUIRE_PARAM_CODE = "300";
@@ -71,5 +126,44 @@ public class Constant {
 	 * 必填项格式不正确，请检查！
 	 */
 	public static final String RESULT_REQUIRE_PARAM_FORMAT_MSG = "必填项格式不正确，请检查！";
+	
+	/**
+	 * 状态码 302
+	 */
+	public static final String RESULT_RENTROOM_ALREADY_ATTENTION_CODE = "302";
+	
+	/**
+	 * 该房源已收藏，请不要重复收藏！
+	 */
+	public static final String RESULT_RENTROOM_ALREADY_ATTENTION_MSG = "该房源已收藏，请不要重复收藏！";
+	
+	/**
+	 * 状态码 303
+	 */
+	public static final String RESULT_REQUIRE_PARAM_INVALIDATE_CODE = "303";
+	
+	/**
+	 * 必填项填写有误，请检查后重试！
+	 */
+	public static final String RESULT_REQUIRE_PARAM_INVALIDATE_MSG = "必填项填写有误，请检查后重试！";
 
+	/**
+	 * 状态码 304
+	 */
+	public static final String RESULT_RENTROOM_NOT_ATTENTION_CODE = "304";
+	
+	/**
+	 * 该房源未被收藏，无法取消！
+	 */
+	public static final String RESULT_RENTROOM_NOT_ATTENTION_MSG = "该房源未被收藏，无法取消！";
+	
+	/**
+	 * 状态码 305
+	 */
+	public static final String RESULT_RENTROOM_NOT_APPOINT_CODE = "305";
+	
+	/**
+	 * 该房源已被预约，请重试！
+	 */
+	public static final String RESULT_RENTROOM_NOT_APPOINT_MSG = "该房源已被预约，请重试！";
 }
