@@ -177,6 +177,16 @@ public class BgRoomVO implements Serializable {
     private Integer bgRoomViewNum;
 
     /**
+     * 开始时间
+     */
+    private Date startDate;
+
+    /**
+     * 结束时间
+     */
+    private Date endDate;
+
+    /**
      * 
      * @return bg_room_id 后台房源id,唯一标识
      */
@@ -614,5 +624,21 @@ public class BgRoomVO implements Serializable {
 
     public void setBgRoomTipsText(String bgRoomTipsText) {
         this.bgRoomTipsText = bgRoomTipsText;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.bg.feedbackmanagement.dao.FeedBackDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.AppFeedback">
+    <id column="app_feedback_id" jdbcType="VARCHAR" property="appFeedbackId" />
+    <result column="app_feedback_title" jdbcType="VARCHAR" property="appFeedbackTitle" />
+    <result column="app_feedback_content" jdbcType="VARCHAR" property="appFeedbackContent" />
+    <result column="app_feedback_contact" jdbcType="VARCHAR" property="appFeedbackContact" />
+    <result column="app_feedback_time" jdbcType="TIMESTAMP" property="appFeedbackTime" />
+    <result column="app_feedback_status" jdbcType="CHAR" property="appFeedbackStatus" />
+    <result column="app_feedback_reply" jdbcType="VARCHAR" property="appFeedbackReply" />
+    <result column="app_feedback_reply_time" jdbcType="TIMESTAMP" property="appFeedbackReplyTime" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+
+  <resultMap id="QueryResultMap" type="com.wkrent.common.entity.vo.AppFeedbackVO" extends="BaseResultMap">
+    <result column="updateName" jdbcType="VARCHAR" property="updateName" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    app_feedback_id, app_feedback_title, app_feedback_content, app_feedback_contact, 
+    app_feedback_time, app_feedback_status, app_feedback_reply, app_feedback_reply_time, 
+    is_delete, description, create_by, create_time, update_by, update_time, remark
+  </sql>
+
+  <sql id="Query_Column_List">
+    fee.app_feedback_id,
+    fee.app_feedback_title,
+    fee.app_feedback_content,
+    fee.app_feedback_contact,
+    fee.app_feedback_time,
+    fee.app_feedback_status,
+    fee.app_feedback_reply,
+    fee.app_feedback_reply_time,
+    fee.is_delete,
+    fee.description,
+    fee.create_by,
+    fee.create_time,
+    fee.update_by,
+    fee.update_time,
+    fee.remark,
+    u.bg_user_name updateName
+  </sql>
+
+  <sql id="Base_Condition_Where">
+    <where>
+      fee.is_delete = '0'
+      <if test="appFeedbackContact != null and appFeedbackContact !=''">
+        AND fee.app_feedback_contact = #{appFeedbackContact,jdbcType=VARCHAR}
+      </if>
+      <if test="appFeedbackStatus != null and appFeedbackStatus !=''">
+        AND fee.app_feedback_status  = #{appFeedbackStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="startDate != null">
+        AND fee.create_time <![CDATA[ >= ]]> #{startDate,jdbcType=DATE}
+      </if>
+      <if test="endDate != null">
+        AND fee.create_time <![CDATA[ <= ]]> #{endDate,jdbcType=DATE}
+      </if>
+    </where>
+  </sql>
+
+  <select id="findById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_feedback
+    where app_feedback_id = #{appFeedbackId,jdbcType=VARCHAR} AND is_delete = '0'
+  </select>
+
+  <update id="delete" parameterType="com.wkrent.common.entity.vo.AppFeedbackVO">
+    update app_feedback
+    set is_delete = #{isDelete, jdbcType=VARCHAR},
+    update_by = #{updateBy, jdbcType=VARCHAR},
+    update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      <choose>
+        <when test="feedBackIdList != null and feedBackIdList.size() > 0">
+          AND app_feedback_id IN
+          <foreach collection="feedBackIdList" item="feeId" separator="," open="(" close=")">
+            #{feeId,jdbcType=VARCHAR}
+          </foreach>
+        </when>
+        <otherwise>
+          1 != 1
+        </otherwise>
+      </choose>
+    </where>
+  </update>
+
+  <update id="updateStatus" parameterType="com.wkrent.common.entity.po.AppFeedback">
+    update app_feedback
+    set app_feedback_status = #{appFeedbackStatus, jdbcType=VARCHAR},
+    description = #{description, jdbcType=VARCHAR},
+    update_by = #{updateBy, jdbcType=VARCHAR},
+    update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      AND app_feedback_id = #{appFeedbackId,jdbcType=VARCHAR}
+    </where>
+  </update>
+
+
+  <select id="findByCondition" parameterType="com.wkrent.common.entity.vo.AppFeedbackVO" resultMap="QueryResultMap">
+    select
+    <include refid="Query_Column_List" />
+    from app_feedback fee LEFT JOIN bg_user u ON fee.update_by = u.bg_user_account
+    <include refid="Base_Condition_Where" />
+    ORDER BY create_time,app_feedback_id DESC
+    LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
+  </select>
+
+  <!-- 根据条件查询总条数 -->
+  <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.AppUserVO" resultType="java.lang.Integer">
+    select
+    count(app_feedback_id)
+    from app_feedback
+    <include refid="Base_Condition_Where" />
+  </select>
+</mapper>

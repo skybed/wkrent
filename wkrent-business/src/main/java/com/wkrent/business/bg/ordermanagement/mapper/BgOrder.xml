@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.bg.ordermanagement.dao.OrderDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.BgOrder">
+    <id column="bg_order_id" jdbcType="VARCHAR" property="bgOrderId" />
+    <result column="bg_order_number" jdbcType="VARCHAR" property="bgOrderNumber" />
+    <result column="bg_order_create_time" jdbcType="TIMESTAMP" property="bgOrderCreateTime" />
+    <result column="bg_order_user_id" jdbcType="VARCHAR" property="bgOrderUserId" />
+    <result column="bg_order_room_id" jdbcType="VARCHAR" property="bgOrderRoomId" />
+    <result column="bg_order_status" jdbcType="CHAR" property="bgOrderStatus" />
+    <result column="bg_order_checkIn_date" jdbcType="DATE" property="bgOrderCheckinDate" />
+    <result column="bg_order_rent_tenancy" jdbcType="VARCHAR" property="bgOrderRentTenancy" />
+    <result column="bg_order_rent_deposit_flag" jdbcType="CHAR" property="bgOrderRentDepositFlag" />
+    <result column="bg_order_rent_deposit_money" jdbcType="DOUBLE" property="bgOrderRentDepositMoney" />
+    <result column="bg_order_rent_deposit_unit" jdbcType="CHAR" property="bgOrderRentDepositUnit" />
+    <result column="bg_order_rent_deposit_serialNum" jdbcType="VARCHAR" property="bgOrderRentDepositSerialnum" />
+    <result column="bg_order_rent_service_flag" jdbcType="CHAR" property="bgOrderRentServiceFlag" />
+    <result column="bg_order_rent_service_money" jdbcType="DOUBLE" property="bgOrderRentServiceMoney" />
+    <result column="bg_order_rent_service_unit" jdbcType="CHAR" property="bgOrderRentServiceUnit" />
+    <result column="bg_order_rent_service_seralNum" jdbcType="VARCHAR" property="bgOrderRentServiceSeralnum" />
+    <result column="bg_order_rent_flag" jdbcType="CHAR" property="bgOrderRentFlag" />
+    <result column="bg_order_rent_money" jdbcType="DOUBLE" property="bgOrderRentMoney" />
+    <result column="bg_order_rent_unit" jdbcType="CHAR" property="bgOrderRentUnit" />
+    <result column="bg_order_rent_serialNum" jdbcType="VARCHAR" property="bgOrderRentSerialnum" />
+    <result column="bg_order_rent_contract_flag" jdbcType="CHAR" property="bgOrderRentContractFlag" />
+    <result column="bg_order_rent_contract_serialNum" jdbcType="VARCHAR" property="bgOrderRentContractSerialnum" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+
+  <resultMap id="QueryResultMap" type="com.wkrent.common.entity.vo.BgOrderVO" extends="BaseResultMap">
+    <result column="orderUserName" jdbcType="VARCHAR" property="orderUserName" />
+    <result column="orderUserPhone" jdbcType="VARCHAR" property="orderUserPhone" />
+    <result column="orderUserSex" jdbcType="VARCHAR" property="orderUserSex" />
+    <result column="bgRoomNumber" jdbcType="VARCHAR" property="bgRoomNumber" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    bg_order_id, bg_order_number, bg_order_create_time, bg_order_user_id, bg_order_room_id, 
+    bg_order_status, bg_order_checkIn_date, bg_order_rent_tenancy, bg_order_rent_deposit_flag, 
+    bg_order_rent_deposit_money, bg_order_rent_deposit_unit, bg_order_rent_deposit_serialNum, 
+    bg_order_rent_service_flag, bg_order_rent_service_money, bg_order_rent_service_unit, 
+    bg_order_rent_service_seralNum, bg_order_rent_flag, bg_order_rent_money, bg_order_rent_unit, 
+    bg_order_rent_serialNum, bg_order_rent_contract_flag, bg_order_rent_contract_serialNum, 
+    is_delete, description, create_by, create_time, update_by, update_time, remark
+  </sql>
+
+  <sql id="Query_Column_List">
+    o.bg_order_id,
+    o.bg_order_number,
+    o.bg_order_create_time,
+    o.bg_order_user_id,
+    o.bg_order_room_id,
+    o.bg_order_status,
+    o.bg_order_checkIn_date,
+    o.bg_order_rent_tenancy,
+    o.bg_order_rent_deposit_flag,
+    o.bg_order_rent_deposit_money,
+    o.bg_order_rent_deposit_unit,
+    o.bg_order_rent_deposit_serialNum,
+    o.bg_order_rent_service_flag,
+    o.bg_order_rent_service_money,
+    o.bg_order_rent_service_unit,
+    o.bg_order_rent_service_seralNum,
+    o.bg_order_rent_flag,
+    o.bg_order_rent_money,
+    o.bg_order_rent_unit,
+    o.bg_order_rent_serialNum,
+    o.bg_order_rent_contract_flag,
+    o.bg_order_rent_contract_serialNum,
+    o.is_delete,
+    o.description,
+    o.create_by,
+    o.create_time,
+    o.update_by,
+    o.update_time,
+    o.remark,
+    u.app_user_name orderUserName,
+    u.app_user_phone orderUserPhone,
+    u.app_user_sex orderUserSex,
+    ro.bg_room_number bgRoomNumber
+  </sql>
+
+  <sql id="Base_Condition_Where">
+    <where>
+      o.is_delete = '0'
+      AND u.is_delete = '0'
+      AND ro.is_delete = '0'
+      <if test="bgOrderStatus != null and bgOrderStatus !=''">
+        AND o.bg_order_status = #{bgOrderStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="bgOrderNumber != null and bgOrderNumber !=''">
+        AND o.bg_order_number  = #{bgOrderNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="orderUserName != null and orderUserName !=''">
+        AND u.app_user_name  = #{orderUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="orderUserPhone != null and orderUserPhone !=''">
+        AND u.app_user_phone  = #{orderUserPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="bgRoomNumber != null and bgRoomNumber !=''">
+        AND ro.bg_room_number  = #{bgRoomNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="startDate != null">
+        AND o.create_time <![CDATA[ >= ]]> #{startDate,jdbcType=DATE}
+      </if>
+      <if test="endDate != null">
+        AND o.create_time <![CDATA[ <= ]]> #{endDate,jdbcType=DATE}
+      </if>
+    </where>
+  </sql>
+
+  <select id="findById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_order
+    where bg_order_id = #{bgOrderId,jdbcType=VARCHAR} AND is_delete = '0'
+  </select>
+
+  <update id="delete" parameterType="com.wkrent.common.entity.vo.BgOrderVO">
+    update bg_order
+    set is_delete = '1',
+    update_by = #{updateBy, jdbcType=VARCHAR},
+    update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      <choose>
+        <when test="orderIdList != null and orderIdList.size() > 0">
+          AND bg_order_id IN
+          <foreach collection="orderIdList" item="orderId" separator="," open="(" close=")">
+            #{orderId,jdbcType=VARCHAR}
+          </foreach>
+        </when>
+        <when test="bgOrderId != null and bgOrderId != ''">
+          AND bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+        </when>
+        <otherwise>
+          1 != 1
+        </otherwise>
+      </choose>
+    </where>
+  </update>
+
+
+  <update id="updateStatus" parameterType="com.wkrent.common.entity.po.BgOrder">
+    update bg_order
+    set bg_order_status = #{bgOrderStatus, jdbcType=VARCHAR},
+    description = #{description, jdbcType=VARCHAR},
+    update_by = #{updateBy, jdbcType=VARCHAR},
+    update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      AND bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+    </where>
+  </update>
+
+
+  <select id="findByCondition" parameterType="com.wkrent.common.entity.vo.BgOrderVO" resultMap="QueryResultMap">
+    select
+    <include refid="Query_Column_List" />
+    from bg_order o
+    LEFT JOIN app_user  u ON o.bg_order_user_id = u.app_user_id
+    LEFT JOIN bg_room  ro ON o.bg_order_room_id = ro.bg_room_id
+    <include refid="Base_Condition_Where" />
+    ORDER BY o.create_time,bg_order_id DESC
+    LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
+  </select>
+
+  <!-- 根据条件查询总条数 -->
+  <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.BgOrderVO" resultType="java.lang.Integer">
+    select
+    count(bg_order_id)
+    from bg_order
+    LEFT JOIN app_user  u ON o.bg_order_user_id = u.app_user_id
+    LEFT JOIN bg_room  ro ON o.bg_order_room_id = ro.bg_room_id
+    <include refid="Base_Condition_Where" />
+  </select>
+</mapper>

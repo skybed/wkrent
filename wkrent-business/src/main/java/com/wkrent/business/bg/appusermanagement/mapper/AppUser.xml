@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.bg.appusermanagement.dao.BgAppUserDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.AppUser">
+    <id column="app_user_id" jdbcType="VARCHAR" property="appUserId" />
+    <result column="app_user_number" jdbcType="VARCHAR" property="appUserNumber" />
+    <result column="app_user_name" jdbcType="VARCHAR" property="appUserName" />
+    <result column="app_user_phone" jdbcType="VARCHAR" property="appUserPhone" />
+    <result column="app_user_email" jdbcType="VARCHAR" property="appUserEmail" />
+    <result column="app_user_sex" jdbcType="CHAR" property="appUserSex" />
+    <result column="app_user_birthday" jdbcType="VARCHAR" property="appUserBirthday" />
+    <result column="app_user_age" jdbcType="TINYINT" property="appUserAge" />
+    <result column="app_user_country" jdbcType="VARCHAR" property="appUserCountry" />
+    <result column="app_user_city" jdbcType="VARCHAR" property="appUserCity" />
+    <result column="app_user_wechat_openId" jdbcType="VARCHAR" property="appUserWechatOpenid" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    app_user_id, app_user_number, app_user_name, app_user_phone, app_user_email, app_user_sex, 
+    app_user_birthday, app_user_age, app_user_country, app_user_city, app_user_wechat_openId, 
+    is_delete, description, create_by, create_time, update_by, update_time, remark
+  </sql>
+
+  <sql id="Base_Condition_Where">
+    <where>
+      is_delete = '0'
+      <if test="appUserName != null and appUserName !=''">
+        AND app_user_name LIKE  '%' || #{appUserName,jdbcType=VARCHAR} || '%'
+      </if>
+      <if test="appUserPhone != null and appUserPhone !=''">
+        AND app_user_phone LIKE  '%' || #{appUserPhone,jdbcType=VARCHAR} || '%'
+      </if>
+      <if test="startDate != null">
+        AND create_time <![CDATA[ >= ]]> #{startDate,jdbcType=DATE}
+      </if>
+      <if test="endDate != null">
+        AND create_time <![CDATA[ <= ]]> #{endDate,jdbcType=DATE}
+      </if>
+    </where>
+  </sql>
+
+  <select id="findById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_user
+    where app_user_id = #{appUserId,jdbcType=VARCHAR} AND is_delete = '0'
+  </select>
+  <update id="delete" parameterType="com.wkrent.common.entity.po.AppUser">
+    update app_user
+    set is_delete = #{isDelete, jdbcType=VARCHAR},
+    update_by = #{updateBy, jdbcType=VARCHAR},
+    update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      AND app_user_id = #{appUserId,jdbcType=VARCHAR}
+    </where>
+  </update>
+  <update id="update" parameterType="com.wkrent.common.entity.po.AppUser">
+    update app_user
+    set
+      app_user_name = #{appUserName,jdbcType=VARCHAR},
+      app_user_phone = #{appUserPhone,jdbcType=VARCHAR},
+      app_user_email = #{appUserEmail,jdbcType=VARCHAR},
+      app_user_sex = #{appUserSex,jdbcType=CHAR},
+      app_user_birthday = #{appUserBirthday,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where app_user_id = #{appUserId,jdbcType=VARCHAR} AND is_delete = '0'
+  </update>
+
+  <select id="findByCondition" parameterType="com.wkrent.common.entity.vo.AppUserVO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_user
+    <include refid="Base_Condition_Where" />
+    ORDER BY create_time,app_user_id
+    LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
+  </select>
+
+  <!-- 根据条件查询总条数 -->
+  <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.AppUserVO" resultType="java.lang.Integer">
+    select
+    count(app_user_id)
+    from app_user
+    <include refid="Base_Condition_Where" />
+  </select>
+</mapper>
