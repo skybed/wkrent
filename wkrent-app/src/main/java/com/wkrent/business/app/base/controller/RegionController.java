@@ -23,6 +23,10 @@ import com.wkrent.common.constants.Constant;
 import com.wkrent.common.entity.AppRegion;
 import com.wkrent.common.obj.ResultData;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "regioninfo", tags = "国家地区信息")
 @Controller
 @RequestMapping("/app/api")
 public class RegionController {
@@ -78,13 +82,14 @@ public class RegionController {
 	}
 	
 	/**
-	 * 获取所有地区信息
+	  * 获取所有地区信息
 	 * @param request
 	 * @param regionName
 	 * @param regionCnName
 	 * @param regionCode
 	 * @return
 	 */
+	@ApiOperation(value = "获取所有地区信息", notes = "获取所有地区信息", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/getCountryAndCodeList.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getCountryAndCodeList(HttpServletRequest request, String regionInfo) {

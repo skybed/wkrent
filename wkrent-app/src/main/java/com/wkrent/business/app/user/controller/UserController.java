@@ -33,6 +33,10 @@ import com.wkrent.common.entity.AppUser;
 import com.wkrent.common.entity.BgPicAttach;
 import com.wkrent.common.obj.ResultData;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "userinfo", tags = "用户信息")
 @Controller
 @RequestMapping("/app/api")
 public class UserController {
@@ -52,6 +56,7 @@ public class UserController {
 	 * @param phone
 	 * @return
 	 */
+	@ApiOperation(value = "获取验证码", notes = "获取验证码", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/sendAuthCode.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String sendAuthCode(HttpServletRequest request, String phone) {
@@ -129,6 +134,7 @@ public class UserController {
 	 * @param phone
 	 * @return
 	 */
+	@ApiOperation(value = "判断手机号是否已被注册", notes = "判断手机号是否已被注册", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/checkPhoneAvailable.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String checkPhoneAvailable(HttpServletRequest request, String phone) {
@@ -165,6 +171,7 @@ public class UserController {
 	 * @param userInfo
 	 * @return
 	 */
+	@ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/userRegister.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String userRegister(HttpServletRequest request, UserInfo userInfo) {
@@ -250,6 +257,7 @@ public class UserController {
 	 * @param bizId
 	 * @return
 	 */
+	@ApiOperation(value = "用户登陆", notes = "用户登陆", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/userLogin.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String userLogin(HttpServletRequest request, String phone, String code, String bizId) {
@@ -296,6 +304,7 @@ public class UserController {
 	 * @param userId
 	 * @return
 	 */
+	@ApiOperation(value = "获取用户详情信息", notes = "获取用户详情信息", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/getUserDetail.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getUserDetail(HttpServletRequest request, String userId) {
@@ -337,6 +346,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
+	@ApiOperation(value = "修改用户基本信息", notes = "修改用户基本信息", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/editUserBaseInfo.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String editUserBaseInfo(HttpServletRequest request, UserInfo userInfo) {
@@ -381,6 +391,7 @@ public class UserController {
 	 * @param picId
 	 * @return
 	 */
+	@ApiOperation(value = "更换头像", notes = "更换头像", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/editUserPhoto.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String editUserPhoto(HttpServletRequest request, String userId, String picId) {
@@ -424,6 +435,7 @@ public class UserController {
 	 * @param bizId
 	 * @return
 	 */
+	@ApiOperation(value = "修改手机号", notes = "修改手机号", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/editUserPhone.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String editUserPhone(HttpServletRequest request, String userId, String oldPhone, String newPhone, String code, String bizId) {
@@ -463,6 +475,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
+	@ApiOperation(value = "退出登陆", notes = "退出登陆", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/userLoginOut.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String userLoginOut(HttpServletRequest request) {

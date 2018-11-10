@@ -107,6 +107,18 @@ public class BgOrder implements Serializable {
 
     // 备注 预留字段
     private String remark;
+    
+    //租客名
+    private String renterName;
+    
+    //租客学校
+    private String renterSchool;
+    
+    //租客邮箱
+    private String renterEmail;
+    
+    //租客电话
+    private String renterPhone;
 
     /**
      * 
@@ -571,4 +583,36 @@ public class BgOrder implements Serializable {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+    
+    public String getRenterName() {
+		return renterName;
+	}
+
+	public void setRenterName(String renterName) {
+		this.renterName = renterName;
+	}
+
+	public String getRenterSchool() {
+		return renterSchool;
+	}
+
+	public void setRenterSchool(String renterSchool) {
+		this.renterSchool = renterSchool;
+	}
+
+	public String getRenterEmail() {
+		return renterEmail;
+	}
+
+	public void setRenterEmail(String renterEmail) {
+		this.renterEmail = renterEmail;
+	}
+
+	public String getRenterPhone() {
+		return renterPhone;
+	}
+
+	public void setRenterPhone(String renterPhone) {
+		this.renterPhone = renterPhone;
+	}
 }

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.app.feedback.dao.AppFeedbackDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.AppFeedback">
+    <id column="app_feedback_id" jdbcType="VARCHAR" property="appFeedbackId" />
+    <result column="app_feedback_title" jdbcType="VARCHAR" property="appFeedbackTitle" />
+    <result column="app_feedback_content" jdbcType="VARCHAR" property="appFeedbackContent" />
+    <result column="app_feedback_contact" jdbcType="VARCHAR" property="appFeedbackContact" />
+    <result column="app_feedback_time" jdbcType="TIMESTAMP" property="appFeedbackTime" />
+    <result column="app_feedback_status" jdbcType="CHAR" property="appFeedbackStatus" />
+    <result column="app_feedback_reply" jdbcType="VARCHAR" property="appFeedbackReply" />
+    <result column="app_feedback_reply_time" jdbcType="TIMESTAMP" property="appFeedbackReplyTime" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    app_feedback_id, app_feedback_title, app_feedback_content, app_feedback_contact, 
+    app_feedback_time, app_feedback_status, app_feedback_reply, app_feedback_reply_time, 
+    is_delete, description, create_by, create_time, update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_feedback
+    where app_feedback_id = #{appFeedbackId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from app_feedback
+    where app_feedback_id = #{appFeedbackId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wkrent.common.entity.AppFeedback">
+    insert into app_feedback (app_feedback_id, app_feedback_title, 
+      app_feedback_content, app_feedback_contact, 
+      app_feedback_time, app_feedback_status, app_feedback_reply, 
+      app_feedback_reply_time, is_delete, description, 
+      create_by, create_time, update_by, 
+      update_time, remark)
+    values (#{appFeedbackId,jdbcType=VARCHAR}, #{appFeedbackTitle,jdbcType=VARCHAR}, 
+      #{appFeedbackContent,jdbcType=VARCHAR}, #{appFeedbackContact,jdbcType=VARCHAR}, 
+      #{appFeedbackTime,jdbcType=TIMESTAMP}, #{appFeedbackStatus,jdbcType=CHAR}, #{appFeedbackReply,jdbcType=VARCHAR}, 
+      #{appFeedbackReplyTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.AppFeedback">
+    insert into app_feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appFeedbackId != null">
+        app_feedback_id,
+      </if>
+      <if test="appFeedbackTitle != null">
+        app_feedback_title,
+      </if>
+      <if test="appFeedbackContent != null">
+        app_feedback_content,
+      </if>
+      <if test="appFeedbackContact != null">
+        app_feedback_contact,
+      </if>
+      <if test="appFeedbackTime != null">
+        app_feedback_time,
+      </if>
+      <if test="appFeedbackStatus != null">
+        app_feedback_status,
+      </if>
+      <if test="appFeedbackReply != null">
+        app_feedback_reply,
+      </if>
+      <if test="appFeedbackReplyTime != null">
+        app_feedback_reply_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appFeedbackId != null">
+        #{appFeedbackId,jdbcType=VARCHAR},
+      </if>
+      <if test="appFeedbackTitle != null">
+        #{appFeedbackTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="appFeedbackContent != null">
+        #{appFeedbackContent,jdbcType=VARCHAR},
+      </if>
+      <if test="appFeedbackContact != null">
+        #{appFeedbackContact,jdbcType=VARCHAR},
+      </if>
+      <if test="appFeedbackTime != null">
+        #{appFeedbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appFeedbackStatus != null">
+        #{appFeedbackStatus,jdbcType=CHAR},
+      </if>
+      <if test="appFeedbackReply != null">
+        #{appFeedbackReply,jdbcType=VARCHAR},
+      </if>
+      <if test="appFeedbackReplyTime != null">
+        #{appFeedbackReplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.AppFeedback">
+    update app_feedback
+    <set>
+      <if test="appFeedbackTitle != null">
+        app_feedback_title = #{appFeedbackTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="appFeedbackContent != null">
+        app_feedback_content = #{appFeedbackContent,jdbcType=VARCHAR},
+      </if>
+      <if test="appFeedbackContact != null">
+        app_feedback_contact = #{appFeedbackContact,jdbcType=VARCHAR},
+      </if>
+      <if test="appFeedbackTime != null">
+        app_feedback_time = #{appFeedbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appFeedbackStatus != null">
+        app_feedback_status = #{appFeedbackStatus,jdbcType=CHAR},
+      </if>
+      <if test="appFeedbackReply != null">
+        app_feedback_reply = #{appFeedbackReply,jdbcType=VARCHAR},
+      </if>
+      <if test="appFeedbackReplyTime != null">
+        app_feedback_reply_time = #{appFeedbackReplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where app_feedback_id = #{appFeedbackId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.AppFeedback">
+    update app_feedback
+    set app_feedback_title = #{appFeedbackTitle,jdbcType=VARCHAR},
+      app_feedback_content = #{appFeedbackContent,jdbcType=VARCHAR},
+      app_feedback_contact = #{appFeedbackContact,jdbcType=VARCHAR},
+      app_feedback_time = #{appFeedbackTime,jdbcType=TIMESTAMP},
+      app_feedback_status = #{appFeedbackStatus,jdbcType=CHAR},
+      app_feedback_reply = #{appFeedbackReply,jdbcType=VARCHAR},
+      app_feedback_reply_time = #{appFeedbackReplyTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where app_feedback_id = #{appFeedbackId,jdbcType=VARCHAR}
+  </update>
+</mapper>
