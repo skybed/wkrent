@@ -187,44 +187,58 @@ public class RentRoomController {
 			if(room != null) {
 				//判断房源是否可以预约
 				if("1".equals(room.getBgRoomStatus())) {
-					//修改房源状态
-					rentRoomService.updateRoomStatus(apponitInfo.getRoomId(), apponitInfo.getUserId());
 					
-					//修改房源预约数信息
-					rentRoomInfoService.AddAppoint(apponitInfo.getRoomId(), apponitInfo.getUserId());
-					
-					//生成订单信息
-					BgOrder order = new BgOrder();
-					order.setBgOrderId(UUIDUtil.getUUIDString());
-					order.setBgOrderNumber(RandomNumUtil.getRandomNum());
-					
-					try {
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						Date utilDate = sdf.parse(apponitInfo.getCheckInTime());
-						order.setBgOrderCheckinDate(utilDate);
-					} catch (ParseException e) {
-						Logger.getRootLogger().error("appointRentRoom checkInTime format exception:" + e.getMessage(), e);
+					//判断是否重复预约
+					BgOrder order = appOrderService.selectByRoomAndUserId(apponitInfo.getRoomId(), apponitInfo.getUserId());
+					if(order != null) {
+						resultData.setCode(Constant.RESULT_RENTROOM_APPOINT_ALREADY_CODE);
+						resultData.setMsg(Constant.RESULT_RENTROOM_APPOINT_ALREADY_MSG);
+					} else {
+						//修改房源状态
+						rentRoomService.updateRoomStatus(apponitInfo.getRoomId(), apponitInfo.getUserId());
+						
+						//修改房源预约数信息
+						boolean flag = rentRoomInfoService.addAppoint(apponitInfo.getRoomId(), apponitInfo.getUserId());
+						
+						//预约成功
+						if(flag) {
+							//生成订单信息
+							order = new BgOrder();
+							order.setBgOrderId(UUIDUtil.getUUIDString());
+							order.setBgOrderNumber(RandomNumUtil.getRandomNum());
+							
+							try {
+								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+								Date utilDate = sdf.parse(apponitInfo.getCheckInTime());
+								order.setBgOrderCheckinDate(utilDate);
+							} catch (ParseException e) {
+								Logger.getRootLogger().error("appointRentRoom checkInTime format exception:" + e.getMessage(), e);
+							}
+							
+							order.setBgOrderCreateTime(new Date());
+							order.setBgOrderRentTenancy(room.getBgRoomPriceUnit());
+							order.setBgOrderRentUnit("0");
+							order.setBgOrderRoomId(apponitInfo.getRoomId());
+							order.setBgOrderStatus("0");
+							order.setBgOrderUserId(apponitInfo.getUserId());
+							order.setCreateBy(apponitInfo.getUserId());
+							order.setCreateTime(new Date());
+							order.setIsDelete("0");
+							order.setUpdateBy(apponitInfo.getUserId());
+							order.setUpdateTime(new Date());
+							order.setBgRenterSchool(apponitInfo.getSchool());
+							order.setBgRenterName(apponitInfo.getUserName());
+							order.setBgRenterEmail(apponitInfo.getEmail());
+							order.setBgRenterPhone(apponitInfo.getPhone());
+							
+							appOrderService.insertOrder(order);
+							
+							map.put("flag", true);
+						} else {
+							resultData.setCode(Constant.RESULT_RENTROOM_APPOINT_FULL_CODE);
+							resultData.setMsg(Constant.RESULT_RENTROOM_APPOINT_FULL_MSG);
+						}
 					}
-					
-					order.setBgOrderCreateTime(new Date());
-					order.setBgOrderRentTenancy(room.getBgRoomPriceUnit());
-					order.setBgOrderRentUnit("0");
-					order.setBgOrderRoomId(apponitInfo.getRoomId());
-					order.setBgOrderStatus("0");
-					order.setBgOrderUserId(apponitInfo.getUserId());
-					order.setCreateBy(apponitInfo.getUserId());
-					order.setCreateTime(new Date());
-					order.setIsDelete("0");
-					order.setUpdateBy(apponitInfo.getUserId());
-					order.setUpdateTime(new Date());
-					order.setRenterSchool(apponitInfo.getSchool());
-					order.setRenterName(apponitInfo.getUserName());
-					order.setRenterEmail(apponitInfo.getEmail());
-					order.setRenterPhone(apponitInfo.getPhone());
-					
-					appOrderService.insertOrder(order);
-					
-					map.put("flag", true);
 				} else {
 					resultData.setCode(Constant.RESULT_RENTROOM_NOT_APPOINT_CODE);
 					resultData.setMsg(Constant.RESULT_RENTROOM_NOT_APPOINT_MSG);

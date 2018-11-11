@@ -109,16 +109,16 @@ public class BgOrder implements Serializable {
     private String remark;
     
     //租客名
-    private String renterName;
+    private String bgRenterName;
     
     //租客学校
-    private String renterSchool;
+    private String bgRenterSchool;
     
     //租客邮箱
-    private String renterEmail;
+    private String bgRenterEmail;
     
     //租客电话
-    private String renterPhone;
+    private String bgRenterPhone;
 
     /**
      * 
@@ -583,36 +583,37 @@ public class BgOrder implements Serializable {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+	public String getBgRenterName() {
+		return bgRenterName;
+	}
+
+	public void setBgRenterName(String bgRenterName) {
+		this.bgRenterName = bgRenterName;
+	}
+
+	public String getBgRenterSchool() {
+		return bgRenterSchool;
+	}
+
+	public void setBgRenterSchool(String bgRenterSchool) {
+		this.bgRenterSchool = bgRenterSchool;
+	}
+
+	public String getBgRenterEmail() {
+		return bgRenterEmail;
+	}
+
+	public void setBgRenterEmail(String bgRenterEmail) {
+		this.bgRenterEmail = bgRenterEmail;
+	}
+
+	public String getBgRenterPhone() {
+		return bgRenterPhone;
+	}
+
+	public void setBgRenterPhone(String bgRenterPhone) {
+		this.bgRenterPhone = bgRenterPhone;
+	}
     
-    public String getRenterName() {
-		return renterName;
-	}
-
-	public void setRenterName(String renterName) {
-		this.renterName = renterName;
-	}
-
-	public String getRenterSchool() {
-		return renterSchool;
-	}
-
-	public void setRenterSchool(String renterSchool) {
-		this.renterSchool = renterSchool;
-	}
-
-	public String getRenterEmail() {
-		return renterEmail;
-	}
-
-	public void setRenterEmail(String renterEmail) {
-		this.renterEmail = renterEmail;
-	}
-
-	public String getRenterPhone() {
-		return renterPhone;
-	}
-
-	public void setRenterPhone(String renterPhone) {
-		this.renterPhone = renterPhone;
-	}
 }

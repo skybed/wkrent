@@ -53,28 +53,28 @@
 	  </foreach>
 	</if>
 	
-	<if test="(timeSort == null or timeSort == '') and priceSort == '0'">
+	<if test='(timeSort == null or timeSort == "") and "0" eq priceSort'>
 	  order by bg_room_price asc 
 	</if>
-	<if test="(timeSort == null or timeSort == '') and priceSort == '1'">
+	<if test='(timeSort == null or timeSort == "") and "1" eq priceSort'>
 	  order by bg_room_price desc 
 	</if>
-	<if test="priceSort == '0' and timeSort == '0'">
+	<if test='"0" eq priceSort and "0" eq timeSort'>
 	  order by bg_room_price asc, update_time asc 
 	</if>
-	<if test="priceSort == '1' and timeSort == '0'">
+	<if test='"1" eq priceSort and "0" eq timeSort'>
 	  order by bg_room_price desc, update_time asc 
 	</if>
-	<if test="priceSort == '0' and timeSort == '1'">
+	<if test='"0" eq priceSort and "1" eq timeSort'>
 	  order by bg_room_price asc, update_time desc 
 	</if>
-	<if test="priceSort == '1' and timeSort == '1'">
+	<if test='"1" eq priceSort and "1" eq timeSort'>
 	  order by bg_room_price desc, update_time desc 
 	</if>
-	<if test="(priceSort == null or priceSort == '') and timeSort == '0'">
+	<if test='(priceSort == null or priceSort == "") and "0" eq timeSort'>
 	  order by update_time asc 
 	</if>
-	<if test="(priceSort == null or priceSort == '') and timeSort == '1'">
+	<if test='(priceSort == null or priceSort == "") and "1" eq timeSort'>
 	  order by update_time desc 
 	</if>
 	limit #{startIndex,jdbcType=INTEGER}, #{endIndex,jdbcType=INTEGER} 

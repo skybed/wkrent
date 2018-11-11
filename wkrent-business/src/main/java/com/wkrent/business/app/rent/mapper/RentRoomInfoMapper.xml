@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wkrent.business.app.rent.dao.RentRoomInfoDao">
-  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.BgRoomInfo">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.BgRoomInfo">
     <id column="bg_room_info_id" jdbcType="VARCHAR" property="bgRoomInfoId" />
     <result column="bg_room_id" jdbcType="VARCHAR" property="bgRoomId" />
     <result column="bg_room_appoint_num" jdbcType="TINYINT" property="bgRoomAppointNum" />
@@ -20,13 +20,13 @@
     delete from bg_room_info
     where bg_room_info_id = #{bgRoomInfoId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.wkrent.common.entity.BgRoomInfo">
+  <insert id="insert" parameterType="com.wkrent.common.entity.po.BgRoomInfo">
     insert into bg_room_info (bg_room_info_id, bg_room_id, bg_room_appoint_num, 
       bg_room_view_num)
     values (#{bgRoomInfoId,jdbcType=VARCHAR}, #{bgRoomId,jdbcType=VARCHAR}, #{bgRoomAppointNum,jdbcType=TINYINT}, 
       #{bgRoomViewNum,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgRoomInfo">
+  <insert id="insertSelective" parameterType="com.wkrent.common.entity.po.BgRoomInfo">
     insert into bg_room_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="bgRoomInfoId != null">
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.BgRoomInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkrent.common.entity.po.BgRoomInfo">
     update bg_room_info
     <set>
       <if test="bgRoomId != null">
@@ -72,7 +72,7 @@
     </set>
     where bg_room_info_id = #{bgRoomInfoId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.BgRoomInfo">
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.po.BgRoomInfo">
     update bg_room_info
     set bg_room_id = #{bgRoomId,jdbcType=VARCHAR},
       bg_room_appoint_num = #{bgRoomAppointNum,jdbcType=TINYINT},

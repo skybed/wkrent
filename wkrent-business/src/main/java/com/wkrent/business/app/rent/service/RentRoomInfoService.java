@@ -10,6 +10,6 @@ public interface RentRoomInfoService {
 
 	public void addViewNum(String roomId);
 	
-	public void AddAppoint(String roomId, String userId);
+	public boolean addAppoint(String roomId, String userId);
 	
 }

@@ -18,4 +18,6 @@ public interface AppOrderService {
 	public void cancelOrderAppoint(String orderId, String userId);
 	
 	public void insertOrder(BgOrder bgOrder);
+	
+	public BgOrder selectByRoomAndUserId(String roomId, String userId);
 }

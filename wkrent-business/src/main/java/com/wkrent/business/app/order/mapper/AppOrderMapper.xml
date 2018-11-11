@@ -24,6 +24,10 @@
     <result column="bg_order_rent_serialNum" jdbcType="VARCHAR" property="bgOrderRentSerialnum" />
     <result column="bg_order_rent_contract_flag" jdbcType="CHAR" property="bgOrderRentContractFlag" />
     <result column="bg_order_rent_contract_serialNum" jdbcType="VARCHAR" property="bgOrderRentContractSerialnum" />
+    <result column="bg_renter_name" jdbcType="VARCHAR" property="bgRenterName" />
+    <result column="bg_renter_school" jdbcType="VARCHAR" property="bgRenterSchool" />
+    <result column="bg_renter_email" jdbcType="VARCHAR" property="bgRenterEmail" />
+    <result column="bg_renter_phone" jdbcType="VARCHAR" property="bgRenterPhone" />
     <result column="is_delete" jdbcType="CHAR" property="isDelete" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
@@ -39,13 +43,14 @@
     bg_order_rent_service_flag, bg_order_rent_service_money, bg_order_rent_service_unit, 
     bg_order_rent_service_seralNum, bg_order_rent_flag, bg_order_rent_money, bg_order_rent_unit, 
     bg_order_rent_serialNum, bg_order_rent_contract_flag, bg_order_rent_contract_serialNum, 
+    bg_renter_name, bg_renter_school, bg_renter_email, bg_renter_phone, 
     is_delete, description, create_by, create_time, update_by, update_time, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from bg_order
-    where bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+    where bg_order_id = #{bgOrderId,jdbcType=VARCHAR} and is_delete = '0'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from bg_order
@@ -61,6 +66,7 @@
       bg_order_rent_service_seralNum, bg_order_rent_flag, 
       bg_order_rent_money, bg_order_rent_unit, bg_order_rent_serialNum, 
       bg_order_rent_contract_flag, bg_order_rent_contract_serialNum, 
+      bg_renter_name, bg_renter_school, bg_renter_email, bg_renter_phone, 
       is_delete, description, create_by, 
       create_time, update_by, update_time, 
       remark)
@@ -73,6 +79,8 @@
       #{bgOrderRentServiceSeralnum,jdbcType=VARCHAR}, #{bgOrderRentFlag,jdbcType=CHAR}, 
       #{bgOrderRentMoney,jdbcType=DOUBLE}, #{bgOrderRentUnit,jdbcType=CHAR}, #{bgOrderRentSerialnum,jdbcType=VARCHAR}, 
       #{bgOrderRentContractFlag,jdbcType=CHAR}, #{bgOrderRentContractSerialnum,jdbcType=VARCHAR}, 
+      #{bgRenterName,jdbcType=VARCHAR},#{bgRenterSchool,jdbcType=VARCHAR},
+      #{bgRenterEmail,jdbcType=VARCHAR},#{bgRenterPhone,jdbcType=VARCHAR},
       #{isDelete,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
@@ -145,6 +153,18 @@
       </if>
       <if test="bgOrderRentContractSerialnum != null">
         bg_order_rent_contract_serialNum,
+      </if>
+      <if test="bgRenterName != null">
+        bg_renter_name,
+      </if>
+      <if test="bgRenterSchool != null">
+        bg_renter_school,
+      </if>
+      <if test="bgRenterEmail != null">
+        bg_renter_email,
+      </if>
+      <if test="bgRenterPhone != null">
+        bg_renter_phone,
       </if>
       <if test="isDelete != null">
         is_delete,
@@ -235,6 +255,18 @@
       <if test="bgOrderRentContractSerialnum != null">
         #{bgOrderRentContractSerialnum,jdbcType=VARCHAR},
       </if>
+	  <if test="bgRenterName != null">
+        #{bgRenterName,jdbcType=VARCHAR},
+      </if>
+       <if test="bgRenterSchool != null">
+        #{bgRenterSchool,jdbcType=VARCHAR},
+      </if>
+       <if test="bgRenterEmail != null">
+        #{bgRenterEmail,jdbcType=VARCHAR},
+      </if>
+       <if test="bgRenterPhone != null">
+        #{bgRenterPhone,jdbcType=VARCHAR},
+      </if>
       <if test="isDelete != null">
         #{isDelete,jdbcType=CHAR},
       </if>
@@ -324,6 +356,18 @@
       <if test="bgOrderRentContractSerialnum != null">
         bg_order_rent_contract_serialNum = #{bgOrderRentContractSerialnum,jdbcType=VARCHAR},
       </if>
+      <if test="bgRenterName != null">
+        bg_renter_name = #{bgRenterName,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRenterSchool != null">
+        bg_renter_school = #{bgRenterSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRenterEmail != null">
+        bg_renter_email = #{bgRenterEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRenterPhone != null">
+        bg_renter_phone = #{bgRenterPhone,jdbcType=VARCHAR},
+      </if>
       <if test="isDelete != null">
         is_delete = #{isDelete,jdbcType=CHAR},
       </if>
@@ -371,6 +415,10 @@
       bg_order_rent_serialNum = #{bgOrderRentSerialnum,jdbcType=VARCHAR},
       bg_order_rent_contract_flag = #{bgOrderRentContractFlag,jdbcType=CHAR},
       bg_order_rent_contract_serialNum = #{bgOrderRentContractSerialnum,jdbcType=VARCHAR},
+      bg_renter_name = #{bgRenterName,jdbcType=VARCHAR},
+      bg_renter_school = #{bgRenterSchool,jdbcType=VARCHAR},
+      bg_renter_email = #{bgRenterEmail,jdbcType=VARCHAR},
+      bg_renter_phone = #{bgRenterPhone,jdbcType=VARCHAR},
       is_delete = #{isDelete,jdbcType=CHAR},
       description = #{description,jdbcType=VARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
@@ -410,4 +458,11 @@
       update_time = DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s') 
     where bg_order_id = #{orderId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByRoomAndUserId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_order 
+    where bg_order_room_id = #{roomId,jdbcType=VARCHAR} and bg_order_user_id = #{userId,jdbcType=VARCHAR} and is_delete = '0'
+  </select>
 </mapper>
