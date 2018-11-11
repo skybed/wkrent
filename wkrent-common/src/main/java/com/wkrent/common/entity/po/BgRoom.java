@@ -147,11 +147,6 @@ public class BgRoom implements Serializable {
     private String remark;
 
     /**
-     * 是否上架 0：否； 1：是
-     */
-    private String isStores;
-
-    /**
      * 
      * @return bg_room_id 后台房源id,唯一标识
      */
@@ -549,13 +544,5 @@ public class BgRoom implements Serializable {
      */
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
-    }
-
-    public String getIsStores() {
-        return isStores;
-    }
-
-    public void setIsStores(String isStores) {
-        this.isStores = isStores;
     }
 }

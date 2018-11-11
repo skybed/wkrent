@@ -156,11 +156,6 @@ public class BgRoomVO implements Serializable {
     private String remark;
 
     /**
-     * 是否上架 0：否； 1：是
-     */
-    private String isStores;
-
-    /**
      * 房源标签idList
      */
     private List<String> roomLabelIdList;
@@ -597,14 +592,6 @@ public class BgRoomVO implements Serializable {
 
     public void setRoomLabelIdList(List<String> roomLabelIdList) {
         this.roomLabelIdList = roomLabelIdList;
-    }
-
-    public String getIsStores() {
-        return isStores;
-    }
-
-    public void setIsStores(String isStores) {
-        this.isStores = isStores;
     }
 
     public Byte getBgRoomAppointNum() {

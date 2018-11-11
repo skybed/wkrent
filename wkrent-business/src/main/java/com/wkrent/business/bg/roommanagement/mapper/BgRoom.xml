@@ -27,7 +27,6 @@
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="is_stores" jdbcType="VARCHAR" property="isStores" />
   </resultMap>
 
   <resultMap id="QueryRoomMap" type="com.wkrent.common.entity.vo.BgRoomVO" extends="BaseResultMap">
@@ -40,7 +39,7 @@
     bg_room_address_detail, bg_room_address_x, bg_room_address_y, bg_room_price, bg_room_price_unit, 
     bg_room_status, bg_room_max_appoint_num, bg_room_recommend, bg_room_tips, bg_room_merchant_id, 
     bg_room_property, bg_room_type, bg_room_detail, is_delete, description, create_by, 
-    create_time, update_by, update_time, remark, is_stores
+    create_time, update_by, update_time, remark
   </sql>
 
   <sql id="Query_Column_List">
@@ -50,7 +49,7 @@
     ro.bg_room_status, ro.bg_room_max_appoint_num, ro.bg_room_recommend,
     ro.bg_room_tips, ro.bg_room_merchant_id, ro.bg_room_property,
     ro.bg_room_type, ro.bg_room_detail, ro.is_delete, ro.description,
-    ro.create_by, ro.create_time, ro.update_by, ro.update_time, ro.remark, ro.is_stores
+    ro.create_by, ro.create_time, ro.update_by, ro.update_time, ro.remark,
     roi.bg_room_appoint_num, roi.bg_room_view_num
   </sql>
 
@@ -101,7 +100,7 @@
       bg_room_merchant_id, bg_room_property, bg_room_type,
       bg_room_detail, is_delete, description,
       create_by, create_time, update_by,
-      update_time, remark, is_stores)
+      update_time, remark)
     values (#{bgRoomId,jdbcType=VARCHAR}, #{bgRoomNumber,jdbcType=VARCHAR}, #{bgRoomName,jdbcType=VARCHAR},
       #{bgRoomAddressCountry,jdbcType=VARCHAR}, #{bgRoomAddressCity,jdbcType=VARCHAR},
       #{bgRoomAddressDetail,jdbcType=VARCHAR}, #{bgRoomAddressX,jdbcType=DOUBLE}, #{bgRoomAddressY,jdbcType=DOUBLE},
@@ -110,7 +109,7 @@
       #{bgRoomMerchantId,jdbcType=VARCHAR}, #{bgRoomProperty,jdbcType=VARCHAR}, #{bgRoomType,jdbcType=VARCHAR},
       #{bgRoomDetail,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{description,jdbcType=VARCHAR},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
-      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{isStores,jdbcType=VARCHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.po.BgRoom">
     update bg_room
