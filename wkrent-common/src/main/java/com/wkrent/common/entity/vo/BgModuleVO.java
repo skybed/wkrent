@@ -1,6 +1,5 @@
 package com.wkrent.common.entity.vo;
 
-import java.sql.Clob;
 import java.util.Date;
 
 /**
@@ -22,7 +21,7 @@ public class BgModuleVO {
     /**
      * 模块设置内容（富文本框）
      */
-    private Clob bgModuleValue;
+    private String bgModuleValue;
 
 
     /**
@@ -76,11 +75,11 @@ public class BgModuleVO {
         this.bgModuleType = bgModuleType;
     }
 
-    public Clob getBgModuleValue() {
+    public String getBgModuleValue() {
         return bgModuleValue;
     }
 
-    public void setBgModuleValue(Clob bgModuleValue) {
+    public void setBgModuleValue(String bgModuleValue) {
         this.bgModuleValue = bgModuleValue;
     }
 

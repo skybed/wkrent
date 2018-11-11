@@ -1,7 +1,6 @@
 package com.wkrent.common.entity.po;
 
 import java.io.Serializable;
-import java.sql.Clob;
 import java.util.Date;
 
 public class BgModule implements Serializable {
@@ -19,7 +18,7 @@ public class BgModule implements Serializable {
     /**
      * 模块设置内容（富文本框）
      */
-    private Clob bgModuleValue;
+    private String bgModuleValue;
 
 
     /**
@@ -63,11 +62,11 @@ public class BgModule implements Serializable {
         this.bgModuleType = bgModuleType;
     }
 
-    public Clob getBgModuleValue() {
+    public String getBgModuleValue() {
         return bgModuleValue;
     }
 
-    public void setBgModuleValue(Clob bgModuleValue) {
+    public void setBgModuleValue(String bgModuleValue) {
         this.bgModuleValue = bgModuleValue;
     }
 

@@ -135,7 +135,7 @@
     where pic_attach_id = #{picId,jdbcType=VARCHAR}
   </update>
 
-  <update id="deletePicAttach" parameterType="java.util.List">
+  <update id="deletePicAttachList" parameterType="java.util.List">
     update bg_pic_attach
     set is_delete = '1'
     <where>

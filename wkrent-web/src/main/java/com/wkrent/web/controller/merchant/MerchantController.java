@@ -173,7 +173,7 @@ public class MerchantController extends BaseController{
     }
 
     @ApiOperation(value = "查询所有未删除商家信息", notes = "查询所有未删除商家信息", httpMethod = "GET", response = PageResult.class)
-    @RequestMapping(value = "/findByCondition", method = RequestMethod.GET)
+    @RequestMapping(value = "/queryAllMerchant", method = RequestMethod.GET)
     @ResponseBody
     public List<BgMerchantVO> queryAllMerchant(){
         return bgMerchantService.queryAllMerchant();
