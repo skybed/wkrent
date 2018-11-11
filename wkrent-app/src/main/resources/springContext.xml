@@ -76,7 +76,18 @@
 		<property name="validationQuery">
 			<value>${jdbc.db.validationQuery}</value>
 		</property>
+		<property name="proxyFilters">
+			<list>
+                <ref bean="logFilter" />
+            </list>
+        </property>
+        <property name="filters" value="wall,log4j" />
 	</bean>
+	
+    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Log4jFilter">
+        <property name="resultSetLogEnabled" value="false"/>
+        <property name="statementExecutableSqlLogEnable" value="true"/>
+    </bean>
 
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sessionFactoryManage" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -91,6 +102,11 @@
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.wkrent.business.**.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sessionFactoryManage"></property>
+	</bean>
+	
+	<!-- 事务管理  -->
+	<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="wkrentdb" />
 	</bean>
 	
 	<!-- 使用annotation定义事务 -->

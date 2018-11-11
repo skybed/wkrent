@@ -166,4 +166,24 @@ public class Constant {
 	 * 该房源已被预约，请重试！
 	 */
 	public static final String RESULT_RENTROOM_NOT_APPOINT_MSG = "该房源已被预约，请重试！";
+	
+	/**
+	 * 状态码 306
+	 */
+	public static final String RESULT_RENTROOM_APPOINT_FULL_CODE = "306";
+	
+	/**
+	 * 该房源已预约满，请看看其它房源
+	 */
+	public static final String RESULT_RENTROOM_APPOINT_FULL_MSG = "该房源已预约满，请看看其它房源！";
+	
+	/**
+	 * 状态码 307
+	 */
+	public static final String RESULT_RENTROOM_APPOINT_ALREADY_CODE = "307";
+	
+	/**
+	 * 您已预定该房源，不可重复预定
+	 */
+	public static final String RESULT_RENTROOM_APPOINT_ALREADY_MSG = "您已预定该房源，不可重复预定！";
 }

@@ -85,4 +85,9 @@ public class AppOrderServiceImpl implements AppOrderService {
 		appOrderDao.insertSelective(bgOrder);
 	}
 
+	@Override
+	public BgOrder selectByRoomAndUserId(String roomId, String userId) {
+		return appOrderDao.selectByRoomAndUserId(roomId, userId);
+	}
+
 }

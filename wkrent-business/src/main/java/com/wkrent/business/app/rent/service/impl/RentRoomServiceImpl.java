@@ -60,7 +60,7 @@ public class RentRoomServiceImpl implements RentRoomService {
 					} else {
 						roomInfo.setIsAttention("1");
 					}
-					
+				
 					infos.add(roomInfo);
 				}
 			}
