@@ -187,6 +187,11 @@ public class BgRoomVO implements Serializable {
     private Date endDate;
 
     /**
+     * 房源附件idList
+     */
+    private List<String> attachIdList;
+
+    /**
      * 
      * @return bg_room_id 后台房源id,唯一标识
      */
@@ -640,5 +645,13 @@ public class BgRoomVO implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<String> getAttachIdList() {
+        return attachIdList;
+    }
+
+    public void setAttachIdList(List<String> attachIdList) {
+        this.attachIdList = attachIdList;
     }
 }

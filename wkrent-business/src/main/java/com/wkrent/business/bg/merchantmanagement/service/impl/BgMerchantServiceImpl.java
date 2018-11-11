@@ -1,5 +1,7 @@
 package com.wkrent.business.bg.merchantmanagement.service.impl;
 
+import com.google.common.collect.Lists;
+import com.wkrent.business.bg.attach.service.BgPicAttachService;
 import com.wkrent.business.bg.merchantmanagement.dao.BgMerchantDao;
 import com.wkrent.business.bg.merchantmanagement.service.BgMerchantService;
 import com.wkrent.common.entity.base.BaseAjaxVO;
@@ -12,6 +14,7 @@ import com.wkrent.common.exception.WkRentException;
 import com.wkrent.common.util.BeanUtil;
 import com.wkrent.common.util.OperatorUtil;
 import com.wkrent.common.util.UUIDUtil;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,9 @@ public class BgMerchantServiceImpl implements BgMerchantService{
 
     @Autowired
     private BgMerchantDao bgMerchantDao;
+
+    @Autowired
+    private BgPicAttachService bgPicAttachService;
 
     /**
      * 分页查询商家信息
@@ -70,8 +76,8 @@ public class BgMerchantServiceImpl implements BgMerchantService{
         bgMerchant.setBgMerchantId(UUIDUtil.getUUID());
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Add, bgMerchant,loginAccount);
         bgMerchantDao.insert(bgMerchant);
-        //TODO 设置附件表商家id信息
-
+        //设置附件表商家id信息
+        bgPicAttachService.updateAttachOwnerId(merchantVO.getFileIdList(), bgMerchant.getBgMerchantId());
         merchantVO.setBgMerchantNumber(code);
         merchantVO.setBgMerchantId(bgMerchant.getBgMerchantId());
         baseAjaxVO.setResult(merchantVO);
@@ -97,7 +103,8 @@ public class BgMerchantServiceImpl implements BgMerchantService{
         }
         BgMerchant updateData = BeanUtil.copyBean(merchantVO, BgMerchant.class);
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateData, loginAccount);
-        //TODO 若fileIdList不为空，则更新 fileInfo商家id信息
+        //若fileIdList不为空，则更新 fileInfo商家id信息
+        bgPicAttachService.updateAttachOwnerId(merchantVO.getFileIdList(), merchantVO.getBgMerchantId());
         bgMerchantDao.update(updateData);
     }
 
@@ -210,5 +217,20 @@ public class BgMerchantServiceImpl implements BgMerchantService{
         if(result != 1){
             throw new WkRentException("禁用商家失败，商家信息已变更！");
         }
+    }
+
+    /**
+     * 查询商家信息
+     *
+     * @return 符合条件信息
+     */
+    @Override
+    public List<BgMerchantVO> queryAllMerchant() {
+
+        List<BgMerchant> merchantList = bgMerchantDao.queryAllMerchant();
+        if(CollectionUtils.isNotEmpty(merchantList)){
+            return BeanUtil.copyList(merchantList, BgMerchantVO.class);
+        }
+        return Lists.newArrayList();
     }
 }

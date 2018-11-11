@@ -19,8 +19,9 @@ public interface OrderService {
      * 根据id删除订单
      * @param orderIdList 订单id
      * @param loginAccount 当前登录账号
+     * @param result 返回提示
      */
-    void delete(List<String> orderIdList, String loginAccount);
+    void delete(List<String> orderIdList, String loginAccount, BaseAjaxVO result);
 
     /**
      * 根据orderId查询前台订单信息
@@ -29,11 +30,36 @@ public interface OrderService {
      */
     BaseAjaxVO findByOrderId(String orderId);
 
+
     /**
-     * 运营管理
+     * 根据房源id更新订单状态
+     * @param roomId 房源id
+     * @param orderStatus 房源状态
+     * @param loginAccount 登录账号
+     */
+    void updateStatusByRoomId(String roomId, String orderStatus, String loginAccount);
+
+    /**
+     * 锁定房源
      * @param orderVO 订单
      * @param loginAccount 操作人账号
      * @return 操作结果
      */
-    void manage(BgOrderVO orderVO, String loginAccount);
+    void lockRoom(BgOrderVO orderVO, String loginAccount);
+
+    /**
+     * 缴纳房租
+     * @param orderVO 订单
+     * @param loginAccount 操作人账号
+     * @return 操作结果
+     */
+    void payRent(BgOrderVO orderVO, String loginAccount);
+
+    /**
+     * 签订合同
+     * @param orderVO 订单
+     * @param loginAccount 操作人账号
+     * @return 操作结果
+     */
+    void signContract(BgOrderVO orderVO, String loginAccount);
 }

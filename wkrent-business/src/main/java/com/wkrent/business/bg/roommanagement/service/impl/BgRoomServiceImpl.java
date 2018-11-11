@@ -1,15 +1,19 @@
 package com.wkrent.business.bg.roommanagement.service.impl;
 
 import com.google.common.collect.Lists;
+import com.wkrent.business.bg.attach.service.BgPicAttachService;
 import com.wkrent.business.bg.datadict.service.BgDataDictValueService;
+import com.wkrent.business.bg.ordermanagement.service.OrderService;
 import com.wkrent.business.bg.roommanagement.dao.BgRoomDao;
 import com.wkrent.business.bg.roommanagement.service.BgRoomService;
 import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
+import com.wkrent.common.entity.enums.OrderStatusEnum;
 import com.wkrent.common.entity.enums.RoomStatusEnum;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.po.BgRoom;
 import com.wkrent.common.entity.vo.BgDataDictValueVO;
+import com.wkrent.common.entity.vo.BgPicAttachVO;
 import com.wkrent.common.entity.vo.BgRoomVO;
 import com.wkrent.common.exception.WkRentException;
 import com.wkrent.common.util.BeanUtil;
@@ -20,9 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Administrator 
@@ -35,6 +37,12 @@ public class BgRoomServiceImpl implements BgRoomService{
 
     @Autowired
     private BgDataDictValueService bgDataDictValueService;
+
+    @Autowired
+    private BgPicAttachService bgPicAttachService;
+
+    @Autowired
+    private OrderService orderService;
 
     /**
      * 分页查询房源信息
@@ -105,8 +113,8 @@ public class BgRoomServiceImpl implements BgRoomService{
         //设置房源标签，多条用，分割
         room.setBgRoomTips(getRoomLabelInfo(roomVO.getRoomLabelIdList()));
         bgRoomDao.insert(room);
-        //TODO 设置附件表房源id信息
-
+        //设置附件表房源id信息
+        bgPicAttachService.updateAttachOwnerId(roomVO.getAttachIdList(), room.getBgRoomId());
         roomVO.setBgRoomNumber(code);
         roomVO.setBgRoomId(room.getBgRoomId());
         baseAjaxVO.setResult(roomVO);
@@ -135,7 +143,10 @@ public class BgRoomServiceImpl implements BgRoomService{
         BgRoom updateData = BeanUtil.copyBean(roomVO, BgRoom.class);
         updateData.setBgRoomTips(getRoomLabelInfo(roomVO.getRoomLabelIdList()));
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateData, loginAccount);
-        //TODO 若fileIdList不为空，则更新 fileInfo房源id信息
+        //设置附件表房源id信息
+        if(CollectionUtils.isNotEmpty(roomVO.getAttachIdList())){
+            bgPicAttachService.updateAttachOwnerId(roomVO.getAttachIdList(), roomVO.getBgRoomId());
+        }
         bgRoomDao.updateByPrimaryKey(updateData);
     }
 
@@ -161,7 +172,15 @@ public class BgRoomServiceImpl implements BgRoomService{
         }
         BgRoomVO roomVO = BeanUtil.copyBean(room, BgRoomVO.class);
         roomVO.setRoomLabelIdList(getLabelIdList(room.getBgRoomTips()));
-        //TODO 查询附件信息
+        //查询附件信息
+        List<BgPicAttachVO> attachVOList = bgPicAttachService.selectByOwnerId(roomVO.getBgRoomId());
+        List<String> attachIdList = Lists.newArrayList();
+        if(CollectionUtils.isNotEmpty(attachVOList)){
+            for (BgPicAttachVO attachVO : attachVOList){
+                attachIdList.add(attachVO.getPicAttachId());
+            }
+        }
+        roomVO.setAttachIdList(attachIdList);
         baseAjaxVO.setResult(roomVO);
         return baseAjaxVO;
     }
@@ -209,29 +228,30 @@ public class BgRoomServiceImpl implements BgRoomService{
     /**
      * 房源运营管理
      * 房源id， 状态 不能为空
-     * @param roomVO 房源信息
+     * @param roomId 房源Id
      * @return 更新条数
      */
     @Override
-    public BaseAjaxVO manage(BgRoomVO roomVO, String loginAccount) {
+    public BaseAjaxVO soldOut(String roomId, String loginAccount) {
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
-        if(StringUtils.isBlank(roomVO.getBgRoomId()) || StringUtils.isBlank(roomVO.getIsStores())){
+        if(StringUtils.isBlank(roomId)){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
-            baseAjaxVO.setText("更新房源状态失败，房源Id&上下架状态不能为空！");
+            baseAjaxVO.setText("下架房源失败，房源Id不能为空！");
             return baseAjaxVO;
         }
-        BgRoom bgRoom = bgRoomDao.selectByPrimaryKey(roomVO.getBgRoomId());
+        BgRoom bgRoom = bgRoomDao.selectByPrimaryKey(roomId);
         if(bgRoom == null){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
-            baseAjaxVO.setText("更新房源上下架状态失败，当前房源不存在或已被删除！");
+            baseAjaxVO.setText("下架房源失败，当前房源不存在或已被删除！");
             return baseAjaxVO;
         }
         BgRoom updateRoom = new BgRoom();
-        updateRoom.setBgRoomId(roomVO.getBgRoomId());
-        updateRoom.setIsStores(roomVO.getIsStores());
-        updateRoom.setDescription(roomVO.getDescription());
+        updateRoom.setBgRoomId(roomId);
+        updateRoom.setDescription(RoomStatusEnum.SOLD_OUT.getCode());
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateRoom, loginAccount);
-        bgRoomDao.manage(updateRoom);
+        bgRoomDao.updateRoomStatusById(updateRoom);
+        //更新当前房源下订单状态为房源已下架
+        orderService.updateStatusByRoomId(roomId, OrderStatusEnum.SOLD_OUT.getCode(), loginAccount);
         return baseAjaxVO;
     }
 

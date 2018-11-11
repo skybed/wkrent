@@ -26,17 +26,59 @@ public interface OrderDao {
 
     /**
      * 更新订单状态
-     * @param order 更新账号
+     * @param order 更新订单
      * @return 更新条数
      */
     int updateStatus(BgOrder order);
 
     /**
+     * 锁定订单
+     * @param order 更新订单
+     * @return 更新条数
+     */
+    int lockOrder(BgOrder order);
+
+    /**
+     * 缴纳房租
+     * @param order 更新订单
+     * @return 更新条数
+     */
+    int orderPayRent(BgOrder order);
+
+    /**
+     * 签订合同
+     * @param order 更新订单
+     * @return 更新条数
+     */
+    int signContract(BgOrder order);
+
+    /**
+     * 根据房源id更新其他订单状态为已出租
+     * @param order 更新订单
+     * @return 更新条数
+     */
+    int updateOtherOrderStatus(BgOrder order);
+
+    /**
+     * 根据房源id更新订单状态
+     * @param order 更新订单
+     * @return 更新条数
+     */
+    int updateStatusByRoomId(BgOrder order);
+
+    /**
      * 根据id查询订单
-     * @param userId 订单id
+     * @param orderId 订单id
      * @return 符合条件未被删除订单信息
      */
-    BgOrder findById(String userId);
+    BgOrder findById(String orderId);
+
+    /**
+     * 根据id查询订单
+     * @param orderIdList 订单id
+     * @return 符合条件未被删除订单信息
+     */
+    List<BgOrder> findByIdList(List<String> orderIdList);
 
     /**
      * 删除订单

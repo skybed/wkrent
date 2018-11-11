@@ -1,9 +1,11 @@
 package com.wkrent.web.controller.room;
 
+import com.wkrent.business.bg.attach.service.BgPicAttachService;
 import com.wkrent.business.bg.roommanagement.service.BgRoomService;
 import com.wkrent.common.base.BaseController;
 import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
+import com.wkrent.common.entity.enums.UploadFileTypeEnum;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.vo.BgRoomVO;
 import com.wkrent.common.exception.WkRentException;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -31,6 +35,9 @@ public class RoomController extends BaseController{
 
     @Autowired
     private BgRoomService bgRoomService;
+
+    @Autowired
+    private BgPicAttachService bgPicAttachService;
 
     @ApiOperation(value = "条件查询房源信息", notes = "条件查询房源信息", httpMethod = "POST", response = BgRoomVO.class)
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
@@ -89,23 +96,36 @@ public class RoomController extends BaseController{
         return baseAjaxVO;
     }
 
-    @ApiOperation(value = "房源运营管理", notes = "房源运营管理", httpMethod = "POST", response = BaseAjaxVO.class)
-    @RequestMapping(value = "/manage", method = RequestMethod.POST)
+    @ApiOperation(value = "房源下架", notes = "房源下架", httpMethod = "POST", response = BaseAjaxVO.class)
+    @RequestMapping(value = "/soldOut", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO manage(@RequestBody @ApiParam(name = "roomVO", value = "运营管理房源")
-                                         BgRoomVO roomVO, @ApiIgnore HttpSession session){
+    public BaseAjaxVO soldOut(@RequestBody @ApiParam(name = "roomId", value = "房源Id")
+                                         String roomId, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgRoomService.updateRoomStatusById(roomVO, getLoginAccount(session));
+            bgRoomService.soldOut(roomId, getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("更新房源信息失败", e, roomVO);
+            log.warn("下架房源失败", e, roomId);
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("更新房源信息失败，系统异常", e, roomVO);
+            log.error("下架房源失败，系统异常", e, roomId);
         }
         return baseAjaxVO;
+    }
+
+    /**
+     * 上传多文件
+     * @param request request
+     * @param uploadFiles 附件信息
+     * @return
+     */
+    @ApiOperation(value = "房源附件上传", notes = "房源附件上传", httpMethod = "POST", response = String.class)
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public BaseAjaxVO uploadPictures(HttpServletRequest request, MultipartFile[] uploadFiles) {
+        return bgPicAttachService.savePicAttachList(uploadFiles, UploadFileTypeEnum.MERCHANT_FILE.getCode());
     }
 }

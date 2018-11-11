@@ -49,9 +49,9 @@ public interface BgRoomService {
 
     /**
      * 房源运营管理
-     * @param roomVO 房源信息
+     * @param roomId 房源id
      * @param loginAccount 登录账号
      * @return 操作结果
      */
-    BaseAjaxVO manage(BgRoomVO roomVO, String loginAccount);
+    BaseAjaxVO soldOut(String roomId, String loginAccount);
 }

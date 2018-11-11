@@ -46,6 +46,12 @@ public interface BgMerchantDao {
     List<BgMerchant> findByCondition(BgMerchantVO bgMerchantVO);
 
     /**
+     * 条件查询商家信息
+     * @return 符合条件结果
+     */
+    List<BgMerchant> queryAllMerchant();
+
+    /**
      * 根据条件查询商家总条数
      * @param bgMerchantVO 查询条件
      * @return 总条数

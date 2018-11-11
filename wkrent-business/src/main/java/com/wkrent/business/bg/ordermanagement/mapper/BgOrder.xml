@@ -159,6 +159,78 @@
     </where>
   </update>
 
+  <update id="lockOrder" parameterType="com.wkrent.common.entity.po.BgOrder">
+    update bg_order
+    set bg_order_status = #{bgOrderStatus, jdbcType=VARCHAR},
+        bg_order_rent_deposit_flag = #{bgOrderRentDepositFlag, jdbcType=CHAR},
+        bg_order_rent_deposit_money = #{bgOrderRentDepositMoney, jdbcType=DOUBLE},
+        bg_order_rent_deposit_unit = #{bgOrderRentDepositUnit, jdbcType=VARCHAR},
+        bg_order_rent_deposit_serialNum = #{bgOrderRentDepositSerialnum, jdbcType=VARCHAR},
+        bg_order_rent_service_flag = #{bgOrderRentServiceFlag, jdbcType=CHAR},
+        bg_order_rent_service_money = #{bgOrderRentServiceMoney, jdbcType=DOUBLE},
+        bg_order_rent_service_unit = #{bgOrderRentServiceUnit, jdbcType=VARCHAR},
+        bg_order_rent_service_seralNum = #{bgOrderRentServiceSeralnum, jdbcType=VARCHAR},
+        description = #{description, jdbcType=VARCHAR},
+        update_by = #{updateBy, jdbcType=VARCHAR},
+        update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      AND bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+    </where>
+  </update>
+
+  <update id="orderPayRent" parameterType="com.wkrent.common.entity.po.BgOrder">
+    update bg_order
+    set bg_order_status = #{bgOrderStatus, jdbcType=VARCHAR},
+        bg_order_rent_flag = #{bgOrderRentFlag, jdbcType=CHAR},
+        bg_order_rent_money = #{bgOrderRentMoney, jdbcType=DOUBLE},
+        bg_order_rent_unit = #{bgOrderRentUnit, jdbcType=VARCHAR},
+        bg_order_rent_serialNum = #{bgOrderRentSerialnum, jdbcType=VARCHAR},
+        description = #{description, jdbcType=VARCHAR},
+        update_by = #{updateBy, jdbcType=VARCHAR},
+        update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      AND bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+    </where>
+  </update>
+
+  <update id="signContract" parameterType="com.wkrent.common.entity.po.BgOrder">
+    update bg_order
+    set bg_order_status = #{bgOrderStatus, jdbcType=VARCHAR},
+        bg_order_rent_contract_flag = #{bgOrderRentContractFlag, jdbcType=CHAR},
+        bg_order_rent_contract_serialNum = #{bgOrderRentContractSerialnum, jdbcType=DOUBLE},
+        description = #{description, jdbcType=VARCHAR},
+        update_by = #{updateBy, jdbcType=VARCHAR},
+        update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      AND bg_order_id = #{bgOrderId,jdbcType=VARCHAR}
+    </where>
+  </update>
+
+  <update id="updateStatusByRoomId" parameterType="com.wkrent.common.entity.po.BgOrder">
+    update bg_order
+    set bg_order_status = #{bgOrderStatus, jdbcType=VARCHAR},
+    update_by = #{updateBy, jdbcType=VARCHAR},
+    update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      AND bg_order_room_id = #{bgOrderRoomId,jdbcType=VARCHAR}
+    </where>
+  </update>
+
+  <update id="updateOtherOrderStatus" parameterType="com.wkrent.common.entity.po.BgOrder">
+    update bg_order
+    set bg_order_status = #{bgOrderStatus, jdbcType=VARCHAR},
+    update_by = #{updateBy, jdbcType=VARCHAR},
+    update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      AND bg_order_room_id = #{bgOrderRoomId,jdbcType=VARCHAR} AND bg_order_id != #{bgOrderId,jdbcType=VARCHAR}
+    </where>
+  </update>
+
 
   <select id="findByCondition" parameterType="com.wkrent.common.entity.vo.BgOrderVO" resultMap="QueryResultMap">
     select

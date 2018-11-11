@@ -63,11 +63,4 @@ public interface BgRoomDao {
      * @return 更新条数
      */
     int updateRoomStatusById(BgRoom room);
-
-    /**
-     * 房源运营管理
-     * @param room 房源信息
-     * @return 更新条数
-     */
-    int manage(BgRoom room);
 }

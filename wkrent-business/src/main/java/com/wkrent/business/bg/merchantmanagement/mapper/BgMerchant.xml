@@ -126,4 +126,14 @@
       is_delete= '0' AND  bg_merchant_name = #{bgMerchantName,jdbcType=VARCHAR}
     </where>
   </select>
+
+  <!-- 查询商家信息 -->
+  <select id="queryAllMerchant" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_merchant
+    <where>
+      is_delete= '0' AND  is_active = '1'
+    </where>
+  </select>
 </mapper>

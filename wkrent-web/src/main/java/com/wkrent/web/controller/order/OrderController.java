@@ -55,33 +55,78 @@ public class OrderController extends BaseController{
     @ResponseBody
     public BaseAjaxVO initManage(@RequestBody @ApiParam(name = "orderId", value = "订单id")
                                          String orderId){
-        //TODO 待处理
         return orderService.findByOrderId(orderId);
     }
 
     /**
      * 运营管理
      */
-    @ApiOperation(value = "订单运营处理", notes = "订单运营处理", httpMethod = "POST", response = BaseAjaxVO.class)
-    @RequestMapping(value = "/manage", method = RequestMethod.POST)
+    @ApiOperation(value = "锁定房源", notes = "锁定房源", httpMethod = "POST", response = BaseAjaxVO.class)
+    @RequestMapping(value = "/lockRoom", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO manage(@RequestBody @ApiParam(name = "orderVO", value = "订单信息")
+    public BaseAjaxVO lockRoom(@RequestBody @ApiParam(name = "orderVO", value = "订单信息")
                                      BgOrderVO orderVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            //TODO 逻辑待处理
-            orderService.manage(orderVO, getLoginAccount(session));
+            orderService.lockRoom(orderVO, getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("订单运营处理失败", e, orderVO);
+            log.warn("订单锁定房源失败", e, orderVO);
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("订单运营处理失败，系统异常", e, orderVO);
+            log.error("订单锁定房源失败，系统异常", e, orderVO);
         }
         return baseAjaxVO;
     }
+
+    /**
+     * 运营管理
+     */
+    @ApiOperation(value = "缴纳房租", notes = "缴纳房租", httpMethod = "POST", response = BaseAjaxVO.class)
+    @RequestMapping(value = "/payRent", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseAjaxVO payRent(@RequestBody @ApiParam(name = "orderVO", value = "订单信息")
+                                       BgOrderVO orderVO, @ApiIgnore HttpSession session){
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+        try {
+            orderService.payRent(orderVO, getLoginAccount(session));
+        }catch (WkRentException e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(e.getMessage());
+            log.warn("订单缴纳房租失败", e, orderVO);
+        }catch (Exception e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(Constants.FAILED_TEXT);
+            log.error("订单缴纳房租失败，系统异常", e, orderVO);
+        }
+        return baseAjaxVO;
+    }
+
+    /**
+     * 运营管理
+     */
+    @ApiOperation(value = "签订合同", notes = "签订合同", httpMethod = "POST", response = BaseAjaxVO.class)
+    @RequestMapping(value = "/signContract", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseAjaxVO signContract(@RequestBody @ApiParam(name = "orderVO", value = "订单信息")
+                                      BgOrderVO orderVO, @ApiIgnore HttpSession session){
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+        try {
+            orderService.signContract(orderVO, getLoginAccount(session));
+        }catch (WkRentException e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(e.getMessage());
+            log.warn("订单签订合同失败", e, orderVO);
+        }catch (Exception e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(Constants.FAILED_TEXT);
+            log.error("订单签订合同失败，系统异常", e, orderVO);
+        }
+        return baseAjaxVO;
+    }
+
 
     @ApiOperation(value = "删除订单信息", notes = "删除订单信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
@@ -90,7 +135,7 @@ public class OrderController extends BaseController{
                                      List<String> orderIdList, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            orderService.delete(orderIdList, getLoginAccount(session));
+            orderService.delete(orderIdList, getLoginAccount(session), baseAjaxVO);
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());

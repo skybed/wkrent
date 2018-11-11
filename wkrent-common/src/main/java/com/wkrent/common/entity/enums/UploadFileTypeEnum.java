@@ -6,36 +6,34 @@ import java.util.Map;
 /**
  * @author Administrator
  */
-public enum RoomStatusEnum {
+public enum UploadFileTypeEnum {
 
     /**
-     * 房源状态
+     * 模块设置附件类型
      */
-    RENTING("1", "出租中"),
-    RESERVED("2", "已被预订"),
-    LOCKED("3", "房源锁定"),
-    SIGN_CONTRACT("4", "待签租房合同"),
-    RENTED("5", "已出租"),
-    SOLD_OUT("6", "房源已下架")
+    CUSTOMER_FILE("10", "客服微信号"),
+    PLATFORM_FILE("20", "平台微信号"),
+    MERCHANT_FILE("30", "商家附件类型"),
+    ROOM_FILE("40", "房源附件类型"),
     ;
 
-    private static Map<String, RoomStatusEnum> enum_map;
+    private static Map<String, UploadFileTypeEnum> enum_map;
     private String code;
     private String desc;
 
     static
     {
         enum_map = new HashMap();
-        RoomStatusEnum[] arrayOfRoomStatusEnum;
+        UploadFileTypeEnum[] arrayOfRoomStatusEnum;
         int j = (arrayOfRoomStatusEnum = values()).length;
         for (int i = 0; i < j; i++)
         {
-            RoomStatusEnum as = arrayOfRoomStatusEnum[i];
+            UploadFileTypeEnum as = arrayOfRoomStatusEnum[i];
             enum_map.put(as.code, as);
         }
     }
 
-    public static RoomStatusEnum getByCode(String code)
+    public static UploadFileTypeEnum getByCode(String code)
     {
         return enum_map.get(code);
     }
@@ -50,7 +48,7 @@ public enum RoomStatusEnum {
         return this.desc;
     }
 
-    private RoomStatusEnum(String code, String desc)
+    private UploadFileTypeEnum(String code, String desc)
     {
         this.code = code;
         this.desc = desc;

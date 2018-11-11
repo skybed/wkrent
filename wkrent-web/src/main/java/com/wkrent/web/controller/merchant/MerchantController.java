@@ -1,10 +1,11 @@
 package com.wkrent.web.controller.merchant;
 
-import com.google.common.collect.Lists;
+import com.wkrent.business.bg.attach.service.BgPicAttachService;
 import com.wkrent.business.bg.merchantmanagement.service.BgMerchantService;
 import com.wkrent.common.base.BaseController;
 import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
+import com.wkrent.common.entity.enums.UploadFileTypeEnum;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.vo.BgMerchantVO;
 import com.wkrent.common.entity.vo.BgPicAttachVO;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -34,6 +37,9 @@ public class MerchantController extends BaseController{
 
     @Autowired
     private BgMerchantService bgMerchantService;
+
+    @Autowired
+    private BgPicAttachService bgPicAttachService;
 
     @ApiOperation(value = "条件查询商家信息", notes = "条件查询商家信息", httpMethod = "POST", response = PageResult.class)
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
@@ -162,7 +168,27 @@ public class MerchantController extends BaseController{
     @RequestMapping(value = "/queryFileById", method = RequestMethod.POST)
     @ResponseBody
     public List<BgPicAttachVO> queryFileById(@RequestBody String merchantId){
-        //TODO 附件信息待处理
-        return Lists.newArrayList();
+        //附件信息
+        return bgPicAttachService.selectByOwnerId(merchantId);
+    }
+
+    @ApiOperation(value = "查询所有未删除商家信息", notes = "查询所有未删除商家信息", httpMethod = "GET", response = PageResult.class)
+    @RequestMapping(value = "/findByCondition", method = RequestMethod.GET)
+    @ResponseBody
+    public List<BgMerchantVO> queryAllMerchant(){
+        return bgMerchantService.queryAllMerchant();
+    }
+
+    /**
+     * 上传多文件
+     * @param request request
+     * @param uploadFiles 附件信息
+     * @return
+     */
+    @ApiOperation(value = "商家附件上传", notes = "商家附件上传", httpMethod = "POST", response = String.class)
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public BaseAjaxVO uploadPictures(HttpServletRequest request, MultipartFile[] uploadFiles) {
+        return bgPicAttachService.savePicAttachList(uploadFiles, UploadFileTypeEnum.MERCHANT_FILE.getCode());
     }
 }

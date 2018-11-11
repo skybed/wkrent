@@ -4,6 +4,8 @@ import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.vo.BgMerchantVO;
 
+import java.util.List;
+
 /**
  * @author Administrator
  */
@@ -60,5 +62,10 @@ public interface BgMerchantService {
      */
     void disable(String merchantId, String loginAccount);
 
+    /**
+     * 查询商家信息
+     * @return 符合条件信息
+     */
+    List<BgMerchantVO> queryAllMerchant();
 
 }

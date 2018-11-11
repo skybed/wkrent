@@ -165,20 +165,7 @@
     <where>
       bg_room_id = #{bgRoomId,jdbcType=VARCHAR}
       AND is_delete = '0'
-      AND is_active != #{bgRoomStatus,jdbcType=CHAR}
-    </where>
-  </update>
-
-  <update id="manage" parameterType="com.wkrent.common.entity.po.BgRoom">
-    update bg_room
-    set
-    is_stores = #{isStores,jdbcType=CHAR},
-    description = #{description,jdbcType=CHAR},
-    update_by = #{updateBy,jdbcType=VARCHAR},
-    update_time = #{updateTime,jdbcType=TIMESTAMP}
-    <where>
-      bg_room_id = #{bgRoomId,jdbcType=VARCHAR}
-      AND is_delete = '0'
+      AND bg_room_status != #{bgRoomStatus,jdbcType=CHAR}
     </where>
   </update>
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.bg.modulemanagement.dao.BgModuleDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.BgModule">
+    <id column="bg_module_id" jdbcType="VARCHAR" property="bgModuleId" />
+    <result column="bg_module_type" jdbcType="VARCHAR" property="bgModuleType" />
+    <result column="bg_module_value" jdbcType="CLOB" property="bgModuleValue" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bg_module_id, bg_module_type, bg_module_value, is_delete, create_by,
+    create_time, update_by, update_time
+  </sql>
+
+  <select id="findModuleByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_module
+    <where>
+      bg_module_type = #{bgModuleType}
+      AND is_delete = '0'
+    </where>
+  </select>
+
+  <insert id="insert" parameterType="com.wkrent.common.entity.po.BgModule">
+    insert into bg_module
+    (bg_module_id, bg_module_type, bg_module_value, is_delete, create_by,
+    create_time, update_by, update_time)
+    values
+      (#{bgModuleId,jdbcType=VARCHAR}, #{bgModuleType,jdbcType=VARCHAR},
+      #{bgModuleValue,jdbcType=CLOB},#{isDelete,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR},  #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="update" parameterType="com.wkrent.common.entity.po.BgModule">
+    update bg_module
+    set bg_module_value = #{bgModuleValue,jdbcType=CLOB},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where bg_module_id = #{bgModuleId,jdbcType=VARCHAR} AND is_delete = '0'
+  </update>
+
+</mapper>
