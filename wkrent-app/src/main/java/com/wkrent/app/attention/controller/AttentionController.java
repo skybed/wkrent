@@ -1,4 +1,4 @@
-package com.wkrent.business.app.attention.controller;
+package com.wkrent.app.attention.controller;
 
 import java.util.Date;
 import java.util.HashMap;

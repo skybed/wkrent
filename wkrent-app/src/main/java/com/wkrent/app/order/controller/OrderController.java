@@ -1,4 +1,4 @@
-package com.wkrent.business.app.order.controller;
+package com.wkrent.app.order.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;

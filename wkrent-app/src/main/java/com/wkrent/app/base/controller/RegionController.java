@@ -1,4 +1,4 @@
-package com.wkrent.business.app.base.controller;
+package com.wkrent.app.base.controller;
 
 import java.io.BufferedReader;
 import java.io.File;

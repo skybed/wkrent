@@ -1,4 +1,4 @@
-package com.wkrent.business.app.user.controller;
+package com.wkrent.app.user.controller;
 
 import java.util.Date;
 import java.util.HashMap;

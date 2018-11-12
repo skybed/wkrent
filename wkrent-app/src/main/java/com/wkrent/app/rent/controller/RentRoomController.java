@@ -1,4 +1,4 @@
-package com.wkrent.business.app.rent.controller;
+package com.wkrent.app.rent.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

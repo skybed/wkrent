@@ -1,4 +1,4 @@
-package com.wkrent.business.app.image.controller;
+package com.wkrent.app.image.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
