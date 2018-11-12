@@ -1,4 +1,4 @@
-package com.wkrent.business.app.user.controller;
+package com.wkrent.app.user.controller;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+import com.wkrent.app.util.AliSmsUtil;
+import com.wkrent.app.util.RandomNumUtil;
+import com.wkrent.app.util.UUIDUtil;
 import com.wkrent.business.app.picture.service.AppImageService;
 import com.wkrent.business.app.user.obj.UserInfo;
 import com.wkrent.business.app.user.service.AppPhoneCodeHistoryService;
 import com.wkrent.business.app.user.service.AppUserService;
-import com.wkrent.business.app.util.AliSmsUtil;
-import com.wkrent.business.app.util.RandomNumUtil;
-import com.wkrent.business.app.util.UUIDUtil;
 import com.wkrent.common.constants.Constant;
 import com.wkrent.common.entity.AppPhoneCodeHistory;
 import com.wkrent.common.entity.AppUser;

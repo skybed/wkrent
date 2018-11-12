@@ -1,4 +1,4 @@
-package com.wkrent.business.app.attention.controller;
+package com.wkrent.app.attention.controller;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.wkrent.app.util.UUIDUtil;
 import com.wkrent.business.app.rent.service.AppAttentionService;
 import com.wkrent.business.app.rent.service.RentRoomService;
-import com.wkrent.business.app.util.UUIDUtil;
 import com.wkrent.common.constants.Constant;
 import com.wkrent.common.entity.AppAttention;
 import com.wkrent.common.entity.BgRoom;

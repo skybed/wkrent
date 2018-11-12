@@ -1,4 +1,4 @@
-package com.wkrent.business.app.base.controller;
+package com.wkrent.app.base.controller;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.wkrent.app.util.UUIDUtil;
 import com.wkrent.business.app.base.obj.RegionInfo;
 import com.wkrent.business.app.base.service.AppRegionService;
-import com.wkrent.business.app.util.UUIDUtil;
 import com.wkrent.common.constants.Constant;
 import com.wkrent.common.entity.AppRegion;
 import com.wkrent.common.obj.ResultData;

@@ -1,4 +1,4 @@
-package com.wkrent.business.app.feedback.controller;
+package com.wkrent.app.feedback.controller;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.wkrent.app.util.UUIDUtil;
 import com.wkrent.business.app.feedback.obj.FeedbackObj;
 import com.wkrent.business.app.feedback.service.AppFeedbackService;
-import com.wkrent.business.app.util.UUIDUtil;
 import com.wkrent.common.constants.Constant;
 import com.wkrent.common.entity.AppFeedback;
 import com.wkrent.common.obj.ResultData;

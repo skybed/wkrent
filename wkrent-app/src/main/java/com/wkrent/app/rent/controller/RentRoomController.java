@@ -1,4 +1,4 @@
-package com.wkrent.business.app.rent.controller;
+package com.wkrent.app.rent.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.wkrent.app.util.RandomNumUtil;
+import com.wkrent.app.util.UUIDUtil;
 import com.wkrent.business.app.order.service.AppOrderService;
 import com.wkrent.business.app.picture.service.AppImageService;
 import com.wkrent.business.app.rent.obj.ApponitInfo;
@@ -30,8 +32,6 @@ import com.wkrent.business.app.rent.obj.RoomInfo;
 import com.wkrent.business.app.rent.service.AppAttentionService;
 import com.wkrent.business.app.rent.service.RentRoomInfoService;
 import com.wkrent.business.app.rent.service.RentRoomService;
-import com.wkrent.business.app.util.RandomNumUtil;
-import com.wkrent.business.app.util.UUIDUtil;
 import com.wkrent.common.constants.Constant;
 import com.wkrent.common.entity.AppAttention;
 import com.wkrent.common.entity.BgOrder;

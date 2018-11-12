@@ -1,4 +1,4 @@
-package com.wkrent.business.app.image.controller;
+package com.wkrent.app.image.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.wkrent.app.util.UUIDUtil;
 import com.wkrent.business.app.picture.service.AppImageService;
-import com.wkrent.business.app.util.UUIDUtil;
 import com.wkrent.common.constants.Constant;
 import com.wkrent.common.entity.BgPicAttach;
 import com.wkrent.common.obj.ResultData;
