@@ -1,4 +1,4 @@
-package com.wkrent.business.app.wechat.controller;
+package com.wkrent.app.wechat.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;

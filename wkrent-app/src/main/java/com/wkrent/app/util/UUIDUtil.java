@@ -1,4 +1,4 @@
-package com.wkrent.business.app.util;
+package com.wkrent.app.util;
 
 import java.util.UUID;
 
