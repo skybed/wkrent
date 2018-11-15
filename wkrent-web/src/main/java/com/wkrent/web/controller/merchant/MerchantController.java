@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -167,7 +165,8 @@ public class MerchantController extends BaseController{
     @ApiOperation(value = "根据商家id查询营业执照信息", notes = "根据商家id查询营业执照信息", httpMethod = "POST")
     @RequestMapping(value = "/queryFileById", method = RequestMethod.POST)
     @ResponseBody
-    public List<BgPicAttachVO> queryFileById(@RequestBody String merchantId){
+    public List<BgPicAttachVO> queryFileById(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
+                                                         String merchantId){
         //附件信息
         return bgPicAttachService.selectByOwnerId(merchantId);
     }
@@ -181,14 +180,14 @@ public class MerchantController extends BaseController{
 
     /**
      * 上传多文件
-     * @param request request
-     * @param uploadFiles 附件信息
+     * @param attachVOList 附件信息
      * @return
      */
     @ApiOperation(value = "商家附件上传", notes = "商家附件上传", httpMethod = "POST", response = String.class)
-    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO uploadPictures(HttpServletRequest request, MultipartFile[] uploadFiles) {
-        return bgPicAttachService.savePicAttachList(uploadFiles, UploadFileTypeEnum.MERCHANT_FILE.getCode());
+    public BaseAjaxVO uploadPictures(@RequestBody @ApiParam(name = "attachVOList", value = "附件List")
+                                                 List<BgPicAttachVO> attachVOList) {
+        return bgPicAttachService.savePicAttachListByBase64(attachVOList, UploadFileTypeEnum.MERCHANT_FILE.getCode());
     }
 }

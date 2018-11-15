@@ -95,6 +95,11 @@ public class BgPicAttachVO implements Serializable {
     private String remark;
 
     /**
+     * base64 文件字符串
+     */
+    private String base64FileStr;
+
+    /**
      * 
      * @return pic_attach_id 附件id,唯一标识
      */
@@ -316,5 +321,13 @@ public class BgPicAttachVO implements Serializable {
      */
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getBase64FileStr() {
+        return base64FileStr;
+    }
+
+    public void setBase64FileStr(String base64FileStr) {
+        this.base64FileStr = base64FileStr;
     }
 }

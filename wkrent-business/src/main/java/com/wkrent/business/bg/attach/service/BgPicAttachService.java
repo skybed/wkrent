@@ -55,17 +55,26 @@ public interface BgPicAttachService {
      */
     void deletePicAttachList(List<String> picIdList);
 
-//    /**
-//     * 更新附件所属id信息
-//     * @param picIdList 附件idList
-//     * @param ownerId 附件所属id
-//     */
-//    void updatePicAttachOwner(List<String> picIdList, String ownerId);
-
     /**
      * 更新附件所属id信息
      * @param picIdList 附件idList
      * @param ownerId 附件所属id
      */
     void updateAttachOwnerId(List<String> picIdList, String ownerId);
+
+    /**
+     * 新增附件信息
+     * @param attachVO 附件Base64字符串
+     * @param fileOwnerType 附件所属对象类型
+     * @return 已插入附件信息
+     */
+    BaseAjaxVO savePicAttachByBase64(BgPicAttachVO attachVO, String fileOwnerType);
+
+    /**
+     * 批量新增附件信息
+     * @param attachVOList 附件Base64字符串
+     * @param fileOwnerType 附件所属对象类型
+     * @return 已插入附件信息
+     */
+    BaseAjaxVO savePicAttachListByBase64(List<BgPicAttachVO> attachVOList, String fileOwnerType);
 }

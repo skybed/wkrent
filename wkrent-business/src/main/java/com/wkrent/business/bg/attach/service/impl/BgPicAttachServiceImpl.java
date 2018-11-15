@@ -18,10 +18,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashSet;
@@ -56,6 +58,10 @@ public class BgPicAttachServiceImpl implements BgPicAttachService{
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             BgPicAttachVO picAttach = uploadAttachInfo(uploadFile, fileOwnerType);
+            if(picAttach == null){
+                baseAjaxVO.setResult(Constants.FAILED_CODE);
+                baseAjaxVO.setText("上传附件不能为空！");
+            }
             baseAjaxVO.setResult(picAttach);
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
@@ -235,5 +241,123 @@ public class BgPicAttachServiceImpl implements BgPicAttachService{
             deletePicAttachList(deleteIdList);
         }
         updatePicAttachOwner(attachIdList, ownerId);
+    }
+
+    /**
+     * 新增附件信息
+     *
+     * @param attachVO        附件Base64字符串
+     * @param fileOwnerType 附件所属对象类型
+     * @return 已插入附件信息
+     */
+    @Override
+    public BaseAjaxVO savePicAttachByBase64(BgPicAttachVO attachVO, String fileOwnerType) {
+
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+
+        String imgStr = attachVO.getBase64FileStr();
+        //图像数据为空
+        if (StringUtils.isBlank(imgStr)) {
+            baseAjaxVO.setResult(Constants.FAILED_CODE);
+            baseAjaxVO.setText("附件数据不能为空");
+            return baseAjaxVO;
+        }
+        BgPicAttachVO picAttach = null;
+        try {
+            picAttach = uploadByBase64(attachVO, fileOwnerType);
+        }catch (Exception e){
+            baseAjaxVO.setResult(Constants.FAILED_CODE);
+            baseAjaxVO.setText("上传失败，读取文件信息异常！");
+        }
+        if (picAttach != null){
+            baseAjaxVO.setResult(picAttach);
+        }
+        return baseAjaxVO;
+    }
+
+    /**
+     * 批量新增附件信息
+     *
+     * @param attachVOList  附件Base64字符串
+     * @param fileOwnerType 附件所属对象类型
+     * @return 已插入附件信息
+     */
+    @Override
+    public BaseAjaxVO savePicAttachListByBase64(List<BgPicAttachVO> attachVOList, String fileOwnerType) {
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+
+        if(CollectionUtils.isEmpty(attachVOList)){
+            baseAjaxVO.setResult(Constants.FAILED_CODE);
+            baseAjaxVO.setText("附件数据不能为空");
+            return baseAjaxVO;
+        }
+        List<BgPicAttachVO> attachVOS = Lists.newArrayList();
+        for(BgPicAttachVO picAttachVO : attachVOList){
+            if(StringUtils.isBlank(picAttachVO.getBase64FileStr())){
+                continue;
+            }
+            BgPicAttachVO picAttach = null;
+            try {
+                picAttach = uploadByBase64(picAttachVO, fileOwnerType);
+            }catch (Exception e){
+                baseAjaxVO.setResult(Constants.FAILED_CODE);
+                baseAjaxVO.setText("上传失败，读取文件信息异常！");
+            }
+            if (picAttach != null){
+                attachVOS.add(picAttach);
+            }
+        }
+        if(CollectionUtils.isEmpty(attachVOS)){
+            baseAjaxVO.setResult(Constants.FAILED_CODE);
+            baseAjaxVO.setText("上传失败，所有附件上传失败！");
+        }
+        baseAjaxVO.setResult(attachVOS);
+        return baseAjaxVO;
+    }
+
+    private BgPicAttachVO uploadByBase64(BgPicAttachVO attachVO, String fileOwnerType) throws IOException {
+        //判断文件目录是否存在，否则自动生成
+        File directory = new File(UPLOAD_DIRECTORY);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        // 获取上传的文件的名称    
+        String filename = attachVO.getPicAttachName();
+
+        //修改文件名称 uuid
+        String fileUUID = UUIDUtil.getUUID();
+
+        //获取后缀
+        String prefix = filename.substring(filename.lastIndexOf(".") + 1);
+
+        //修改后完整的文件名称
+        String nFileName = fileUUID + "." + prefix;
+
+        // 文件保存路径
+        String filePath = FilenameUtils.concat(UPLOAD_DIRECTORY, nFileName);
+        BASE64Decoder decoder = new BASE64Decoder();
+        //Base64解码
+        byte[] b = decoder.decodeBuffer(attachVO.getBase64FileStr());
+        for(int i=0;i<b.length;++i){
+            if(b[i]<0){
+                //调整异常数据
+                b[i]+=256;
+            }
+        }
+        //生成jpeg图片
+        OutputStream out = new FileOutputStream(filePath);
+        out.flush();
+        out.close();
+
+        BgPicAttach picAttach = new BgPicAttach();
+        picAttach.setPicAttachId(fileUUID);
+        picAttach.setPicAttachName(filename);
+        picAttach.setPicAttachUrl(filePath);
+        picAttach.setPicAttachFileType(prefix);
+        picAttach.setPicAttachType(fileOwnerType);
+        picAttach.setPicAttachFileVolume(attachVO.getPicAttachFileVolume());
+        bgPicAttachDao.insertSelective(picAttach);
+        return BeanUtil.copyBean(picAttach, BgPicAttachVO.class);
     }
 }
