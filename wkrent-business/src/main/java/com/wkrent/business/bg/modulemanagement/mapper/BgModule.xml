@@ -32,7 +32,7 @@
     create_time, update_by, update_time)
     values
       (#{bgModuleId,jdbcType=VARCHAR}, #{bgModuleType,jdbcType=VARCHAR},
-      #{bgModuleValue,jdbcType=CLOB},#{isDelete,jdbcType=CHAR},
+      #{bgModuleValue,jdbcType=CLOB},'0',
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateBy,jdbcType=VARCHAR},  #{updateTime,jdbcType=TIMESTAMP})
   </insert>

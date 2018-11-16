@@ -107,7 +107,7 @@
       #{bgRoomPrice,jdbcType=DOUBLE}, #{bgRoomPriceUnit,jdbcType=VARCHAR}, #{bgRoomStatus,jdbcType=VARCHAR},
       #{bgRoomMaxAppointNum,jdbcType=TINYINT}, #{bgRoomRecommend,jdbcType=CHAR}, #{bgRoomTips,jdbcType=VARCHAR},
       #{bgRoomMerchantId,jdbcType=VARCHAR}, #{bgRoomProperty,jdbcType=VARCHAR}, #{bgRoomType,jdbcType=VARCHAR},
-      #{bgRoomDetail,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{description,jdbcType=VARCHAR},
+      #{bgRoomDetail,jdbcType=VARCHAR}, '0', #{description,jdbcType=VARCHAR},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>

@@ -68,7 +68,7 @@
       )
     values (#{bgMenuId,jdbcType=VARCHAR}, #{bgMenuName,jdbcType=VARCHAR}, #{bgMenuIcon,jdbcType=VARCHAR},
       #{bgMenuUrl,jdbcType=VARCHAR}, #{bgMenuParentId,jdbcType=VARCHAR}, #{bgMenuType,jdbcType=CHAR}, 
-      #{bgMenuSort,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{isActive,jdbcType=CHAR}, 
+      #{bgMenuSort,jdbcType=VARCHAR}, '0', #{isActive,jdbcType=CHAR},
       #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )

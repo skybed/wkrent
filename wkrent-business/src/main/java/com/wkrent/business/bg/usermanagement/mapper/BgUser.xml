@@ -98,7 +98,7 @@
     values (#{bgUserId,jdbcType=VARCHAR}, #{bgUserAccount,jdbcType=VARCHAR}, #{bgUserPwd,jdbcType=VARCHAR}, 
       #{bgUserName,jdbcType=VARCHAR}, #{bgUserSex,jdbcType=CHAR}, #{bgUserPhone,jdbcType=VARCHAR}, 
       #{bgUserEmail,jdbcType=VARCHAR}, #{bgUserEmpId,jdbcType=VARCHAR}, #{bgUserDept,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{isActive,jdbcType=CHAR}, 
+      #{description,jdbcType=VARCHAR}, '0', #{isActive,jdbcType=CHAR},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>

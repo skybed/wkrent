@@ -85,7 +85,7 @@
       is_active, description, create_by,
       create_time, update_by, update_time, 
       remark)
-    values (#{bgRoleId,jdbcType=VARCHAR}, #{bgRoleName,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, 
+    values (#{bgRoleId,jdbcType=VARCHAR}, #{bgRoleName,jdbcType=VARCHAR}, '0',
       #{isActive,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})

@@ -15,7 +15,7 @@
     insert into bg_user_role (bg_user_role_id, bg_user_id, bg_role_id, 
       is_delete, remark)
     values (#{bgUserRoleId,jdbcType=VARCHAR}, #{bgUserId,jdbcType=VARCHAR}, #{bgRoleId,jdbcType=VARCHAR}, 
-      #{isDelete,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR})
+      '0', #{remark,jdbcType=VARCHAR})
   </insert>
 
   <update id="deleteByCondition" parameterType="com.wkrent.common.entity.po.BgUserRole">

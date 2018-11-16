@@ -72,7 +72,7 @@
       update_time, remark)
     values (#{bgMerchantId,jdbcType=VARCHAR}, #{bgMerchantNumber,jdbcType=VARCHAR}, #{bgMerchantCode,jdbcType=VARCHAR}, 
       #{bgMerchantName,jdbcType=VARCHAR}, #{bgMerchantAddress,jdbcType=VARCHAR}, #{bgMerchantPhone,jdbcType=VARCHAR}, 
-      #{isDelete,jdbcType=CHAR}, #{isActive,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, 
+      '0', #{isActive,jdbcType=CHAR}, #{description,jdbcType=VARCHAR},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>

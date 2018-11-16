@@ -29,7 +29,7 @@
     from bg_pic_attach
     where pic_attach_owner = #{ownerId,jdbcType=VARCHAR} and is_delete = '0';
   </select>
-  
+
   <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgPicAttach">
     insert into bg_pic_attach
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -54,9 +54,6 @@
       <if test="picAttachOwner != null">
         pic_attach_owner,
       </if>
-      <if test="isDelete != null">
-        is_delete,
-      </if>
       <if test="description != null">
         description,
       </if>
@@ -75,6 +72,7 @@
       <if test="remark != null">
         remark,
       </if>
+      is_delete
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="picAttachId != null">
@@ -98,9 +96,6 @@
       <if test="picAttachOwner != null">
         #{picAttachOwner,jdbcType=VARCHAR},
       </if>
-      <if test="isDelete != null">
-        #{isDelete,jdbcType=CHAR},
-      </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>
@@ -119,6 +114,7 @@
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
+      '0'
     </trim>
   </insert>
   
