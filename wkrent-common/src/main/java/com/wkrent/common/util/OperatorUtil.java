@@ -50,11 +50,11 @@ public class OperatorUtil
 
         if (insert)
         {
-            setValue(po, "create_time", time);
-            setValue(po, "create_by", userAccount);
+            setValue(po, "createTime", time);
+            setValue(po, "createBy", userAccount);
         }
-        setValue(po, "update_by", userAccount);
-        setValue(po, "update_time", time);
+        setValue(po, "updateBy", userAccount);
+        setValue(po, "updateTime", time);
     }
 
     private static void setAddOperator(Serializable po, String userAccount)
