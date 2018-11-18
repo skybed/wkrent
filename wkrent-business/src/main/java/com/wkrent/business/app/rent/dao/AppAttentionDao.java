@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.wkrent.common.entity.AppAttention;
+import com.wkrent.common.entity.BgRoom;
 
 public interface AppAttentionDao {
 	
@@ -26,7 +27,7 @@ public interface AppAttentionDao {
 
     int updateByPrimaryKey(AppAttention record);
     
-	List<AppAttention> getAppAttentionByPager(@Param("sIndex")Integer sIndex, @Param("eIndex")Integer eIndex, @Param("userId")String userId);
+	List<BgRoom> getAppAttentionByPager(@Param("sIndex")Integer sIndex, @Param("eIndex")Integer eIndex, @Param("userId")String userId);
     
 	Integer countAppAttention(String userId);
 	

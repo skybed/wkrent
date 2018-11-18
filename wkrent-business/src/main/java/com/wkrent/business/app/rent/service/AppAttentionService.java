@@ -2,11 +2,12 @@ package com.wkrent.business.app.rent.service;
 
 import java.util.List;
 
+import com.wkrent.business.app.rent.obj.RoomInfo;
 import com.wkrent.common.entity.AppAttention;
 
 public interface AppAttentionService {
 	
-	public List<AppAttention> getAppAttentionByPager(String userId, Integer index, Integer pageSize);
+	public List<RoomInfo> getAppAttentionByPager(String userId, Integer index, Integer pageSize);
 	
 	public Integer countAppAttention(String userId);
 	

@@ -17,6 +17,42 @@
     app_attention_id, app_user_id, app_room_id, is_delete, description, create_by, create_time, 
     update_by, update_time, remark
   </sql>
+  
+  <resultMap id="BaseRoomResultMap" type="com.wkrent.common.entity.BgRoom">
+    <id column="bg_room_id" jdbcType="VARCHAR" property="bgRoomId" />
+    <result column="bg_room_number" jdbcType="VARCHAR" property="bgRoomNumber" />
+    <result column="bg_room_name" jdbcType="VARCHAR" property="bgRoomName" />
+    <result column="bg_room_address_country" jdbcType="VARCHAR" property="bgRoomAddressCountry" />
+    <result column="bg_room_address_city" jdbcType="VARCHAR" property="bgRoomAddressCity" />
+    <result column="bg_room_address_detail" jdbcType="VARCHAR" property="bgRoomAddressDetail" />
+    <result column="bg_room_address_x" jdbcType="DOUBLE" property="bgRoomAddressX" />
+    <result column="bg_room_address_y" jdbcType="DOUBLE" property="bgRoomAddressY" />
+    <result column="bg_room_price" jdbcType="DOUBLE" property="bgRoomPrice" />
+    <result column="bg_room_price_unit" jdbcType="VARCHAR" property="bgRoomPriceUnit" />
+    <result column="bg_room_status" jdbcType="VARCHAR" property="bgRoomStatus" />
+    <result column="bg_room_max_appoint_num" jdbcType="TINYINT" property="bgRoomMaxAppointNum" />
+    <result column="bg_room_recommend" jdbcType="CHAR" property="bgRoomRecommend" />
+    <result column="bg_room_tips" jdbcType="VARCHAR" property="bgRoomTips" />
+    <result column="bg_room_merchant_id" jdbcType="VARCHAR" property="bgRoomMerchantId" />
+    <result column="bg_room_property" jdbcType="VARCHAR" property="bgRoomProperty" />
+    <result column="bg_room_type" jdbcType="VARCHAR" property="bgRoomType" />
+    <result column="bg_room_detail" jdbcType="VARCHAR" property="bgRoomDetail" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Room_Column_List">
+    r.bg_room_id, r.bg_room_number, r.bg_room_name, r.bg_room_address_country, r.bg_room_address_city, 
+    r.bg_room_address_detail, r.bg_room_address_x, r.bg_room_address_y, r.bg_room_price, r.bg_room_price_unit, 
+    r.bg_room_status, r.bg_room_max_appoint_num, r.bg_room_recommend, r.bg_room_tips, r.bg_room_merchant_id, 
+    r.bg_room_property, r.bg_room_type, r.bg_room_detail, r.is_delete, r.description, r.create_by, 
+    r.create_time, r.update_by, r.update_time, r.remark
+  </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -151,18 +187,18 @@
     where app_attention_id = #{appAttentionId,jdbcType=VARCHAR}
   </update>
   
-  <select id="getAppAttentionByPager" resultMap="BaseResultMap">
+  <select id="getAppAttentionByPager" resultMap="BaseRoomResultMap">
     select 
-    <include refid="Base_Column_List" />
-    from app_attention 
-    where is_delete = '0' and app_user_id = #{userId,jdbcType=VARCHAR} 
+    <include refid="Base_Room_Column_List" />
+    from app_attention a, bg_room r 
+    where a.is_delete = '0' and a.app_user_id = #{userId,jdbcType=VARCHAR} and a.app_room_id = r.bg_room_id and r.is_delete = '0' 
     limit #{sIndex,jdbcType=INTEGER}, #{eIndex,jdbcType=INTEGER}
   </select>
   
    <select id="countAppAttention" resultType="java.lang.Integer">
     select count(1) 
-    from app_attention 
-    where is_delete = '0' and app_user_id = #{userId,jdbcType=VARCHAR}
+    from app_attention a, bg_room r 
+    where a.is_delete = '0' and a.app_user_id = #{userId,jdbcType=VARCHAR} and a.app_room_id = r.bg_room_id and r.is_delete = '0' 
   </select>
   
   <select id="selectByRoomAndUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
