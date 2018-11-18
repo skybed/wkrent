@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -180,14 +182,15 @@ public class MerchantController extends BaseController{
 
     /**
      * 上传多文件
-     * @param attachVOList 附件信息
+     * @param request request
+     * @param uploadFiles 附件信息
      * @return
      */
     @ApiOperation(value = "商家附件上传", notes = "商家附件上传", httpMethod = "POST", response = String.class)
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BaseAjaxVO uploadPictures(@RequestBody @ApiParam(name = "attachVOList", value = "附件List")
-                                                 List<BgPicAttachVO> attachVOList) {
-        return bgPicAttachService.savePicAttachListByBase64(attachVOList, UploadFileTypeEnum.MERCHANT_FILE.getCode());
+    public BaseAjaxVO uploadPictures(@ApiIgnore HttpServletRequest request,
+                                     MultipartFile[] uploadFiles) {
+        return bgPicAttachService.savePicAttachList(uploadFiles, UploadFileTypeEnum.MERCHANT_FILE.getCode());
     }
 }
