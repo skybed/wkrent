@@ -44,13 +44,14 @@ public class AppOrderServiceImpl implements AppOrderService {
 				order.setOrderId(bgOrders.get(i).getBgOrderId());
 				order.setOrderNum(bgOrders.get(i).getBgOrderNumber());
 				order.setOrderStatus(bgOrders.get(i).getBgOrderStatus());
-				order.setPrice(bgOrders.get(i).getBgOrderRentMoney() + "/" + bgOrders.get(i).getBgOrderRentTenancy());
+				
 				order.setRoomId(bgOrders.get(i).getBgOrderRoomId());
 				
 				BgRoom room = rentRoomDao.selectByPrimaryKey(bgOrders.get(i).getBgOrderRoomId());
 				if(room != null) {
 					order.setRoomName(room.getBgRoomName());
 					order.setRoomTips(room.getBgRoomTips());
+					order.setPrice(room.getBgRoomPrice() + "/" + getPriceUnit(bgOrders.get(i).getBgOrderRentTenancy()));
 				}
 				
 				List<BgPicAttach> picAttachs = appImageDao.selectByOwnerId(bgOrders.get(i).getBgOrderRoomId());
@@ -64,6 +65,17 @@ public class AppOrderServiceImpl implements AppOrderService {
 		return rentOrders;
 	}
 
+	private String getPriceUnit(String unit) {
+		if("0".equals(unit)) {
+			return "周";
+		} else if("1".equals(unit)) {
+			return "月";
+		} else if ("2".equals(unit)) {
+			return "年";
+		}
+		return "";
+	}
+	
 	@Override
 	public void deleteRentOrder(String orderId, String userId) {
 		appOrderDao.deleteRentOrder(orderId, userId);

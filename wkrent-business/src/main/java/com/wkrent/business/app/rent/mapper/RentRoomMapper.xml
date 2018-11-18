@@ -46,9 +46,9 @@
 	<if test="minPrice != null and minPrice != '' and maxPrice != null and maxPrice != ''">
 	  and bg_room_price &gt;= #{minPrice,jdbcType=DOUBLE} and bg_room_price &lt;= #{maxPrice,jdbcType=DOUBLE} 
 	</if>
-	<if test="roomType != '' and roomType != null">
+	<if test="roomTypes != null">
 	  and 
-	  <foreach item="item" index="index" collection="roomType" open="(" separator="or" close=")">
+	  <foreach item="item" index="index" collection="roomTypes" open="(" separator="or" close=")">
 	   FIND_IN_SET(#{item},bg_room_type) 
 	  </foreach>
 	</if>
@@ -90,9 +90,9 @@
 	<if test="minPrice != null and minPrice != '' and maxPrice != null and maxPrice != ''">
 	  and bg_room_price &gt;= #{minPrice,jdbcType=DOUBLE} and bg_room_price &lt;= #{maxPrice,jdbcType=DOUBLE} 
 	</if>
-	<if test="roomType != '' and roomType != null">
+	<if test="roomTypes != null">
 	  and 
-	  <foreach item="item" index="index" collection="roomType" open="(" separator="or" close=")">
+	  <foreach item="item" index="index" collection="roomTypes" open="(" separator="or" close=")">
 	   FIND_IN_SET(#{item},bg_room_type) 
 	  </foreach>
 	</if>

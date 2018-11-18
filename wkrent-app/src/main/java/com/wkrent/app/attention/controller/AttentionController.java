@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.wkrent.app.util.UUIDUtil;
+import com.wkrent.business.app.rent.obj.RoomInfo;
 import com.wkrent.business.app.rent.service.AppAttentionService;
 import com.wkrent.business.app.rent.service.RentRoomService;
 import com.wkrent.common.constants.Constant;
@@ -48,21 +49,24 @@ public class AttentionController {
 	@ApiOperation(value = "获取我的收藏分页信息", notes = "获取我的收藏分页信息", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/getMyAttentListByPager.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getMyAttentListByPager(HttpServletRequest request, String userId, Integer currentIndex, Integer pageSize) {
+	public String getMyAttentListByPager(HttpServletRequest request, Integer currentIndex, Integer pageSize) {
 		
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("flag", false);
 		
 		if(StringUtils.isNotEmpty(userId)) {
 			Integer count = appAttentionService.countAppAttention(userId);
-			List<AppAttention> appAttentions = appAttentionService.getAppAttentionByPager(userId, currentIndex, pageSize);
+			List<RoomInfo> attentionRooms = appAttentionService.getAppAttentionByPager(userId, currentIndex, pageSize);
 			
 			map.put("count", count);
-			map.put("list", appAttentions);
+			map.put("list", attentionRooms);
 			map.put("flag", true);
 		} else {
 			resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);
@@ -84,11 +88,14 @@ public class AttentionController {
 	@ApiOperation(value = "收藏/取消房源 0-取消 1-收藏", notes = "收藏/取消房源 0-取消 1-收藏", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/rentRoomAttent.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String rentRoomAttent(HttpServletRequest request, String userId, String roomId, String type) {
+	public String rentRoomAttent(HttpServletRequest request, String roomId, String type) {
 		
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("flag", false);

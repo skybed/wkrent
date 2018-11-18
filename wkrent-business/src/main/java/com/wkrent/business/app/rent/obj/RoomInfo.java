@@ -20,7 +20,7 @@ public class RoomInfo implements Serializable {
 	//价格
 	private String price;
 	
-	//价格
+	//状态
 	private String status;
 	
 	//标签

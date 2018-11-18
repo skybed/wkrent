@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,11 +59,14 @@ public class AppImageController {
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("fileId", "");
 		
 		// 判断文件是否为空
-		if (!uploadfile.isEmpty()) {
+		if (!uploadfile.isEmpty() && StringUtils.isNotEmpty(userId)) {
 			try {
 				//判断文件目录是否存在，否则自动生成
                 File directory = new File(UPLOAD_DIRECTORY);
@@ -94,6 +99,10 @@ public class AppImageController {
                 picAttach.setIsDelete("0");
                 picAttach.setPicAttachFileType(prefix);
                 picAttach.setPicAttachFileVolume("" + uploadfile.getSize());
+                picAttach.setCreateBy(userId);
+                picAttach.setCreateTime(new Date());
+                picAttach.setUpdateBy(userId);
+                picAttach.setUpdateTime(new Date());
                 appImageService.savePicAttach(picAttach);
                 
                 map.put("fileId", fileUUID);
@@ -121,12 +130,15 @@ public class AppImageController {
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("fileId", "");
 		
 		List<String> idsList = new ArrayList<String>();
 		//判断file数组不能为空并且长度大于0
-        if (uploadfiles != null && uploadfiles.length > 0) {
+        if (uploadfiles != null && uploadfiles.length > 0 && StringUtils.isNotEmpty(userId)) {
         	File directory = new File(UPLOAD_DIRECTORY);
             if (!directory.exists()) {
                 directory.mkdirs();
@@ -161,6 +173,10 @@ public class AppImageController {
                      picAttach.setIsDelete("0");
                      picAttach.setPicAttachFileType(prefix);
                      picAttach.setPicAttachFileVolume("" + file.getSize());
+                     picAttach.setCreateBy(userId);
+                     picAttach.setCreateTime(new Date());
+                     picAttach.setUpdateBy(userId);
+                     picAttach.setUpdateTime(new Date());
                      appImageService.savePicAttach(picAttach);
                      
                 	idsList.add(fileUUID);
