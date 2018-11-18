@@ -1,6 +1,7 @@
 package com.wkrent.business.app.rent.obj;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class RentRoomCondition implements Serializable {
 
@@ -23,6 +24,9 @@ public class RentRoomCondition implements Serializable {
 	
 	//房屋类型
 	private String roomType;
+	
+	//类型列表
+	private List<String> roomTypes;
 	
 	//最低价
 	private Double minPrice;
@@ -128,6 +132,14 @@ public class RentRoomCondition implements Serializable {
 
 	public void setEndIndex(Integer endIndex) {
 		this.endIndex = endIndex;
+	}
+
+	public List<String> getRoomTypes() {
+		return roomTypes;
+	}
+
+	public void setRoomTypes(List<String> roomTypes) {
+		this.roomTypes = roomTypes;
 	}
 	
 }

@@ -15,7 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -71,11 +70,18 @@ public class RentRoomController {
 	@ApiOperation(value = "获取房源列表信息", notes = "获取房源列表信息", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/getRentRoomListByPager.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getRentRoomListByPager(HttpServletRequest request, @RequestBody RentRoomCondition condition) {
+	public String getRentRoomListByPager(HttpServletRequest request, RentRoomCondition condition) {
 		
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = "";
+		if(request.getSession().getAttribute("userId") != null && StringUtils.isNotEmpty(request.getSession().getAttribute("userId").toString())) {
+			userId = request.getSession().getAttribute("userId").toString();
+			condition.setUserId(userId);
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -98,10 +104,16 @@ public class RentRoomController {
 	@ApiOperation(value = "获取房源详情", notes = "获取房源详情", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/getRentRoomDetail.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getRentRoomDetail(HttpServletRequest request, String roomId, String userId) {
+	public String getRentRoomDetail(HttpServletRequest request, String roomId) {
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = "";
+		if(request.getSession().getAttribute("userId") != null && StringUtils.isNotEmpty(request.getSession().getAttribute("userId").toString())) {
+			userId = request.getSession().getAttribute("userId").toString();
+		}
 		
 		if(StringUtils.isNotEmpty(roomId)) {
 			BgRoom room = rentRoomService.selectByPrimaryKey(roomId);
@@ -174,10 +186,17 @@ public class RentRoomController {
 	@ApiOperation(value = "预约房源", notes = "预约房源", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/appointRentRoom.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String appointRentRoom(HttpServletRequest request, @RequestBody ApponitInfo apponitInfo) {
+	public String appointRentRoom(HttpServletRequest request, ApponitInfo apponitInfo) {
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = "";
+		if(request.getSession().getAttribute("userId") != null && StringUtils.isNotEmpty(request.getSession().getAttribute("userId").toString())) {
+			userId = request.getSession().getAttribute("userId").toString();
+			apponitInfo.setUserId(userId);
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("flag", false);

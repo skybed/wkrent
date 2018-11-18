@@ -65,11 +65,14 @@ public class OrderController {
 	@ApiOperation(value = "查看订单分页列表", notes = "查看订单分页列表", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/getOrderListByPager.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getOrderListByPager(HttpServletRequest request, String userId, Integer currentIndex, Integer pageSize) {
+	public String getOrderListByPager(HttpServletRequest request, Integer currentIndex, Integer pageSize) {
 		
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("flag", false);
@@ -100,10 +103,13 @@ public class OrderController {
 	@ApiOperation(value = "删除订单", notes = "删除订单", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/deleteOrder.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String deleteOrder(HttpServletRequest request, String orderId, String userId) {
+	public String deleteOrder(HttpServletRequest request, String orderId) {
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("flag", false);
@@ -142,10 +148,13 @@ public class OrderController {
 	@ApiOperation(value = "取消预约", notes = "取消预约", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/cancelApponitOrder.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String cancelApponitOrder(HttpServletRequest request, String orderId, String userId) {
+	public String cancelApponitOrder(HttpServletRequest request, String orderId) {
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("flag", false);

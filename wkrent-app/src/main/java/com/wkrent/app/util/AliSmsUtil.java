@@ -22,8 +22,8 @@ public class AliSmsUtil {
     private static final String domain = "dysmsapi.aliyuncs.com";
 
     //此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    private static final String accessKeyId = "yourAccessKeyId";
-    private static final String accessKeySecret = "yourAccessKeySecret";
+    private static final String accessKeyId = "LTAIleWUSLu5bWyy";
+    private static final String accessKeySecret = "SGVSFhRuU95NcYWbPa8gC72nLMbz9G";
 
     public static SendSmsResponse sendSms(String phone, String code) throws ClientException {
 
@@ -43,13 +43,13 @@ public class AliSmsUtil {
         request.setPhoneNumbers(phone);
         
         //必填:短信签名-可在短信控制台中找到
-        request.setSignName("云通信");
+        request.setSignName("蜗客租房");
         
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_1000000");
+        request.setTemplateCode("SMS_151176277");
         
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
-        request.setTemplateParam("{\"name\":\"Tom\", \"code\":\"" + code + "\"}");
+        request.setTemplateParam("{\"code\":\"" + code + "\"}");
 
         //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
         //request.setSmsUpExtendCode("90997");
@@ -103,7 +103,7 @@ public class AliSmsUtil {
     public static void main(String[] args) throws ClientException, InterruptedException {
 
         //发短信
-        SendSmsResponse response = sendSms("8613800138000", "1234");
+        SendSmsResponse response = sendSms("8615907110838", "1234");
         System.out.println("短信接口返回的数据----------------");
         System.out.println("Code=" + response.getCode());
         System.out.println("Message=" + response.getMessage());

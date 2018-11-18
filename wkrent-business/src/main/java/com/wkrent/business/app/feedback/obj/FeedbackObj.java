@@ -1,7 +1,5 @@
 package com.wkrent.business.app.feedback.obj;
 
-import java.util.List;
-
 public class FeedbackObj {
 	
 	//用户Id
@@ -14,7 +12,7 @@ public class FeedbackObj {
 	private String feedbackContent;
 	
 	//反馈图片
-	private List<String> feedbackPics;
+	private String feedbackPics;
 	
 	//联系方式
 	private String phone;
@@ -43,11 +41,11 @@ public class FeedbackObj {
 		this.feedbackContent = feedbackContent;
 	}
 
-	public List<String> getFeedbackPics() {
+	public String getFeedbackPics() {
 		return feedbackPics;
 	}
 
-	public void setFeedbackPics(List<String> feedbackPics) {
+	public void setFeedbackPics(String feedbackPics) {
 		this.feedbackPics = feedbackPics;
 	}
 

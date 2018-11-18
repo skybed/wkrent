@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
-import com.aliyuncs.exceptions.ClientException;
-import com.wkrent.app.util.AliSmsUtil;
 import com.wkrent.app.util.RandomNumUtil;
 import com.wkrent.app.util.UUIDUtil;
 import com.wkrent.business.app.picture.service.AppImageService;
@@ -72,6 +69,7 @@ public class UserController {
 			//调用阿里api发送短信验证码
 			try {
 				String code = RandomNumUtil.getRandomNum(4);
+				/**
 				SendSmsResponse response = AliSmsUtil.sendSms(phone, code);
 				if(response.getCode() != null && response.getCode().equals("OK")) {
 					
@@ -85,9 +83,24 @@ public class UserController {
 					
 					//返回处理编号
 					map.put("bizId", codeHistory.getPhoneCodeHistoryId());
+					map.put("code", code);
 					map.put("flag", true);
 				}
-			} catch (ClientException e) {
+				**/
+				
+				AppPhoneCodeHistory codeHistory = new AppPhoneCodeHistory();
+				codeHistory.setPhoneCodeHistoryId(UUIDUtil.getUUIDString());
+				codeHistory.setPhone(phone);
+				codeHistory.setCode(code);
+				codeHistory.setCreateTime(new Date());
+				codeHistory.setIsValidate("0");
+				appPhoneCodeHistoryService.insertCodeHistory(codeHistory);
+				
+				//返回处理编号
+				map.put("bizId", codeHistory.getPhoneCodeHistoryId());
+				map.put("code", code);
+				map.put("flag", true);
+			} catch (Exception e) {
 				resultData.setCode(Constant.RESULT_FAIL_CODE);
 				resultData.setMsg(Constant.RESULT_FAIL_MSG);
 				Logger.getRootLogger().error("发送短信验证码抛异常，异常信息为：" + e.getMessage(), e);
@@ -184,41 +197,34 @@ public class UserController {
 		map.put("userId", "");
 		
 		//必填项不能为空
-		if(userInfo != null && StringUtils.isNotEmpty(userInfo.getEmail()) && StringUtils.isNotEmpty(userInfo.getPhone()) 
+		if(userInfo != null && StringUtils.isNotEmpty(userInfo.getPhone()) 
 				&& StringUtils.isNotEmpty(userInfo.getMsgCode()) &&StringUtils.isNotEmpty(userInfo.getBizId())) {
-			//判断邮箱是否正确
-			if(checkEmail(userInfo.getEmail())) {
-				//判断短信验证码是否正确
-				if(validateAuthCode(userInfo.getPhone(), userInfo.getMsgCode(), userInfo.getBizId())) {
-					//判断用户手机号是存在
-					AppUser user = appUserService.getUserByPhone(userInfo.getPhone());
-					if(user != null) {
-						resultData.setCode(Constant.RESULT_USER_EXIST_CODE);
-						resultData.setMsg(Constant.RESULT_USER_EXIST_MSG);
-					} else {
-						user = new AppUser();
-						user.setAppUserId(UUIDUtil.getUUIDString());
-						user.setAppUserEmail(userInfo.getEmail());
-						//生成用户编号
-						user.setAppUserNumber(RandomNumUtil.getRandomNum());
-						user.setAppUserPhone(userInfo.getPhone());
-						user.setIsDelete("0");
-						user.setCreateBy("register");
-						user.setCreateTime(new Date());
-						
-						//注册用户
-						appUserService.insertAppUser(user);
-						
-						map.put("flag", true);
-						map.put("userId", user.getAppUserId());
-					}
-				} else {//验证码不正确
-					resultData.setCode(Constant.RESULT_PHONE_CODE_ERROR_CODE);
-					resultData.setMsg(Constant.RESULT_PHONE_CODE_ERROR_MSG);
+			//判断短信验证码是否正确
+			if(validateAuthCode(userInfo.getPhone(), userInfo.getMsgCode(), userInfo.getBizId())) {
+				//判断用户手机号是存在
+				AppUser user = appUserService.getUserByPhone(userInfo.getPhone());
+				if(user != null) {
+					resultData.setCode(Constant.RESULT_USER_EXIST_CODE);
+					resultData.setMsg(Constant.RESULT_USER_EXIST_MSG);
+				} else {
+					user = new AppUser();
+					user.setAppUserId(UUIDUtil.getUUIDString());
+					//生成用户编号
+					user.setAppUserNumber(RandomNumUtil.getRandomNum());
+					user.setAppUserPhone(userInfo.getPhone());
+					user.setIsDelete("0");
+					user.setCreateBy("register");
+					user.setCreateTime(new Date());
+					
+					//注册用户
+					appUserService.insertAppUser(user);
+					
+					map.put("flag", true);
+					map.put("userId", user.getAppUserId());
 				}
-			} else {//格式不正确
-				resultData.setCode(Constant.RESULT_REQUIRE_PARAM_FORMAT_CODE);
-				resultData.setMsg(Constant.RESULT_REQUIRE_PARAM_FORMAT_MSG);
+			} else {//验证码不正确
+				resultData.setCode(Constant.RESULT_PHONE_CODE_ERROR_CODE);
+				resultData.setMsg(Constant.RESULT_PHONE_CODE_ERROR_MSG);
 			}
 		} else {
 			resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);
@@ -307,10 +313,13 @@ public class UserController {
 	@ApiOperation(value = "获取用户详情信息", notes = "获取用户详情信息", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/getUserDetail.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getUserDetail(HttpServletRequest request, String userId) {
+	public String getUserDetail(HttpServletRequest request) {
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
 		
 		//必填项不能为空
 		if(StringUtils.isNotEmpty(userId)) {
@@ -322,11 +331,12 @@ public class UserController {
 				userInfo.setBirthday(user.getAppUserBirthday());
 				userInfo.setGender(user.getAppUserSex());
 				userInfo.setUserName(user.getAppUserName());
+				userInfo.setEmail(user.getAppUserEmail());
 				
 				//获取用户头像
 				List<BgPicAttach> picAttachs = appImageService.selectByOwnerId(user.getAppUserId());
 				if(picAttachs != null && picAttachs.size() > 0) {
-					userInfo.setIcon(picAttachs.get(0).getPicAttachUrl());
+					userInfo.setIcon(picAttachs.get(0).getPicAttachId());
 				}
 				
 				resultData.setData(JSON.toJSONString(userInfo));
@@ -354,11 +364,18 @@ public class UserController {
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
+		
 		//必填项不能为空
-		if(StringUtils.isNotEmpty(userInfo.getUserId())) {
+		if(StringUtils.isNotEmpty(userId)) {
 			//判断用户id是否存在
 			AppUser user = appUserService.getUserById(userInfo.getUserId());
 			if(user != null) {
+				if(StringUtils.isNotEmpty(userInfo.getEmail()) && checkEmail(userInfo.getEmail())) {
+					user.setAppUserEmail(userInfo.getEmail());
+				}
+				
 				if(StringUtils.isNotEmpty(userInfo.getBirthday())) {
 					user.setAppUserBirthday(userInfo.getBirthday());
 				}
@@ -394,10 +411,13 @@ public class UserController {
 	@ApiOperation(value = "更换头像", notes = "更换头像", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/editUserPhoto.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String editUserPhoto(HttpServletRequest request, String userId, String picId) {
+	public String editUserPhoto(HttpServletRequest request, String picId) {
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
 		
 		//必填项不能为空
 		if(StringUtils.isNotEmpty(userId)) {
@@ -438,10 +458,13 @@ public class UserController {
 	@ApiOperation(value = "修改手机号", notes = "修改手机号", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/editUserPhone.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String editUserPhone(HttpServletRequest request, String userId, String oldPhone, String newPhone, String code, String bizId) {
+	public String editUserPhone(HttpServletRequest request, String oldPhone, String newPhone, String code, String bizId) {
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		//获取登陆用户信息
+		String userId = request.getSession().getAttribute("userId").toString();
 		
 		//必填项不能为空
 		if(StringUtils.isNotEmpty(userId) && StringUtils.isNotEmpty(oldPhone) && StringUtils.isNotEmpty(newPhone) 

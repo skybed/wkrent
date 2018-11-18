@@ -1,9 +1,11 @@
 package com.wkrent.business.app.rent.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,11 @@ public class RentRoomServiceImpl implements RentRoomService {
 	
 	@Override
 	public Integer getRentRoomCount(RentRoomCondition condition) {
+		List<String> tips = new ArrayList<String>();
+		if(StringUtils.isNotEmpty(condition.getRoomType())) {
+			tips = Arrays.asList(condition.getRoomType().split(","));
+			condition.setRoomTypes(tips);
+		}
 		return rentRoomDao.getRentRoomCount(condition);
 	}
 	
@@ -36,6 +43,11 @@ public class RentRoomServiceImpl implements RentRoomService {
 			condition.setStartIndex((condition.getCurrentIndex() - 1) * condition.getPageSize());
 			condition.setEndIndex(condition.getCurrentIndex() * condition.getPageSize());
 			
+			List<String> tips = new ArrayList<String>();
+			if(StringUtils.isNotEmpty(condition.getRoomType())) {
+				tips = Arrays.asList(condition.getRoomType().split(","));
+				condition.setRoomTypes(tips);
+			}
 			List<BgRoom> roomInfos = rentRoomDao.getRentRoomListByPager(condition);
 			
 			if(roomInfos != null && roomInfos.size() > 0) {

@@ -32,7 +32,7 @@ public interface AppOrderDao {
 
     void deleteRentOrder(@Param("orderId")String orderId, @Param("updateBy")String updateBy);
     
-    void cancelOrderAppoint(@Param("orderId")String orderId, @Param("userId")String userId);
+    void cancelOrderAppoint(@Param("orderId")String orderId, @Param("updateBy")String updateBy);
     
     public BgOrder selectByRoomAndUserId(@Param("roomId")String roomId, @Param("userId")String userId);
 }
