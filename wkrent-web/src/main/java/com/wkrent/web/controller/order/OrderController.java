@@ -45,17 +45,17 @@ public class OrderController extends BaseController{
     @ApiOperation(value = "根据id查询订单信息", notes = "根据id查询订单信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/findById", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO findById(@RequestBody @ApiParam(name = "orderId", value = "订单id")
-                                       String orderId){
-        return orderService.findByOrderId(orderId);
+    public BaseAjaxVO findById(@RequestBody @ApiParam(name = "orderId", value = "订单id(仅传入bgOrderId即可)")
+                                       BgOrderVO orderVO){
+        return orderService.findByOrderId(orderVO.getBgOrderId());
     }
 
     @ApiOperation(value = "初始化运营处理", notes = "初始化运营处理", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/initManage", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO initManage(@RequestBody @ApiParam(name = "orderId", value = "订单id")
-                                         String orderId){
-        return orderService.findByOrderId(orderId);
+    public BaseAjaxVO initManage(@RequestBody @ApiParam(name = "orderId", value = "订单id(仅传入bgOrderId即可)")
+                                         BgOrderVO orderVO){
+        return orderService.findByOrderId(orderVO.getBgOrderId());
     }
 
     /**

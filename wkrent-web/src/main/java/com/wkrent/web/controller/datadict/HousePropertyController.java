@@ -108,26 +108,26 @@ public class HousePropertyController extends BaseController{
 
     /**
      * 删除房屋性质
-     * @param dataDictIdList 房屋性质idList
+     * @param valueVO 房屋性质idList
      * @param session 用户登录session
      * @return 操作结果
      */
     @ApiOperation(value = "删除房屋性质", notes = "删除房屋性质", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "dataDictIdList", value = "房屋性质idList")
-                                         List<String> dataDictIdList, @ApiIgnore HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "dataDictIdList", value = "房屋性质idList(仅传入dataDictValueIdList即可)")
+                                         BgDataDictValueVO valueVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgDataDictValueService.delete(dataDictIdList, getLoginAccount(session));
+            bgDataDictValueService.delete(valueVO.getDataDictValueIdList(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("删除房屋性质失败", e, dataDictIdList);
+            log.warn("删除房屋性质失败", e, valueVO.getDataDictValueIdList());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("删除房屋性质失败，系统异常", e, dataDictIdList);
+            log.error("删除房屋性质失败，系统异常", e, valueVO.getDataDictValueIdList());
         }
         return baseAjaxVO;
     }

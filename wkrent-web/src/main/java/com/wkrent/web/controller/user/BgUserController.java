@@ -92,19 +92,19 @@ public class BgUserController extends BaseController {
     @ApiOperation(value = "删除平台账号信息", notes = "删除平台账号信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "userId", value = "账号id")
-                                         String userId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "userId", value = "账号id(仅传入bgUserId即可)")
+                                         BgUserVO bgUserVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgUserService.delete(userId, getLoginAccount(session));
+            bgUserService.delete(bgUserVO.getBgUserId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("删除用户失败", e, userId);
+            log.warn("删除用户失败", e, bgUserVO.getBgUserId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("删除用户失败，系统异常", e, userId);
+            log.error("删除用户失败，系统异常", e, bgUserVO.getBgUserId());
         }
         return baseAjaxVO;
     }
@@ -112,19 +112,19 @@ public class BgUserController extends BaseController {
     @ApiOperation(value = "锁定平台账号信息", notes = "锁定平台账号信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/lockAccount", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO lockAccount(@RequestBody @ApiParam(name = "userId", value = "账号id")
-                                              String userId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO lockAccount(@RequestBody @ApiParam(name = "userId", value = "账号id(仅传入bgUserId即可)")
+                                              BgUserVO bgUserVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgUserService.lockAccount(userId, getLoginAccount(session));
+            bgUserService.lockAccount(bgUserVO.getBgUserId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("锁定用户失败", e, userId);
+            log.warn("锁定用户失败", e, bgUserVO.getBgUserId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("锁定用户失败，系统异常", e, userId);
+            log.error("锁定用户失败，系统异常", e, bgUserVO.getBgUserId());
         }
         return baseAjaxVO;
     }
@@ -132,19 +132,19 @@ public class BgUserController extends BaseController {
     @ApiOperation(value = "解锁平台账号信息", notes = "解锁平台账号信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/unlockAccount", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO unlockAccount(@RequestBody @ApiParam(name = "userId", value = "账号id")
-                                                String userId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO unlockAccount(@RequestBody @ApiParam(name = "userId", value = "账号id(仅传入bgUserId即可)")
+                                                BgUserVO bgUserVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgUserService.unlockAccount(userId, getLoginAccount(session));
+            bgUserService.unlockAccount(bgUserVO.getBgUserId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("解锁用户失败", e, userId);
+            log.warn("解锁用户失败", e, bgUserVO.getBgUserId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("解锁用户失败，系统异常", e, userId);
+            log.error("解锁用户失败，系统异常", e, bgUserVO.getBgUserId());
         }
         return baseAjaxVO;
     }

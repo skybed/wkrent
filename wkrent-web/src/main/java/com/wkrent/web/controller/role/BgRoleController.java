@@ -87,19 +87,19 @@ public class BgRoleController extends BaseController {
     @ApiOperation(value = "删除角色信息", notes = "删除角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "roleId", value = "角色Id")
-                                         String roleId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "roleId", value = "角色Id(仅传入bgRoleId即可)")
+                                         BgRoleVO roleVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgRoleService.delete(roleId, getLoginAccount(session));
+            bgRoleService.delete(roleVO.getBgRoleId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("删除角色失败", e, roleId);
+            log.warn("删除角色失败", e, roleVO.getBgRoleId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("删除角色失败，系统异常", e, roleId);
+            log.error("删除角色失败，系统异常", e, roleVO.getBgRoleId());
         }
         return baseAjaxVO;
     }
@@ -107,19 +107,19 @@ public class BgRoleController extends BaseController {
     @ApiOperation(value = "禁用角色信息", notes = "禁用角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/disable", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO disable(@RequestBody @ApiParam(name = "roleId", value = "角色Id")
-                                          String roleId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO disable(@RequestBody @ApiParam(name = "roleId", value = "角色Id(仅传入bgRoleId即可)")
+                                          BgRoleVO roleVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgRoleService.disable(roleId, getLoginAccount(session));
+            bgRoleService.disable(roleVO.getBgRoleId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("禁用角色失败", e, roleId);
+            log.warn("禁用角色失败", e, roleVO.getBgRoleId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("禁用角色失败，系统异常", e, roleId);
+            log.error("禁用角色失败，系统异常", e, roleVO.getBgRoleId());
         }
         return baseAjaxVO;
     }
@@ -127,19 +127,19 @@ public class BgRoleController extends BaseController {
     @ApiOperation(value = "启用角色信息", notes = "启用角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/enable", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO enable(@RequestBody @ApiParam(name = "roleId", value = "角色Id")
-                                         String roleId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO enable(@RequestBody @ApiParam(name = "roleId", value = "角色Id(仅传入bgRoleId即可)")
+                                         BgRoleVO roleVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgRoleService.enable(roleId, getLoginAccount(session));
+            bgRoleService.enable(roleVO.getBgRoleId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("启用角色失败", e, roleId);
+            log.warn("启用角色失败", e, roleVO.getBgRoleId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("启用角色失败，系统异常", e, roleId);
+            log.error("启用角色失败，系统异常", e, roleVO.getBgRoleId());
         }
         return baseAjaxVO;
     }

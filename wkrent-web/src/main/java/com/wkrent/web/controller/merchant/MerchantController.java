@@ -52,9 +52,9 @@ public class MerchantController extends BaseController{
     @ApiOperation(value = "根据id查询商家信息", notes = "根据id查询商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/findByMerchantId", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO findByMerchantId(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
-                                                   String merchantId){
-        return bgMerchantService.findByMerchantId(merchantId);
+    public BaseAjaxVO findByMerchantId(@RequestBody @ApiParam(name = "merchantId", value = "商家id(仅传入bgMerchantId即可)")
+                                                   BgMerchantVO merchantVO){
+        return bgMerchantService.findByMerchantId(merchantVO.getBgMerchantId());
     }
 
     @ApiOperation(value = "新增商家信息", notes = "新增商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
@@ -102,19 +102,19 @@ public class MerchantController extends BaseController{
     @ApiOperation(value = "删除商家信息", notes = "删除商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
-                                         String merchantId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "merchantId", value = "商家id(仅传入bgMerchantId即可)")
+                                         BgMerchantVO merchantVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgMerchantService.delete(merchantId, getLoginAccount(session));
+            bgMerchantService.delete(merchantVO.getBgMerchantId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("删除商家失败", e, merchantId);
+            log.warn("删除商家失败", e, merchantVO.getBgMerchantId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("删除商家失败，系统异常", e, merchantId);
+            log.error("删除商家失败，系统异常", e, merchantVO.getBgMerchantId());
         }
         return baseAjaxVO;
     }
@@ -122,19 +122,19 @@ public class MerchantController extends BaseController{
     @ApiOperation(value = "禁用商家信息", notes = "禁用商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/disable", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO disable(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
-                                          String merchantId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO disable(@RequestBody @ApiParam(name = "merchantId", value = "商家id(仅传入bgMerchantId即可)")
+                                          BgMerchantVO merchantVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgMerchantService.disable(merchantId, getLoginAccount(session));
+            bgMerchantService.disable(merchantVO.getBgMerchantId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("禁用商家失败", e, merchantId);
+            log.warn("禁用商家失败", e, merchantVO.getBgMerchantId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("禁用商家失败，系统异常", e, merchantId);
+            log.error("禁用商家失败，系统异常", e, merchantVO.getBgMerchantId());
         }
         return baseAjaxVO;
     }
@@ -142,35 +142,35 @@ public class MerchantController extends BaseController{
     @ApiOperation(value = "启用商家信息", notes = "启用商家信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/enable", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO enable(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
-                                         String merchantId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO enable(@RequestBody @ApiParam(name = "merchantId", value = "商家id(仅传入bgMerchantId即可)")
+                                         BgMerchantVO merchantVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgMerchantService.enable(merchantId, getLoginAccount(session));
+            bgMerchantService.enable(merchantVO.getBgMerchantId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("启用商家失败", e, merchantId);
+            log.warn("启用商家失败", e, merchantVO.getBgMerchantId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("启用商家失败，系统异常", e, merchantId);
+            log.error("启用商家失败，系统异常", e, merchantVO.getBgMerchantId());
         }
         return baseAjaxVO;
     }
 
     /**
      * 根据商家id查询营业执照信息
-     * @param merchantId 商家id
+     * @param merchantVO 商家id
      * @return 未被删除营业执照附件信息
      */
     @ApiOperation(value = "根据商家id查询营业执照信息", notes = "根据商家id查询营业执照信息", httpMethod = "POST")
     @RequestMapping(value = "/queryFileById", method = RequestMethod.POST)
     @ResponseBody
-    public List<BgPicAttachVO> queryFileById(@RequestBody @ApiParam(name = "merchantId", value = "商家id")
-                                                         String merchantId){
+    public List<BgPicAttachVO> queryFileById(@RequestBody @ApiParam(name = "merchantId", value = "商家id(仅传入bgMerchantId即可)")
+                                                         BgMerchantVO merchantVO){
         //附件信息
-        return bgPicAttachService.selectByOwnerId(merchantId);
+        return bgPicAttachService.selectByOwnerId(merchantVO.getBgMerchantId());
     }
 
     @ApiOperation(value = "查询所有未删除商家信息", notes = "查询所有未删除商家信息", httpMethod = "GET", response = PageResult.class)

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * 用户反馈信息
@@ -45,17 +44,17 @@ public class FeedBackController extends BaseController{
     @ApiOperation(value = "根据id查询用户反馈信息", notes = "根据id查询用户反馈信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/findById", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO findById(@RequestBody @ApiParam(name = "feedBackId", value = "用户反馈id")
-                                           String feedBackId){
-        return feedBackService.findByFeedId(feedBackId);
+    public BaseAjaxVO findById(@RequestBody @ApiParam(name = "feedBackId", value = "用户反馈id(仅传入appFeedbackId即可)")
+                                           AppFeedbackVO feedbackVO){
+        return feedBackService.findByFeedId(feedbackVO.getAppFeedbackId());
     }
 
     @ApiOperation(value = "初始化运营处理", notes = "初始化运营处理", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/initManage", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO initManage(@RequestBody @ApiParam(name = "feedBackId", value = "用户反馈id")
-                                       String feedBackId){
-        return feedBackService.findByFeedId(feedBackId);
+    public BaseAjaxVO initManage(@RequestBody @ApiParam(name = "feedBackId", value = "用户反馈id(仅传入appFeedbackId即可)")
+                                             AppFeedbackVO feedbackVO){
+        return feedBackService.findByFeedId(feedbackVO.getAppFeedbackId());
     }
 
     /**
@@ -84,19 +83,19 @@ public class FeedBackController extends BaseController{
     @ApiOperation(value = "删除用户反馈信息", notes = "删除用户反馈信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "feedBackId", value = "待修改用户反馈信息")
-                                     List<String> feedBackIdList, @ApiIgnore HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "feedBackIdList", value = "待删除用户反馈信息(仅传入feedBackIdList即可)")
+                                         AppFeedbackVO feedBackVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            feedBackService.delete(feedBackIdList, getLoginAccount(session));
+            feedBackService.delete(feedBackVO.getFeedBackIdList(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("删除用户反馈信息失败", e, feedBackIdList);
+            log.warn("删除用户反馈信息失败", e, feedBackVO.getFeedBackIdList());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("删除用户反馈信息失败，系统异常", e, feedBackIdList);
+            log.error("删除用户反馈信息失败，系统异常", e, feedBackVO.getFeedBackIdList());
         }
         return baseAjaxVO;
     }

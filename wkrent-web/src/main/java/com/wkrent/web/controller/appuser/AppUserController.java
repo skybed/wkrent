@@ -43,9 +43,9 @@ public class AppUserController extends BaseController{
     @ApiOperation(value = "根据id查询前台用户信息", notes = "根据id查询前台用户信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/findByUserId", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO findByUserId(@RequestBody @ApiParam(name = "userId", value = "前台用户id")
-                                           String userId){
-        return bgAppUserService.findByUserId(userId);
+    public BaseAjaxVO findByUserId(@RequestBody @ApiParam(name = "userId", value = "前台用户id（传入appUserId即可）")
+                                           AppUserVO userVO){
+        return bgAppUserService.findByUserId(userVO.getAppUserId());
     }
 
     @ApiOperation(value = "修改前台用户信息", notes = "修改前台用户信息", httpMethod = "POST", response = BaseAjaxVO.class)
@@ -71,11 +71,11 @@ public class AppUserController extends BaseController{
     @ApiOperation(value = "删除前台用户信息", notes = "删除前台用户信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "userVO", value = "待修改前台用户信息")
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "userId", value = "前台用户id（传入appUserId即可）")
                                      AppUserVO userVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgAppUserService.update(userVO, getLoginAccount(session));
+            bgAppUserService.delete(userVO.getAppUserId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());

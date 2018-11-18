@@ -49,9 +49,9 @@ public class RoomController extends BaseController{
     @ApiOperation(value = "根据id查询房源信息", notes = "根据id查询房源信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/findByRoomId", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO findByRoomId(@RequestBody @ApiParam(name = "roomId", value = "房源id")
-                                               String roomId){
-        return bgRoomService.findByRoomId(roomId);
+    public BaseAjaxVO findByRoomId(@RequestBody @ApiParam(name = "roomId", value = "房源id(传入bgRoomId即可)")
+                                               BgRoomVO roomVO){
+        return bgRoomService.findByRoomId(roomVO.getBgRoomId());
     }
 
     @ApiOperation(value = "新增房源信息", notes = "新增房源信息", httpMethod = "POST", response = BaseAjaxVO.class)
@@ -99,19 +99,19 @@ public class RoomController extends BaseController{
     @ApiOperation(value = "房源下架", notes = "房源下架", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/soldOut", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO soldOut(@RequestBody @ApiParam(name = "roomId", value = "房源Id")
-                                         String roomId, @ApiIgnore HttpSession session){
+    public BaseAjaxVO soldOut(@RequestBody @ApiParam(name = "roomId", value = "房源id(传入bgRoomId即可)")
+                                         BgRoomVO roomVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            bgRoomService.soldOut(roomId, getLoginAccount(session));
+            bgRoomService.soldOut(roomVO.getBgRoomId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("下架房源失败", e, roomId);
+            log.warn("下架房源失败", e, roomVO.getBgRoomId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("下架房源失败，系统异常", e, roomId);
+            log.error("下架房源失败，系统异常", e, roomVO.getBgRoomId());
         }
         return baseAjaxVO;
     }
