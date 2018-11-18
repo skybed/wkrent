@@ -18,6 +18,16 @@ public class Constant {
 	public static final String RESULT_SUCCESS_MSG = "操作成功！";
 	
 	/**
+	 * 状态码 202
+	 */
+	public static final String RESULT_NOT_LOGIN_CODE = "202";
+	
+	/**
+	 * 用户未登陆,请登陆后重试!
+	 */
+	public static final String RESULT_NOT_LOGIN_MSG = "用户未登陆,请登陆后重试!";
+	
+	/**
 	 * 状态码 400
 	 */
 	public static final String RESULT_FAIL_CODE = "400";
