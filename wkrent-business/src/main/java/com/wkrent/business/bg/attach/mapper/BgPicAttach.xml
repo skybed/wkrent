@@ -30,6 +30,18 @@
     where pic_attach_owner = #{ownerId,jdbcType=VARCHAR} and is_delete = '0';
   </select>
 
+  <select id="selectByOwnerIdList" parameterType="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_pic_attach
+    <where>
+      is_delete = '0'
+      <foreach collection="ownerIdList" open="(" close=")" separator="," item="ownerId">
+        pic_attach_owner = #{ownerId,jdbcType=VARCHAR}
+      </foreach>
+    </where>
+  </select>
+
   <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgPicAttach">
     insert into bg_pic_attach
     <trim prefix="(" suffix=")" suffixOverrides=",">

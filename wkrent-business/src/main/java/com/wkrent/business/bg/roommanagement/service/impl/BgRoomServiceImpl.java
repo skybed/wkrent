@@ -24,7 +24,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Administrator 
@@ -55,12 +57,23 @@ public class BgRoomServiceImpl implements BgRoomService{
         PageResult<BgRoomVO> pageResult = new PageResult<>();
 
         int total = bgRoomDao.countByCondition(roomVO);
-        if(total > 0){
-            List<BgRoomVO> bgMerchantList = bgRoomDao.findByCondition(roomVO);
-            setRoomLabelName(bgMerchantList);
-            pageResult.setRows(BeanUtil.copyList(bgMerchantList, BgRoomVO.class));
-            pageResult.setTotal(total);
+        if(total <= 0){
+            return pageResult;
         }
+        List<BgRoomVO> bgRoomVOList = bgRoomDao.findByCondition(roomVO);
+        List<String> roomIdList = Lists.newArrayList();
+        for(BgRoomVO bgRoomVO : bgRoomVOList){
+            roomIdList.add(bgRoomVO.getBgRoomId());
+        }
+        Map<String, List<String>> fileIdMap = bgPicAttachService.selectFileIdByOwnerIdList(roomIdList);
+        if(!fileIdMap.isEmpty()){
+            for(BgRoomVO bgRoomVO : bgRoomVOList){
+                bgRoomVO.setAttachIdList(fileIdMap.get(bgRoomVO.getBgRoomId()));
+            }
+        }
+        setRoomLabelName(bgRoomVOList);
+        pageResult.setRows(bgRoomVOList);
+        pageResult.setTotal(total);
         return pageResult;
     }
 

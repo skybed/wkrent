@@ -18,6 +18,13 @@ public interface BgPicAttachDao {
     List<BgPicAttach> selectByOwnerId(String ownerId);
 
     /**
+     * 根据附件所属id查询附件信息
+     * @param ownerIdList 附件所属id
+     * @return 符合条件未删除附件信息
+     */
+    List<BgPicAttach> selectByOwnerIdList(List<String> ownerIdList);
+
+    /**
      * 新增附件信息
      * @param bgPicAttach 附件
      */

@@ -6,6 +6,7 @@
 */
 package com.wkrent.common.entity.vo;
 
+import com.wkrent.common.entity.paging.Page;
 import io.swagger.annotations.ApiModel;
 
 import java.io.Serializable;
@@ -170,6 +171,11 @@ public class BgRoomVO implements Serializable {
      * 总浏览数
      */
     private Integer bgRoomViewNum;
+
+    /**
+     * 分页信息
+     */
+    private Page page;
 
     /**
      * 开始时间
@@ -640,5 +646,13 @@ public class BgRoomVO implements Serializable {
 
     public void setAttachIdList(List<String> attachIdList) {
         this.attachIdList = attachIdList;
+    }
+
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
     }
 }

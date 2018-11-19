@@ -41,7 +41,7 @@ public class HouseLabelController extends BaseController{
     }
 
     @ApiOperation(value = "查询房源标签", notes = "查询房源标签")
-    @RequestMapping(value = "/queryList", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryList", method = RequestMethod.GET)
     @ResponseBody
     public List<BgDataDictValueVO> queryList(){
         return bgDataDictValueService.queryDictValueList(Constants.DICT_TYPE_HOUSE_LABEL);

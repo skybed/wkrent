@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Administrator
@@ -18,6 +19,13 @@ public interface BgPicAttachService {
      * @return 符合条件未删除附件信息
      */
     List<BgPicAttachVO> selectByOwnerId(String ownerId);
+
+    /**
+     * 根据附件所属id查询附件Id信息
+     * @param ownerId 附件所属id
+     * @return 符合条件未删除附件信息
+     */
+    Map<String, List<String>> selectFileIdByOwnerIdList(List<String> ownerId);
 
     /**
      * 新增附件信息

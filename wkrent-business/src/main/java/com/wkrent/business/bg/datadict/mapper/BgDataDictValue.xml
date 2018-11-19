@@ -42,12 +42,12 @@
     <sql id="Query_Condition">
         INNER JOIN bg_data_dict DIC on VAL.bg_data_dict_id = DIC.bg_data_dict_id
         <where>
-            VAL.is_delte = '0' AND DIC.is_delete = '0'
+            VAL.is_delete = '0' AND DIC.is_delete = '0'
             AND DIC.bg_data_dict_type = #{bgDataDictType,jdbcType=VARCHAR}
-            <if test="bg_data_dict_id != null and bg_data_dict_id != ''">
+            <if test="bgDataDictId != null and bgDataDictId != ''">
                 AND VAL.bg_data_dict_id = #{bgDataDictId,jdbcType=VARCHAR}
             </if>
-            <if test="bg_data_dict_value != null and bg_data_dict_value != ''">
+            <if test="bgDataDictValue != null and bgDataDictValue != ''">
                 AND VAL.bg_data_dict_value = #{bgDataDictValue,jdbcType=VARCHAR}
             </if>
             <if test="isActive != null and isActive != ''">
@@ -61,7 +61,7 @@
         <include refid="Base_Column_List" />
         from bg_data_dict_value
         where
-        is_delte = '0'
+        is_delete = '0'
         AND bg_data_dict_value_id = #{bgDataDictValueId,jdbcType=VARCHAR}
     </select>
 
@@ -147,7 +147,7 @@
         </if>
     </select>
 
-    <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.BgDataDictValueVO" resultMap="QueryResultMap">
+    <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.BgDataDictValueVO" resultType="java.lang.Integer">
         select
         count(bg_data_dict_value_id)
         from bg_data_dict_value VAL
@@ -160,7 +160,7 @@
         from bg_data_dict_value VAL
         INNER JOIN bg_data_dict DIC on VAL.bg_data_dict_id = DIC.bg_data_dict_id
         <where>
-            VAL.is_delte = '0'
+            VAL.is_delete = '0'
             AND DIC.is_delete = '0'
             AND VAL.is_active = '1'
             AND DIC.bg_data_dict_type = #{bgDataDictType,jdbcType=VARCHAR}

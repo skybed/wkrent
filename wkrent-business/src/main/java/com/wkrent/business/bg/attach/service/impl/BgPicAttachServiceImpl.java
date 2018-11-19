@@ -26,8 +26,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -51,6 +53,34 @@ public class BgPicAttachServiceImpl implements BgPicAttachService{
             return Lists.newArrayList();
         }
         return BeanUtil.copyList(attachList, BgPicAttachVO.class);
+    }
+
+    /**
+     * 根据附件所属id查询附件Id信息
+     *
+     * @param ownerIdList 附件所属id
+     * @return 符合条件未删除附件信息
+     */
+    @Override
+    public Map<String, List<String>> selectFileIdByOwnerIdList(List<String> ownerIdList) {
+        Map<String, List<String>> fileMap = new HashMap<>();
+        if(CollectionUtils.isEmpty(ownerIdList)){
+            return fileMap;
+        }
+        for(String ownerId : ownerIdList){
+            if(!fileMap.containsKey(ownerId)){
+                fileMap.put(ownerId, Lists.newArrayList());
+            }
+        }
+        List<BgPicAttach> attachList = bgPicAttachDao.selectByOwnerIdList(ownerIdList);
+        if(CollectionUtils.isEmpty(attachList)){
+            for(BgPicAttach attach : attachList){
+                if(fileMap.containsKey(attach.getPicAttachOwner())){
+                    fileMap.get(attach.getPicAttachOwner()).add(attach.getPicAttachId());
+                }
+            }
+        }
+        return fileMap;
     }
 
     @Override
@@ -215,7 +245,7 @@ public class BgPicAttachServiceImpl implements BgPicAttachService{
     }
 
     private void updatePicAttachOwner(List<String> picIdList, String ownerId) {
-        if(CollectionUtils.isNotEmpty(picIdList) && StringUtils.isBlank(ownerId)){
+        if(CollectionUtils.isNotEmpty(picIdList) && StringUtils.isNotBlank(ownerId)){
             bgPicAttachDao.updatePicAttachOwner(picIdList, ownerId);
         }
     }

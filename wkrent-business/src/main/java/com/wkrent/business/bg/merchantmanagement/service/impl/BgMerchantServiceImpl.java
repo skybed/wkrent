@@ -8,7 +8,6 @@ import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.po.BgMerchant;
-import com.wkrent.common.entity.po.BgRole;
 import com.wkrent.common.entity.vo.BgMerchantVO;
 import com.wkrent.common.exception.WkRentException;
 import com.wkrent.common.util.BeanUtil;
@@ -20,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Administrator 
@@ -44,11 +44,23 @@ public class BgMerchantServiceImpl implements BgMerchantService{
         PageResult<BgMerchantVO> pageResult = new PageResult<>();
 
         int total = bgMerchantDao.countByCondition(merchantVO);
-        if(total > 0){
-            List<BgMerchant> bgMerchantList = bgMerchantDao.findByCondition(merchantVO);
-            pageResult.setRows(BeanUtil.copyList(bgMerchantList, BgMerchantVO.class));
-            pageResult.setTotal(total);
+        if(total <= 0){
+            return pageResult;
         }
+        List<BgMerchant> bgMerchantList = bgMerchantDao.findByCondition(merchantVO);
+        List<String> merchantIdList = Lists.newArrayList();
+        for(BgMerchant bgMerchant : bgMerchantList){
+            merchantIdList.add(bgMerchant.getBgMerchantId());
+        }
+        Map<String, List<String>> fileIdMap = bgPicAttachService.selectFileIdByOwnerIdList(merchantIdList);
+        List<BgMerchantVO> bgMerchantVOList = BeanUtil.copyList(bgMerchantList, BgMerchantVO.class);
+        if(!fileIdMap.isEmpty()){
+            for(BgMerchantVO merchant : bgMerchantVOList){
+                merchant.setFileIdList(fileIdMap.get(merchant.getBgMerchantId()));
+            }
+        }
+        pageResult.setRows(bgMerchantVOList);
+        pageResult.setTotal(total);
         return pageResult;
     }
 
@@ -128,7 +140,12 @@ public class BgMerchantServiceImpl implements BgMerchantService{
             baseAjaxVO.setText("商家不存在或者已被删除！");
             return baseAjaxVO;
         }
-        baseAjaxVO.setResult(BeanUtil.copyBean(merchant, BgMerchantVO.class));
+        Map<String, List<String>> attachIdMap = bgPicAttachService.selectFileIdByOwnerIdList(Lists.newArrayList(merchantId));
+        BgMerchantVO merchantVO = BeanUtil.copyBean(merchant, BgMerchantVO.class);
+        if(!attachIdMap.isEmpty()){
+            merchantVO.setFileIdList(attachIdMap.get(merchantId));
+        }
+        baseAjaxVO.setResult(merchantVO);
         return baseAjaxVO;
     }
 
