@@ -22,7 +22,7 @@ public interface BgPicAttachDao {
      * @param ownerIdList 附件所属id
      * @return 符合条件未删除附件信息
      */
-    List<BgPicAttach> selectByOwnerIdList(List<String> ownerIdList);
+    List<BgPicAttach> selectByOwnerIdList(@Param("ownerIdList") List<String> ownerIdList);
 
     /**
      * 新增附件信息

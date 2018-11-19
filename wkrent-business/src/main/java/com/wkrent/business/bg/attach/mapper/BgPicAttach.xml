@@ -35,9 +35,9 @@
     <include refid="Base_Column_List" />
     from bg_pic_attach
     <where>
-      is_delete = '0'
+      is_delete = '0' AND pic_attach_owner in
       <foreach collection="ownerIdList" open="(" close=")" separator="," item="ownerId">
-        pic_attach_owner = #{ownerId,jdbcType=VARCHAR}
+        #{ownerId,jdbcType=VARCHAR}
       </foreach>
     </where>
   </select>

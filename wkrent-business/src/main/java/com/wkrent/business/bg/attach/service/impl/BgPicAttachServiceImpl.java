@@ -73,7 +73,7 @@ public class BgPicAttachServiceImpl implements BgPicAttachService{
             }
         }
         List<BgPicAttach> attachList = bgPicAttachDao.selectByOwnerIdList(ownerIdList);
-        if(CollectionUtils.isEmpty(attachList)){
+        if(CollectionUtils.isNotEmpty(attachList)){
             for(BgPicAttach attach : attachList){
                 if(fileMap.containsKey(attach.getPicAttachOwner())){
                     fileMap.get(attach.getPicAttachOwner()).add(attach.getPicAttachId());

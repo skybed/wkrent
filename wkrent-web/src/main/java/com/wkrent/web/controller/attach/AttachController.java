@@ -30,8 +30,8 @@ public class AttachController {
      * @param picAttachVO 附件id
      * @return 对应附件文件流
      */
-    @ApiOperation(value = "获取文件流", notes = "获取文件流", httpMethod = "GET")
-    @RequestMapping(value="/getAttachById", method = RequestMethod.GET)
+    @ApiOperation(value = "获取文件流", notes = "获取文件流", httpMethod = "POST")
+    @RequestMapping(value="/getAttachById", method = RequestMethod.POST)
     public void getAttachById(@RequestBody @ApiParam(name = "picAttachId", value = "根据附件id获取文件流(仅传入picAttachId即可)")
                                           BgPicAttachVO picAttachVO, HttpServletResponse response) {
         bgPicAttachService.selectById(picAttachVO.getPicAttachId(), response);
