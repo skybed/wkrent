@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,7 +30,7 @@ public class AttachController {
      */
     @ApiOperation(value = "获取文件流", notes = "获取文件流", httpMethod = "GET")
     @RequestMapping(value="/getAttachById", method = RequestMethod.GET)
-    public void getAttachById(@RequestBody @ApiParam(name = "picAttachId", value = "根据附件id获取文件流(仅传入picAttachId即可)")
+    public void getAttachById(@ApiParam(name = "picAttachId", value = "根据附件id获取文件流(仅传入picAttachId即可)")
                                           String picAttachId, HttpServletResponse response) {
         bgPicAttachService.selectById(picAttachId, response);
     }
