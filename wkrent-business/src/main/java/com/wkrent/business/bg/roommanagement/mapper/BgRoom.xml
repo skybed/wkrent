@@ -141,7 +141,7 @@
     select
     <include refid="Query_Column_List" />
     from bg_room ro
-    left JOIN bg_room_info roi on ro.bg_room_id = roi.bg_room_info_id
+    left JOIN bg_room_info roi on ro.bg_room_id = roi.bg_room_id
     left JOIN bg_data_dict_value on ro. val
     <include refid="Base_Condition_Where" />
     ORDER BY create_time,bg_merchant_id
@@ -151,8 +151,8 @@
   <!-- 根据条件查询总条数 -->
   <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.BgRoomVO" resultType="java.lang.Integer">
     select
-    count(bg_room_id)
-    from bg_room left JOIN bg_room_info roi on ro.bg_room_id = roi.bg_room_info_id
+    count(ro.bg_room_id)
+    from bg_room ro left JOIN bg_room_info roi on ro.bg_room_id = roi.bg_room_id
     <include refid="Base_Condition_Where" />
   </select>
 

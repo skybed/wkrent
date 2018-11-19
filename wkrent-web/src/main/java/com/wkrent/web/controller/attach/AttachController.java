@@ -1,7 +1,6 @@
 package com.wkrent.web.controller.attach;
 
 import com.wkrent.business.bg.attach.service.BgPicAttachService;
-import com.wkrent.common.entity.vo.BgPicAttachVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,14 +26,14 @@ public class AttachController {
     /**
      * 获取文件流
      * @param response 返回结果
-     * @param picAttachVO 附件id
+     * @param picAttachId 附件id
      * @return 对应附件文件流
      */
-    @ApiOperation(value = "获取文件流", notes = "获取文件流", httpMethod = "POST")
-    @RequestMapping(value="/getAttachById", method = RequestMethod.POST)
+    @ApiOperation(value = "获取文件流", notes = "获取文件流", httpMethod = "GET")
+    @RequestMapping(value="/getAttachById", method = RequestMethod.GET)
     public void getAttachById(@RequestBody @ApiParam(name = "picAttachId", value = "根据附件id获取文件流(仅传入picAttachId即可)")
-                                          BgPicAttachVO picAttachVO, HttpServletResponse response) {
-        bgPicAttachService.selectById(picAttachVO.getPicAttachId(), response);
+                                          String picAttachId, HttpServletResponse response) {
+        bgPicAttachService.selectById(picAttachId, response);
     }
 
 }

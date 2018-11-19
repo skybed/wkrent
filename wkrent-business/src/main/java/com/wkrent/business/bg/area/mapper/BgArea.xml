@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.bg.area.dao.BgAreaDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.BgArea">
+    <id column="area_id" jdbcType="VARCHAR" property="areaId" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="area_parent_code" jdbcType="VARCHAR" property="areaParentCode" />
+    <result column="area_level" jdbcType="INTEGER" property="areaLevel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    area_code, area_name, area_parent_code, area_level
+  </sql>
+
+  <select id="queryAreaByLevel" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+      <include refid="Base_Column_List" />
+    from bg_area
+    where  area_level = #{level,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryAreaByParentCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from bg_area
+    where  area_parent_code = #{areaParentCode,jdbcType=VARCHAR} and area_level > 1
+  </select>
+</mapper>
