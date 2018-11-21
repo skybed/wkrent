@@ -131,7 +131,7 @@
       bg_room_detail = #{bgRoomDetail,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       update_by = #{updateBy,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where bg_room_id = #{bgRoomId,jdbcType=VARCHAR} AND is_delete = '0'
   </update>
 

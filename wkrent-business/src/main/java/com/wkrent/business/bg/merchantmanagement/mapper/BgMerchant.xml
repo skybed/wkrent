@@ -83,7 +83,7 @@
       is_active = #{isActive,jdbcType=CHAR},
       description = #{description,jdbcType=VARCHAR},
       update_by = #{updateBy,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where bg_merchant_id = #{bgMerchantId,jdbcType=VARCHAR}
     AND is_delete = '0'
   </update>
