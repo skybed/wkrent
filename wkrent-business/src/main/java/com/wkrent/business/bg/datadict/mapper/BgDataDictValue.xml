@@ -94,7 +94,7 @@
           update_by, update_time, remark
           )
         values (#{bgDataDictValueId,jdbcType=VARCHAR}, #{bgDataDictId,jdbcType=VARCHAR},
-          #{bgDataDictValue,jdbcType=VARCHAR}, '0', #{isActive,jdbcType=CHAR},
+          #{bgDataDictValue,jdbcType=VARCHAR}, '0', '1',
           #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
           #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
           )
