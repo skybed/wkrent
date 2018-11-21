@@ -84,25 +84,49 @@ public class BgRoomServiceImpl implements BgRoomService{
         //查询房源标签信息转换为Map ，key：valueId，value：valueName
         List<BgDataDictValueVO> dataDictValueVOList =
                 bgDataDictValueService.queryDictValueList(Constants.DICT_TYPE_HOUSE_LABEL);
+        List<BgDataDictValueVO> houseTypeList =
+                bgDataDictValueService.queryDictValueList(Constants.DICT_TYPE_HOUSE_TYPE);
+        List<BgDataDictValueVO> housePropertyList =
+                bgDataDictValueService.queryDictValueList(Constants.DICT_TYPE_HOUSE_PROPERTY);
         Map<String, String> dicValueMap = new HashMap<>();
+        Map<String, String> houseTypeMap = new HashMap<>();
+        Map<String, String> housePropertyMap = new HashMap<>();
         for(BgDataDictValueVO valueVO : dataDictValueVOList){
             if(!dicValueMap.containsKey(valueVO.getBgDataDictValueId())){
                 dicValueMap.put(valueVO.getBgDataDictValueId(), valueVO.getBgDataDictValue());
             }
         }
+        for(BgDataDictValueVO valueVO : houseTypeList){
+            if(!houseTypeMap.containsKey(valueVO.getBgDataDictValueId())){
+                houseTypeMap.put(valueVO.getBgDataDictValueId(), valueVO.getBgDataDictValue());
+            }
+        }
+        for(BgDataDictValueVO valueVO : housePropertyList){
+            if(!housePropertyMap.containsKey(valueVO.getBgDataDictValueId())){
+                housePropertyMap.put(valueVO.getBgDataDictValueId(), valueVO.getBgDataDictValue());
+            }
+        }
         for(BgRoomVO roomVO : roomVOList){
             String roomTips = roomVO.getBgRoomTips();
-            if(StringUtils.isBlank(roomTips)){
-                continue;
-            }
-            List<String> tipList = Lists.newArrayList(roomTips.split(", "));
-            List<String> tipTextList = Lists.newArrayList();
-            for(String tip : tipList){
-                if(dicValueMap.containsKey(tip)){
-                    tipTextList.add(dicValueMap.get(tip));
+            if(StringUtils.isNotBlank(roomTips)){
+                List<String> tipList = Lists.newArrayList(roomTips.split(", "));
+                List<String> tipTextList = Lists.newArrayList();
+                for(String tip : tipList){
+                    if(dicValueMap.containsKey(tip)){
+                        tipTextList.add(dicValueMap.get(tip));
+                    }
                 }
+                roomVO.setBgRoomTipsText(StringUtils.join(tipTextList, ", "));
             }
-            roomVO.setBgRoomTipsText(StringUtils.join(tipTextList, ", "));
+            if(StringUtils.isNotBlank(roomVO.getBgRoomType())){
+                roomVO.setBgRoomTypeText(houseTypeMap.get(roomVO.getBgRoomType()));
+            }
+            if(StringUtils.isNotBlank(roomVO.getBgRoomProperty())){
+                roomVO.setBgRoomPropertyText(housePropertyMap.get(roomVO.getBgRoomProperty()));
+            }
+            if(RoomStatusEnum.getByCode(roomVO.getBgRoomStatus()) != null){
+                roomVO.setBgRoomStatusText(RoomStatusEnum.getByCode(roomVO.getBgRoomStatus()).getDesc());
+            }
         }
     }
 

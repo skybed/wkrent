@@ -142,9 +142,8 @@
     <include refid="Query_Column_List" />
     from bg_room ro
     left JOIN bg_room_info roi on ro.bg_room_id = roi.bg_room_id
-    left JOIN bg_data_dict_value on ro. val
     <include refid="Base_Condition_Where" />
-    ORDER BY create_time,bg_merchant_id
+    ORDER BY create_time,bg_room_id
     LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
   </select>
 

@@ -80,6 +80,10 @@ public class BgRoomVO implements Serializable {
      * 房源状态 1-出租中 2-已被预订 3-房源锁定 4-待签租房合同 5-已出租 6-已下架
      */
     private String bgRoomStatus;
+    /**
+     * 房源状态 1-出租中 2-已被预订 3-房源锁定 4-待签租房合同 5-已出租 6-已下架
+     */
+    private String bgRoomStatusText;
 
     /**
      * 最大预约数
@@ -110,11 +114,19 @@ public class BgRoomVO implements Serializable {
      * 房屋性质 来源数据字典
      */
     private String bgRoomProperty;
+    /**
+     * 房屋性质 来源数据字典
+     */
+    private String bgRoomPropertyText;
 
     /**
      * 房屋类型 来源数据字典
      */
     private String bgRoomType;
+    /**
+     * 房屋类型 来源数据字典
+     */
+    private String bgRoomTypeText;
 
     /**
      * 房屋详情
@@ -654,5 +666,29 @@ public class BgRoomVO implements Serializable {
 
     public void setPage(Page page) {
         this.page = page;
+    }
+
+    public String getBgRoomStatusText() {
+        return bgRoomStatusText;
+    }
+
+    public void setBgRoomStatusText(String bgRoomStatusText) {
+        this.bgRoomStatusText = bgRoomStatusText;
+    }
+
+    public String getBgRoomPropertyText() {
+        return bgRoomPropertyText;
+    }
+
+    public void setBgRoomPropertyText(String bgRoomPropertyText) {
+        this.bgRoomPropertyText = bgRoomPropertyText;
+    }
+
+    public String getBgRoomTypeText() {
+        return bgRoomTypeText;
+    }
+
+    public void setBgRoomTypeText(String bgRoomTypeText) {
+        this.bgRoomTypeText = bgRoomTypeText;
     }
 }
