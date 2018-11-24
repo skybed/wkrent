@@ -89,6 +89,7 @@ public class BgRoleServiceImpl implements BgRoleService {
             }
             BgRole bgRole = BeanUtil.copyBean(roleVO, BgRole.class);
             bgRole.setBgRoleId(UUIDUtil.getUUID());
+            bgRole.setIsActive(Constants.STR_TRUE);
             OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Add, bgRole, loginAccount);
             int result = bgRoleDao.insertRole(bgRole);
             if(result != 1){
