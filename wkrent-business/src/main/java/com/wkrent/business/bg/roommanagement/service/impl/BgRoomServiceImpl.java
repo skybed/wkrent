@@ -157,6 +157,9 @@ public class BgRoomServiceImpl implements BgRoomService{
         roomVO.setBgRoomNumber(code);
         roomVO.setBgRoomId(room.getBgRoomId());
         roomVO.setBgRoomStatus(room.getBgRoomStatus());
+        if(RoomStatusEnum.getByCode(room.getBgRoomStatus()) != null){
+            roomVO.setBgRoomStatusText(RoomStatusEnum.getByCode(room.getBgRoomStatus()).getDesc());
+        }
         baseAjaxVO.setResult(roomVO);
         return baseAjaxVO;
     }
