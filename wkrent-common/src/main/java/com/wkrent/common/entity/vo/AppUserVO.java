@@ -1,5 +1,7 @@
 package com.wkrent.common.entity.vo;
 
+import com.wkrent.common.entity.paging.Page;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -99,6 +101,45 @@ public class AppUserVO implements Serializable {
      * 备注 预留字段
      */
     private String remark;
+
+    /**
+     * 分页信息
+     */
+    private Page page;
+
+    /**
+     * 开始时间
+     */
+    private Date startDate;
+
+    /**
+     * 结束时间
+     */
+    private Date endDate;
+
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
     /**
      * 

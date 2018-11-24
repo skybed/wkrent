@@ -146,6 +146,8 @@ public class BgRoomServiceImpl implements BgRoomService{
         BgRoom room = BeanUtil.copyBean(roomVO, BgRoom.class);
         room.setBgRoomNumber(code);
         room.setBgRoomId(UUIDUtil.getUUID());
+        //新增房源默认设置为出租中
+        room.setBgRoomStatus(RoomStatusEnum.RENTING.getCode());
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Add, room, loginAccount);
         //设置房源标签，多条用，分割
         room.setBgRoomTips(getRoomLabelInfo(roomVO.getRoomLabelIdList()));
@@ -154,6 +156,7 @@ public class BgRoomServiceImpl implements BgRoomService{
         bgPicAttachService.updateAttachOwnerId(roomVO.getAttachIdList(), room.getBgRoomId());
         roomVO.setBgRoomNumber(code);
         roomVO.setBgRoomId(room.getBgRoomId());
+        roomVO.setBgRoomStatus(room.getBgRoomStatus());
         baseAjaxVO.setResult(roomVO);
         return baseAjaxVO;
     }

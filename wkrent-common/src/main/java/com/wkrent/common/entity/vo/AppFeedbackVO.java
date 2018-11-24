@@ -1,5 +1,7 @@
 package com.wkrent.common.entity.vo;
 
+import com.wkrent.common.entity.paging.Page;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -95,6 +97,45 @@ public class AppFeedbackVO implements Serializable {
      * 用户反馈IdList
      */
     private List<String> feedBackIdList;
+
+    /**
+     * 分页信息
+     */
+    private Page page;
+
+    /**
+     * 开始时间
+     */
+    private Date startDate;
+
+    /**
+     * 结束时间
+     */
+    private Date endDate;
+
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
     /**
      * 
