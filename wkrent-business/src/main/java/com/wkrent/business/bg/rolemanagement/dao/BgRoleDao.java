@@ -26,6 +26,13 @@ public interface BgRoleDao {
     List<BgRole> findByCondition(BgRoleVO roleVO);
 
     /**
+     * 查询所有符合条件角色信息
+     * @param role 查询条件
+     * @return 符合条件角色信息
+     */
+    List<BgRole> queryRoleInfo(BgRole role);
+
+    /**
      * 根据条件查询角色总条数
      * @param roleVO 查询条件
      * @return 总条数

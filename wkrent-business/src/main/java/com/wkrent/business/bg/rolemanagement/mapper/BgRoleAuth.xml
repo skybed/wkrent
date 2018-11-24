@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wkrent.business.dao.BgRoleAuthMapper">
+<mapper namespace="com.wkrent.business.bg.rolemanagement.dao.BgRoleAuthDao">
   <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.BgRoleAuth">
     <id column="bg_role_auth_id" jdbcType="VARCHAR" property="bgRoleAuthId" />
     <result column="bg_role_id" jdbcType="VARCHAR" property="bgRoleId" />

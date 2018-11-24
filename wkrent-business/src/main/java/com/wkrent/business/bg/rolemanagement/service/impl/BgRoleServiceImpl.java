@@ -54,6 +54,23 @@ public class BgRoleServiceImpl implements BgRoleService {
     }
 
     /**
+     * 查询所有启用角色信息
+     *
+     * @return 符合条件角色信息
+     */
+    @Override
+    public BaseAjaxVO queryRoleInfo() {
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+        BgRole bgRole = new BgRole();
+        bgRole.setIsActive(Constants.STR_TRUE);
+        List<BgRole> bgRoleList = bgRoleDao.queryRoleInfo(bgRole);
+        if(CollectionUtils.isNotEmpty(bgRoleList)){
+            baseAjaxVO.setResult(BeanUtil.copyList(bgRoleList, BgRoleVO.class));
+        }
+        return baseAjaxVO;
+    }
+
+    /**
      * 新增角色信息
      * @param roleVO 角色信息
      * @param loginAccount 当前登录账号

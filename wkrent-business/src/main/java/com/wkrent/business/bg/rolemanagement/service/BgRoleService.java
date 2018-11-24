@@ -15,6 +15,12 @@ public interface BgRoleService {
     PageResult<BgRoleVO> findByCondition(BgRoleVO roleVO);
 
     /**
+     * 查询所有启用角色信息
+     * @return 符合条件角色信息
+     */
+    BaseAjaxVO queryRoleInfo();
+
+    /**
      * 新增角色信息
      * @param roleVO 角色信息
      * @param loginAccount 当前登录账号

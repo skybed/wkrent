@@ -51,6 +51,15 @@
     AND is_delete = '0'
   </select>
 
+  <!-- 根据名称查询角色信息 -->
+  <select id="queryRoleInfo" parameterType="com.wkrent.common.entity.po.BgRole" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_role
+    where is_active = #{isActive,jdbcType=VARCHAR}
+    AND is_delete = '0'
+  </select>
+
   <!-- 根据条件查询角色信息(分页) -->
   <select id="findByCondition" parameterType="com.wkrent.common.entity.vo.BgRoleVO" resultMap="BaseResultMap">
     select

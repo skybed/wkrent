@@ -91,7 +91,12 @@
 		<property name="basePackage" value="com.wkrent.business.**.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sessionFactoryManage"></property>
 	</bean>
-	
+
+	<!-- 事务管理  -->
+	<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="wkrentdb" />
+	</bean>
+
 	<!-- 使用annotation定义事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 

@@ -41,6 +41,13 @@ public class BgRoleController extends BaseController {
         return bgRoleService.findByCondition(bgRoleVO);
     }
 
+    @ApiOperation(value = "查询所有启用角色信息", notes = "条件查询后台角色", httpMethod = "GET", response = BgRoleVO.class)
+    @RequestMapping(value = "/queryRoleInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseAjaxVO queryRoleInfo(){
+        return bgRoleService.queryRoleInfo();
+    }
+
     @ApiOperation(value = "新增角色信息", notes = "新增角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
