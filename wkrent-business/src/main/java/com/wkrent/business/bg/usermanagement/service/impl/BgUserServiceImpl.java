@@ -158,7 +158,7 @@ public class BgUserServiceImpl implements BgUserService {
         }
         BgUser updateUser = new BgUser();
         updateUser.setBgUserId(userId);
-        updateUser.setIsDelete(Constants.STR_FALSE);
+        updateUser.setIsDelete(Constants.STR_TRUE);
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateUser, loginAccount);
         int result = bgUserDao.delete(updateUser);
         if(result != 1){

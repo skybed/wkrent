@@ -80,7 +80,7 @@ public class BgAppUserServiceImpl implements BgAppUserService {
         }
         AppUser updateUser = new AppUser();
         updateUser.setAppUserId(userId);
-        updateUser.setIsDelete(Constants.STR_FALSE);
+        updateUser.setIsDelete(Constants.STR_TRUE);
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateUser, loginAccount);
         int result = bgAppUserDao.delete(updateUser);
         if(result != 1){

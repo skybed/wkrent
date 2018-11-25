@@ -50,7 +50,7 @@ public class BgUserRoleServiceImpl implements BgUserRoleService {
         }
         BgUserRole bgUserRole = new BgUserRole();
         bgUserRole.setBgUserId(userId);
-        bgUserRole.setIsDelete(Constants.STR_FALSE);
+        bgUserRole.setIsDelete(Constants.STR_TRUE);
         return bgUserRoleDao.deleteByCondition(bgUserRole);
     }
 }

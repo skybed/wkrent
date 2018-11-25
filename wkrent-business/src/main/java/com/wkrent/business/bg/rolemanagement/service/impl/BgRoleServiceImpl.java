@@ -160,7 +160,7 @@ public class BgRoleServiceImpl implements BgRoleService {
         }
         BgRole updateRole = new BgRole();
         updateRole.setBgRoleId(roleId);
-        updateRole.setIsDelete(Constants.STR_FALSE);
+        updateRole.setIsDelete(Constants.STR_TRUE);
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateRole, loginAccount);
         int result = bgRoleDao.delete(updateRole);
         if(result != 1){

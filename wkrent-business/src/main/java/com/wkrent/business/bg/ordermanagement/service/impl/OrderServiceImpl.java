@@ -212,7 +212,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void payRent(BgOrderVO orderVO, String loginAccount) {
 
-        if(Constants.STR_TRUE.equals(orderVO.getBgOrderRentFlag())){
+        if(Constants.STR_FALSE.equals(orderVO.getBgOrderRentFlag())){
             throw new WkRentException("是否缴纳房租必须勾选");
         }
         if(CurrencyEnum.getByCode(orderVO.getBgOrderRentUnit()) == null){
@@ -255,7 +255,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public void signContract(BgOrderVO orderVO, String loginAccount) {
-        if(Constants.STR_TRUE.equals(orderVO.getBgOrderRentContractFlag())){
+        if(Constants.STR_FALSE.equals(orderVO.getBgOrderRentContractFlag())){
             throw new WkRentException("是否签订合同必须勾选");
         }
         if(StringUtils.isBlank(orderVO.getBgOrderRentContractSerialnum())){
