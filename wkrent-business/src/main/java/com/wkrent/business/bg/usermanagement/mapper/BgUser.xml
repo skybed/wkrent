@@ -77,6 +77,13 @@
     where bg_user_id = #{bgUserId,jdbcType=VARCHAR} AND is_delete = '0'
   </select>
 
+  <select id="findByUserAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_user
+    where bg_user_account = #{bgUserAccount,jdbcType=VARCHAR} AND is_delete = '0'
+  </select>
+
   <update id="delete" parameterType="com.wkrent.common.entity.po.BgUser">
     update bg_user
     set is_delete = #{isDelete, jdbcType=VARCHAR},

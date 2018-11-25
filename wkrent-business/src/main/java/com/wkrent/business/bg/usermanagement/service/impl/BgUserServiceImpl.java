@@ -97,7 +97,8 @@ public class BgUserServiceImpl implements BgUserService {
                 throw new WkRentException("新增用户失败，服务器异常！");
             }
             insertUserRoleInfo(bgUserVO.getRoleId(), bgUser.getBgUserId());
-            ajaxVO.setResult(bgUser);
+            bgUserVO.setBgUserId(bgUser.getBgUserId());
+            ajaxVO.setResult(bgUserVO);
         }
         return ajaxVO;
     }
