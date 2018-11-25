@@ -93,7 +93,7 @@ public class BgMenuServiceImpl implements BgMenuService{
             bgMenuVO.setChildMenuList(childrenList);
         }
         if(StringUtils.isBlank(parentId)){
-            return treeMap.get(parentId);
+            return treeMap.get(ROOT_KEY);
         }
         return treeMap.get(parentId);
     }
