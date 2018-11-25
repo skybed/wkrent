@@ -290,7 +290,7 @@ public class BgRoomServiceImpl implements BgRoomService{
         }
         BgRoom updateRoom = new BgRoom();
         updateRoom.setBgRoomId(roomId);
-        updateRoom.setDescription(RoomStatusEnum.SOLD_OUT.getCode());
+        updateRoom.setBgRoomStatus(RoomStatusEnum.SOLD_OUT.getCode());
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateRoom, loginAccount);
         bgRoomDao.updateRoomStatusById(updateRoom);
         //更新当前房源下订单状态为房源已下架
