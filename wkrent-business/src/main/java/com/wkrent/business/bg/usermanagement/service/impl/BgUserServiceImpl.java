@@ -1,8 +1,8 @@
 package com.wkrent.business.bg.usermanagement.service.impl;
 
 import com.wkrent.business.bg.usermanagement.dao.BgUserDao;
-import com.wkrent.business.bg.usermanagement.service.BgUserService;
 import com.wkrent.business.bg.usermanagement.service.BgUserRoleService;
+import com.wkrent.business.bg.usermanagement.service.BgUserService;
 import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.paging.PageResult;
@@ -11,6 +11,7 @@ import com.wkrent.common.entity.po.BgUserRole;
 import com.wkrent.common.entity.vo.BgUserVO;
 import com.wkrent.common.exception.WkRentException;
 import com.wkrent.common.util.BeanUtil;
+import com.wkrent.common.util.Md5Utils;
 import com.wkrent.common.util.OperatorUtil;
 import com.wkrent.common.util.UUIDUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -90,7 +91,10 @@ public class BgUserServiceImpl implements BgUserService {
                 throw new WkRentException("新增用户失败，用户账号已存在！");
             }
             BgUser bgUser = BeanUtil.copyBean(bgUserVO, BgUser.class);
+            //加密用户密码
+            bgUser.setBgUserPwd(Md5Utils.encryptPassword(bgUser.getBgUserAccount(), bgUser.getBgUserPwd(), Md5Utils.SALT));
             bgUser.setBgUserId(UUIDUtil.getUUID());
+            bgUser.setIsActive(Constants.STR_TRUE);
             OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Add, bgUser, loginAccount);
             int result = bgUserDao.insertUser(bgUser);
             if(result != 1){
@@ -98,6 +102,7 @@ public class BgUserServiceImpl implements BgUserService {
             }
             insertUserRoleInfo(bgUserVO.getRoleId(), bgUser.getBgUserId());
             bgUserVO.setBgUserId(bgUser.getBgUserId());
+            bgUserVO.setIsActive(bgUser.getIsActive());
             ajaxVO.setResult(bgUserVO);
         }
         return ajaxVO;
