@@ -247,7 +247,7 @@
   <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.BgOrderVO" resultType="java.lang.Integer">
     select
     count(bg_order_id)
-    from bg_order
+    from bg_order o
     LEFT JOIN app_user  u ON o.bg_order_user_id = u.app_user_id
     LEFT JOIN bg_room  ro ON o.bg_order_room_id = ro.bg_room_id
     <include refid="Base_Condition_Where" />

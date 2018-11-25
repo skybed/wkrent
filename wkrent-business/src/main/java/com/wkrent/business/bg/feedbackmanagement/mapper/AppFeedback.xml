@@ -120,7 +120,7 @@
   <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.AppUserVO" resultType="java.lang.Integer">
     select
     count(app_feedback_id)
-    from app_feedback
+    from app_feedback fee
     <include refid="Base_Condition_Where" />
   </select>
 </mapper>
