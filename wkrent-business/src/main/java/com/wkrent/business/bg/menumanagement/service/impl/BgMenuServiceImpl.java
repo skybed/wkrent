@@ -78,7 +78,7 @@ public class BgMenuServiceImpl implements BgMenuService{
             }
             //不含当前父级id，则新增
             if(!treeMap.containsKey(bgMenuVO.getBgMenuParentId())){
-                treeMap.put(bgMenuVO.getBgMenuParentId(), Lists.newArrayList(bgMenuVO));
+                treeMap.put(parentKey, Lists.newArrayList(bgMenuVO));
             }else {
                 treeMap.get(parentKey).add(bgMenuVO);
             }
