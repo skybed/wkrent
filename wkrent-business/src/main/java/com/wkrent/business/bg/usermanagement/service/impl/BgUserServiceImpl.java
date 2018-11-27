@@ -5,6 +5,7 @@ import com.wkrent.business.bg.usermanagement.service.BgUserRoleService;
 import com.wkrent.business.bg.usermanagement.service.BgUserService;
 import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
+import com.wkrent.common.entity.enums.SexEnum;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.po.BgUser;
 import com.wkrent.common.entity.po.BgUserRole;
@@ -67,8 +68,13 @@ public class BgUserServiceImpl implements BgUserService {
 
         int total = bgUserDao.countByCondition(userVO);
         if(total > 0){
-            List<BgUser> bgUserList = bgUserDao.findByCondition(userVO);
-            pageResult.setRows(BeanUtil.copyList(bgUserList, BgUserVO.class));
+            List<BgUserVO> bgUserList = bgUserDao.findByCondition(userVO);
+            for(BgUserVO bgUserVO : bgUserList){
+                if(SexEnum.getByCode(bgUserVO.getBgUserSex()) != null){
+                    bgUserVO.setBgUserSexStr(SexEnum.getByCode(bgUserVO.getBgUserSex()).getDesc());
+                }
+            }
+            pageResult.setRows(bgUserList);
             pageResult.setTotal(total);
         }
         return pageResult;
@@ -130,6 +136,10 @@ public class BgUserServiceImpl implements BgUserService {
     public void update(BgUserVO bgUserVO, String loginAccount) {
             //校验用户信息
         if(checkUserInfo(bgUserVO)){
+            BgUser user = bgUserDao.findById(bgUserVO.getBgUserId());
+            if(user == null){
+                throw new WkRentException("更新用户信息失败，用户信息已被删除！");
+            }
             BgUser bgUser = BeanUtil.copyBean(bgUserVO, BgUser.class);
             OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, bgUser, loginAccount);
             int result = bgUserDao.update(bgUser);
@@ -140,6 +150,33 @@ public class BgUserServiceImpl implements BgUserService {
             bgUserRoleService.deleteByUserId(bgUser.getBgUserId());
             insertUserRoleInfo(bgUserVO.getRoleId(), bgUser.getBgUserId());
         }
+    }
+
+    /**
+     * 根据用户账号修改用户密码
+     *
+     * @param bgUserVO     待修改用户信息
+     * @param loginAccount 当前登录账号
+     * @return 修改条数
+     */
+    @Override
+    public void updatePassWord(BgUserVO bgUserVO, String loginAccount) {
+        if(StringUtils.isBlank(bgUserVO.getBgUserId())){
+            throw new WkRentException("重置密码失败，用户id不能为空");
+        }
+        if(StringUtils.isBlank(bgUserVO.getBgUserPwd())){
+            throw new WkRentException("重置密码失败，新密码不能为空");
+        }
+        BgUser user = bgUserDao.findById(bgUserVO.getBgUserId());
+        if(user == null){
+            throw new WkRentException("重置密码失败，用户信息已被删除！");
+        }
+        BgUser updateUser = new BgUser();
+        //设置密码（加密后）
+        updateUser.setBgUserPwd(Md5Utils.encryptPassword(user.getBgUserAccount(), bgUserVO.getBgUserPwd(), Md5Utils.SALT));
+        updateUser.setBgUserId(bgUserVO.getBgUserId());
+        OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateUser, loginAccount);
+        bgUserDao.updatePassWord(updateUser);
     }
 
     /**

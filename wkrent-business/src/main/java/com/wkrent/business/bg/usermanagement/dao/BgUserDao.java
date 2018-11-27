@@ -21,7 +21,7 @@ public interface BgUserDao {
      * @param bgUserVO 查询条件
      * @return 符合条件结果
      */
-    List<BgUser> findByCondition(BgUserVO bgUserVO);
+    List<BgUserVO> findByCondition(BgUserVO bgUserVO);
 
     /**
      * 根据条件查询用户总条数
@@ -43,6 +43,13 @@ public interface BgUserDao {
      * @return 更新条数
      */
     int update(BgUser bgUser);
+
+    /**
+     * 修改平台账号密码
+     * @param bgUser 更新账号
+     * @return 更新条数
+     */
+    int updatePassWord(BgUser bgUser);
 
     /**
      * 根据id查询用户信息

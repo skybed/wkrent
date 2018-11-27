@@ -89,6 +89,46 @@ public class BgUserController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "修改平台账号密码", notes = "修改平台账号密码", httpMethod = "POST", response = BaseAjaxVO.class)
+    @RequestMapping(value = "/updatePassWord", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseAjaxVO updatePassWord(@RequestBody @ApiParam(name = "bgUserVO", value = "待修改账号密码（bgUserId，bgUserPwd）")
+                                         BgUserVO bgUserVO, @ApiIgnore HttpSession session){
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+        try {
+            bgUserService.updatePassWord(bgUserVO, getLoginAccount(session));
+        }catch (WkRentException e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(e.getMessage());
+            log.warn("修改平台账号密码失败", e, bgUserVO);
+        }catch (Exception e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(Constants.FAILED_TEXT);
+            log.error("修改平台账号密码失败，系统异常", e, bgUserVO);
+        }
+        return baseAjaxVO;
+    }
+//
+//    @ApiOperation(value = "根据userId查询用户信息", notes = "根据userId查询用户信息", httpMethod = "POST", response = BaseAjaxVO.class)
+//    @RequestMapping(value = "/findById", method = RequestMethod.POST)
+//    @ResponseBody
+//    public BaseAjaxVO findById(@RequestBody @ApiParam(name = "bgUserVO", value = "用户id bgUserId")
+//                                     BgUserVO bgUserVO, @ApiIgnore HttpSession session){
+//        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+//        try {
+//            bgUserService.update(bgUserVO, getLoginAccount(session));
+//        }catch (WkRentException e){
+//            baseAjaxVO.setCode(Constants.FAILED_CODE);
+//            baseAjaxVO.setText(e.getMessage());
+//            log.warn("根据userId查询用户信息失败", e, bgUserVO);
+//        }catch (Exception e){
+//            baseAjaxVO.setCode(Constants.FAILED_CODE);
+//            baseAjaxVO.setText(Constants.FAILED_TEXT);
+//            log.error("根据userId查询用户信息失败，系统异常", e, bgUserVO);
+//        }
+//        return baseAjaxVO;
+//    }
+
     @ApiOperation(value = "删除平台账号信息", notes = "删除平台账号信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody

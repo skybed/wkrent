@@ -6,10 +6,10 @@ import java.util.Map;
 public enum SexEnum
 {
     //男
-    MALE("M", "男"),
+    MALE("0", "男"),
 
     //女
-    FEMALE("F", "女");
+    FEMALE("1", "女");
 
     private static Map<String, SexEnum> enum_map;
     private String code;

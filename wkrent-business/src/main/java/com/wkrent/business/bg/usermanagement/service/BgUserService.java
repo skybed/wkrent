@@ -42,6 +42,14 @@ public interface BgUserService {
     void update(BgUserVO bgUserVO, String loginAccount);
 
     /**
+     * 根据用户账号修改用户密码
+     * @param bgUserVO 待修改用户信息
+     * @param loginAccount 当前登录账号
+     * @return 修改条数
+     */
+    void updatePassWord(BgUserVO bgUserVO, String loginAccount);
+
+    /**
      * 根据id删除用户
      * @param userId 用户id
      * @param loginAccount 当前登录账号
