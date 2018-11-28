@@ -111,6 +111,26 @@ public class BgRoleController extends BaseController {
         return baseAjaxVO;
     }
 
+    @ApiOperation(value = "根据角色id查询用户信息", notes = "根据角色id查询用户信息", httpMethod = "POST", response = BaseAjaxVO.class)
+    @RequestMapping(value = "/findUserByRoleId", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseAjaxVO findUserByRoleId(@RequestBody @ApiParam(name = "roleId", value = "角色Id(仅传入bgRoleId即可)")
+                                         BgRoleVO roleVO){
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+        try {
+            baseAjaxVO = bgRoleService.findUserByRoleId(roleVO.getBgRoleId());
+        }catch (WkRentException e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(e.getMessage());
+            log.warn("根据角色id查询用户信息失败", e, roleVO.getBgRoleId());
+        }catch (Exception e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(Constants.FAILED_TEXT);
+            log.error("根据角色id查询用户信息失败，系统异常", e, roleVO.getBgRoleId());
+        }
+        return baseAjaxVO;
+    }
+
     @ApiOperation(value = "禁用角色信息", notes = "禁用角色信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/disable", method = RequestMethod.POST)
     @ResponseBody

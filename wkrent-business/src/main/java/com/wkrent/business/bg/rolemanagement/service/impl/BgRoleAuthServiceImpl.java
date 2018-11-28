@@ -1,13 +1,17 @@
 package com.wkrent.business.bg.rolemanagement.service.impl;
 
+import com.google.common.collect.Lists;
 import com.wkrent.business.bg.rolemanagement.dao.BgRoleAuthDao;
 import com.wkrent.business.bg.rolemanagement.service.BgRoleAuthService;
 import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.po.BgRoleAuth;
 import com.wkrent.common.util.UUIDUtil;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Administrator
@@ -48,5 +52,19 @@ public class BgRoleAuthServiceImpl implements BgRoleAuthService{
             return 0;
         }
         return bgRoleAuthDao.deleteByRoleId(roleId);
+    }
+
+    /**
+     * 根据角色idList查询权限信息
+     *
+     * @param roleIdList 角色idList
+     * @return 角色权限信息
+     */
+    @Override
+    public List<BgRoleAuth> queryByRoleIdList(List<String> roleIdList) {
+        if(CollectionUtils.isEmpty(roleIdList)){
+            return Lists.newArrayList();
+        }
+        return bgRoleAuthDao.queryByRoleIdList(roleIdList);
     }
 }

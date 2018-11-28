@@ -24,8 +24,8 @@
     set is_delete = #{isDelete, jdbcType=VARCHAR}
     <where>
       <choose>
-        <when test="bgUserId != null and bgUserId != ''">
-          bg_user_id = #{bgUserId,jdbcType=VARCHAR}
+        <when test="bgRoleId != null and bgRoleId != ''">
+          bg_role_id = #{bgRoleId,jdbcType=VARCHAR}
         </when>
         <when test="bgMenuId != null and bgMenuId != ''">
           AND bg_menu_id = #{bgMenuId,jdbcType=VARCHAR}
@@ -37,6 +37,14 @@
     </where>
   </update>
 
+  <update id="deleteByRoleId" parameterType="java.lang.String">
+    update bg_role_auth
+    set is_delete = '1'
+    <where>
+          bg_role_id = #{bgRoleId,jdbcType=VARCHAR}
+    </where>
+  </update>
+
   <select id="findByCondition" parameterType="com.wkrent.common.entity.po.BgRoleAuth" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -44,8 +52,8 @@
     <where>
       is_delete= '0'
       <choose>
-        <when test="bgUserId != null and bgUserId != ''">
-          AND bg_user_id = #{bgUserId,jdbcType=VARCHAR}
+        <when test="bgRoleId != null and bgRoleId != ''">
+          AND bg_role_id = #{bgRoleId,jdbcType=VARCHAR}
         </when>
         <when test="bgMenuId != null and bgMenuId != ''">
           AND bg_menu_id = #{bgMenuId,jdbcType=VARCHAR}
@@ -54,6 +62,19 @@
           1 != 1
         </otherwise>
       </choose>
+    </where>
+  </select>
+
+  <select id="queryByRoleIdList" parameterType="java.util.List" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_role_auth
+    <where>
+      is_delete= '0'
+      AND bg_role_id IN
+      <foreach collection="roleIdList" item="roleId" separator="," close=")" open="(">
+        #{roleId,jdbcType=VARCHAR}
+      </foreach>
     </where>
   </select>
 </mapper>

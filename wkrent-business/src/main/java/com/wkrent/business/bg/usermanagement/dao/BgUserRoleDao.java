@@ -1,6 +1,7 @@
 package com.wkrent.business.bg.usermanagement.dao;
 
 import com.wkrent.common.entity.po.BgUserRole;
+import com.wkrent.common.entity.vo.BgUserRoleVO;
 
 import java.util.List;
 
@@ -28,6 +29,6 @@ public interface BgUserRoleDao {
      * @param bgUserRole 查询条件
      * @return 符合条件未被删除记录
      */
-    List<BgUserRole> findByCondition(BgUserRole bgUserRole);
+    List<BgUserRoleVO> findByCondition(BgUserRole bgUserRole);
 
 }

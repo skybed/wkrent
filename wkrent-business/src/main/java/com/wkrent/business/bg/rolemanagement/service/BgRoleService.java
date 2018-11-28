@@ -44,6 +44,13 @@ public interface BgRoleService {
     void delete(String roleId, String loginAccount);
 
     /**
+     * 根据角色id查询平台用户信息
+     * @param roleId 角色id
+     * @return  符合条件用户信息
+     */
+    BaseAjaxVO findUserByRoleId(String roleId);
+
+    /**
      * 根据id禁用角色
      * @param roleId 角色id
      * @param loginAccount 当前登录账号

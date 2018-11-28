@@ -1,14 +1,18 @@
 package com.wkrent.business.bg.rolemanagement.service.impl;
 
+import com.google.common.collect.Lists;
 import com.wkrent.business.bg.rolemanagement.dao.BgRoleDao;
 import com.wkrent.business.bg.rolemanagement.service.BgRoleAuthService;
 import com.wkrent.business.bg.rolemanagement.service.BgRoleService;
+import com.wkrent.business.bg.usermanagement.dao.BgUserRoleDao;
 import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.po.BgRole;
 import com.wkrent.common.entity.po.BgRoleAuth;
+import com.wkrent.common.entity.po.BgUserRole;
 import com.wkrent.common.entity.vo.BgRoleVO;
+import com.wkrent.common.entity.vo.BgUserRoleVO;
 import com.wkrent.common.exception.WkRentException;
 import com.wkrent.common.util.BeanUtil;
 import com.wkrent.common.util.OperatorUtil;
@@ -19,7 +23,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Administrator
@@ -32,6 +40,9 @@ public class BgRoleServiceImpl implements BgRoleService {
 
     @Autowired
     private BgRoleAuthService bgRoleAuthService;
+
+    @Autowired
+    private BgUserRoleDao bgUserRoleDao;
 
 
 
@@ -47,10 +58,44 @@ public class BgRoleServiceImpl implements BgRoleService {
         int total = bgRoleDao.countByCondition(roleVO);
         if(total > 0){
             List<BgRole> bgRoleList = bgRoleDao.findByCondition(roleVO);
-            pageResult.setRows(BeanUtil.copyList(bgRoleList, BgRoleVO.class));
+            List<BgRoleVO> bgRoleVOList = BeanUtil.copyList(bgRoleList, BgRoleVO.class);
+            //设置权限信息
+            setAuthInfoByRole(bgRoleVOList);
+            pageResult.setRows(bgRoleVOList);
             pageResult.setTotal(total);
         }
         return pageResult;
+    }
+
+    private void setAuthInfoByRole(List<BgRoleVO> bgRoleVOList){
+        if(CollectionUtils.isEmpty(bgRoleVOList)){
+            return;
+        }
+        Set<String> roleIdSet = new HashSet<>();
+        bgRoleVOList.forEach((roleVO )-> roleIdSet.add(roleVO.getBgRoleId()));
+        //根据roleIdList 查询 权限信息
+        List<BgRoleAuth> bgRoleAuthList = bgRoleAuthService.queryByRoleIdList(Lists.newArrayList(roleIdSet));
+        if(CollectionUtils.isEmpty(bgRoleAuthList)){
+            return;
+        }
+        Map<String, List<String>> roleAuthIdMap = new HashMap<>();
+        bgRoleAuthList.forEach((roleAuth )-> transferRoleAuthMap(roleAuthIdMap, roleAuth));
+        bgRoleVOList.forEach((roleVO )-> roleVO.setAuthList(roleAuthIdMap.get(roleVO.getBgRoleId())));
+    }
+
+    /**
+     * 角色权限信息转换为mao
+     * key：roleId  value：authIdList
+     * @param roleAuthIdMap 角色权限map
+     * @param roleAuth 角色权限信息
+     */
+    private void transferRoleAuthMap(Map<String, List<String>> roleAuthIdMap, BgRoleAuth roleAuth){
+        String key = roleAuth.getBgRoleId();
+        if(roleAuthIdMap.containsKey(key)){
+            roleAuthIdMap.get(key).add(roleAuth.getBgMenuId());
+        }else {
+            roleAuthIdMap.put(key, Lists.newArrayList(roleAuth.getBgMenuId()));
+        }
     }
 
     /**
@@ -168,6 +213,27 @@ public class BgRoleServiceImpl implements BgRoleService {
         }
         //删除角色权限信息
         bgRoleAuthService.deleteByRoleId(roleId);
+    }
+
+    /**
+     * 根据角色id查询平台用户信息
+     *
+     * @param roleId 角色id
+     * @return 符合条件用户信息
+     */
+    @Override
+    public BaseAjaxVO findUserByRoleId(String roleId) {
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+        if(StringUtils.isBlank(roleId)){
+            return baseAjaxVO;
+        }
+        BgUserRole bgUserRole = new BgUserRole();
+        bgUserRole.setBgRoleId(roleId);
+        List<BgUserRoleVO> bgUserRoleVOList = bgUserRoleDao.findByCondition(bgUserRole);
+        if(CollectionUtils.isNotEmpty(bgUserRoleVOList)){
+            baseAjaxVO.setResult(bgUserRoleVOList);
+        }
+        return baseAjaxVO;
     }
 
     /**

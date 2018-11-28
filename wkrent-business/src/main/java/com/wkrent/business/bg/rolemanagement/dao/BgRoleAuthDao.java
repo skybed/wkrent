@@ -7,6 +7,9 @@
 package com.wkrent.business.bg.rolemanagement.dao;
 
 import com.wkrent.common.entity.po.BgRoleAuth;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author Administrator
@@ -25,7 +28,14 @@ public interface BgRoleAuthDao {
      * @param roleId 角色id
      * @return 删除条数
      */
-    int deleteByRoleId(String roleId);
+    int deleteByRoleId(@Param("bgRoleId") String roleId);
+
+    /**
+     * 根据角色idList查询权限信息
+     * @param roleIdList 角色idList
+     * @return 角色权限信息
+     */
+    List<BgRoleAuth> queryByRoleIdList(@Param("roleIdList") List<String> roleIdList);
 
     /**
      *

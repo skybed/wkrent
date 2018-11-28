@@ -73,7 +73,6 @@
     o.bg_order_rent_serialNum,
     o.bg_order_rent_contract_flag,
     o.bg_order_rent_contract_serialNum,
-    o.is_delete,
     o.description,
     o.create_by,
     o.create_time,

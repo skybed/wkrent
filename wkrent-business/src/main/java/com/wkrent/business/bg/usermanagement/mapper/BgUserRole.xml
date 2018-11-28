@@ -8,9 +8,21 @@
     <result column="is_delete" jdbcType="CHAR" property="isDelete" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
+
+  <resultMap id="QueryResultMap" type="com.wkrent.common.entity.vo.BgUserRoleVO" extends="BaseResultMap">
+    <result column="bg_user_name" jdbcType="VARCHAR" property="bgUserName" />
+  </resultMap>
   <sql id="Base_Column_List">
     bg_user_role_id, bg_user_id, bg_role_id, is_delete, remark
   </sql>
+
+  <sql id="Query_Column_List">
+    bur.bg_user_role_id,
+    bur.bg_user_id,
+    bur.bg_role_id,
+    bu.bg_user_name
+  </sql>
+
   <insert id="insert" parameterType="com.wkrent.common.entity.po.BgUserRole">
     insert into bg_user_role (bg_user_role_id, bg_user_id, bg_role_id, 
       is_delete, remark)
@@ -36,12 +48,13 @@
     </where>
   </update>
 
-  <select id="findByCondition" parameterType="com.wkrent.common.entity.po.BgUserRole" resultMap="BaseResultMap">
+  <select id="findByCondition" parameterType="com.wkrent.common.entity.po.BgUserRole" resultMap="QueryResultMap">
     select
-    <include refid="Base_Column_List" />
-    from bg_user_role
+    <include refid="Query_Column_List" />
+    from bg_user_role bur
+    INNER JOIN bg_user bu ON bur.bg_user_id = bu.bg_user_id
     <where>
-      is_delete= '0'
+      bu.is_delete= '0' AND bur.is_delete= '0'
       <choose>
         <when test="bgUserId != null and bgUserId != ''">
           AND bg_user_id = #{bgUserId,jdbcType=VARCHAR}
