@@ -99,6 +99,11 @@ public class AppFeedbackVO implements Serializable {
     private List<String> feedBackIdList;
 
     /**
+     * 附件idList
+     */
+    private List<String> fileIdList;
+
+    /**
      * 分页信息
      */
     private Page page;
@@ -375,5 +380,13 @@ public class AppFeedbackVO implements Serializable {
 
     public void setUpdateName(String updateName) {
         this.updateName = updateName;
+    }
+
+    public List<String> getFileIdList() {
+        return fileIdList;
+    }
+
+    public void setFileIdList(List<String> fileIdList) {
+        this.fileIdList = fileIdList;
     }
 }

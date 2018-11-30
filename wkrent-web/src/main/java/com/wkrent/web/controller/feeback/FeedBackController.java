@@ -83,11 +83,11 @@ public class FeedBackController extends BaseController{
     @ApiOperation(value = "删除用户反馈信息", notes = "删除用户反馈信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "feedBackIdList", value = "待删除用户反馈信息(仅传入feedBackIdList即可)")
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "feedBackIdList", value = "待删除用户反馈信息(仅传入appFeedbackId即可)")
                                          AppFeedbackVO feedBackVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            feedBackService.delete(feedBackVO.getFeedBackIdList(), getLoginAccount(session));
+            feedBackService.delete(feedBackVO.getAppFeedbackId(), getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());

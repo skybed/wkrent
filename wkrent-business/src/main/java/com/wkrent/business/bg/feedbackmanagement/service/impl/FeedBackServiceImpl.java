@@ -1,5 +1,7 @@
 package com.wkrent.business.bg.feedbackmanagement.service.impl;
 
+import com.google.common.collect.Lists;
+import com.wkrent.business.bg.attach.service.BgPicAttachService;
 import com.wkrent.business.bg.feedbackmanagement.dao.FeedBackDao;
 import com.wkrent.business.bg.feedbackmanagement.service.FeedBackService;
 import com.wkrent.common.entity.base.BaseAjaxVO;
@@ -7,16 +9,18 @@ import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.enums.AppFeedBackStatusEnum;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.po.AppFeedback;
+import com.wkrent.common.entity.po.BgMerchant;
 import com.wkrent.common.entity.vo.AppFeedbackVO;
+import com.wkrent.common.entity.vo.BgMerchantVO;
 import com.wkrent.common.exception.WkRentException;
 import com.wkrent.common.util.BeanUtil;
 import com.wkrent.common.util.OperatorUtil;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Administrator
@@ -26,6 +30,9 @@ public class FeedBackServiceImpl implements FeedBackService {
 
     @Autowired
     private FeedBackDao feedBackDao;
+
+    @Autowired
+    private BgPicAttachService bgPicAttachService;
 
     /**
      * 分页查询用户信息
@@ -40,6 +47,16 @@ public class FeedBackServiceImpl implements FeedBackService {
         int total = feedBackDao.countByCondition(feedBackVO);
         if(total > 0){
             List<AppFeedbackVO> feeBackList = feedBackDao.findByCondition(feedBackVO);
+            List<String> feeBackIdList = Lists.newArrayList();
+            for(AppFeedbackVO feedbackVO : feeBackList){
+                feeBackIdList.add(feedbackVO.getAppFeedbackId());
+            }
+            Map<String, List<String>> fileIdMap = bgPicAttachService.selectFileIdByOwnerIdList(feeBackIdList);
+            if(!fileIdMap.isEmpty()){
+                for(AppFeedbackVO feedbackVO : feeBackList){
+                    feedbackVO.setFileIdList(fileIdMap.get(feedbackVO.getAppFeedbackId()));
+                }
+            }
             pageResult.setRows(feeBackList);
             pageResult.setTotal(total);
         }
@@ -50,15 +67,15 @@ public class FeedBackServiceImpl implements FeedBackService {
     /**
      * 根据id删除用户
      *
-     * @param feedBackIdList 用户反馈idList
+     * @param feedBackId 用户反馈idList
      */
     @Override
-    public void delete(List<String> feedBackIdList, String loginAccount) {
-        if(CollectionUtils.isEmpty(feedBackIdList)){
-            throw new WkRentException("删除用户失败，请传入用户id");
+    public void delete(String feedBackId, String loginAccount) {
+        if(StringUtils.isBlank(feedBackId)){
+            throw new WkRentException("删除用户反馈失败，请传入用户反馈id");
         }
         AppFeedbackVO updateFeedBack = new AppFeedbackVO();
-        updateFeedBack.setFeedBackIdList(feedBackIdList);
+        updateFeedBack.setAppFeedbackId(feedBackId);
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, updateFeedBack, loginAccount);
         int result = feedBackDao.delete(updateFeedBack);
         if(result != 1){

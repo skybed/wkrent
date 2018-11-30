@@ -4,8 +4,6 @@ import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.vo.AppFeedbackVO;
 
-import java.util.List;
-
 public interface FeedBackService {
 
     /**
@@ -17,10 +15,10 @@ public interface FeedBackService {
 
     /**
      * 根据id删除用户反馈
-     * @param feedBackIdList 用户反馈id
+     * @param feedBackId 用户反馈id
      * @param loginAccount 当前登录账号
      */
-    void delete(List<String> feedBackIdList, String loginAccount);
+    void delete(String feedBackId, String loginAccount);
 
     /**
      * 根据feedBackId查询前台用户反馈信息

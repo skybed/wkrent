@@ -74,7 +74,7 @@
 
   <update id="delete" parameterType="com.wkrent.common.entity.vo.AppFeedbackVO">
     update app_feedback
-    set is_delete = #{isDelete, jdbcType=VARCHAR},
+    set is_delete = '1',
     update_by = #{updateBy, jdbcType=VARCHAR},
     update_time = #{updateTime, jdbcType=VARCHAR}
     <where>
@@ -85,6 +85,9 @@
           <foreach collection="feedBackIdList" item="feeId" separator="," open="(" close=")">
             #{feeId,jdbcType=VARCHAR}
           </foreach>
+        </when>
+        <when test="appFeedbackId != null and appFeedbackId != ''">
+          AND app_feedback_id =  #{appFeedbackId,jdbcType=VARCHAR}
         </when>
         <otherwise>
           1 != 1
