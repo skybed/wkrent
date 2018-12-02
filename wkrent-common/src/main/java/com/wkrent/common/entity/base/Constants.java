@@ -10,9 +10,13 @@ public interface Constants {
 
     int FAILED_CODE = -1;
 
+    int TOKEN_AUTH_FAILED = -999;
+
     String SUCCESS_TEXT = "操作成功";
 
     String FAILED_TEXT = "操作失败，系统异常！";
+
+    String TOKEN_AUTH_FAILED_TEXT = "token已失效，请重新登录！";
 
     String STR_TRUE = "1";
 

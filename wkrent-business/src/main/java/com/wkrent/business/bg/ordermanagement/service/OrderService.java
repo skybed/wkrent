@@ -4,8 +4,6 @@ import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.vo.BgOrderVO;
 
-import java.util.List;
-
 public interface OrderService {
 
     /**
@@ -17,11 +15,11 @@ public interface OrderService {
 
     /**
      * 根据id删除订单
-     * @param orderIdList 订单id
+     * @param orderId 订单id
      * @param loginAccount 当前登录账号
      * @param result 返回提示
      */
-    void delete(List<String> orderIdList, String loginAccount, BaseAjaxVO result);
+    void delete(String orderId, String loginAccount, BaseAjaxVO result);
 
     /**
      * 根据orderId查询前台订单信息

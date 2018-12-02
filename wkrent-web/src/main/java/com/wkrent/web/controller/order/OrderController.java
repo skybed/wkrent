@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * @author Administrator
@@ -131,19 +130,19 @@ public class OrderController extends BaseController{
     @ApiOperation(value = "删除订单信息", notes = "删除订单信息", httpMethod = "POST", response = BaseAjaxVO.class)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "orderIdList", value = "待修改订单信息")
-                                     List<String> orderIdList, @ApiIgnore HttpSession session){
+    public BaseAjaxVO delete(@RequestBody @ApiParam(name = "bgOrderId", value = "订单id(传入bgOrderId)")
+                                     BgOrderVO orderVO, @ApiIgnore HttpSession session){
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
-            orderService.delete(orderIdList, getLoginAccount(session), baseAjaxVO);
+            orderService.delete(orderVO.getBgOrderId(), getLoginAccount(session), baseAjaxVO);
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
-            log.warn("删除订单信息失败", e, orderIdList);
+            log.warn("删除订单信息失败", e, orderVO.getBgOrderId());
         }catch (Exception e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(Constants.FAILED_TEXT);
-            log.error("删除订单信息失败，系统异常", e, orderIdList);
+            log.error("删除订单信息失败，系统异常", e, orderVO.getBgOrderId());
         }
         return baseAjaxVO;
     }

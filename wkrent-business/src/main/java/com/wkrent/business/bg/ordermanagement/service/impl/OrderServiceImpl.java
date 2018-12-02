@@ -60,44 +60,29 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 根据id删除用户
      *
-     * @param orderIdList 订单idList
+     * @param orderId 订单id
      */
     @Override
-    public void delete(List<String> orderIdList, String loginAccount, BaseAjaxVO result) {
+    public void delete(String orderId, String loginAccount, BaseAjaxVO result) {
         //删除前校验，只有已完成 or 房源已出租 or 已取消预订可删除
-        List<String> deleteIdList = checkOrderStatus(orderIdList, result);
-        if(CollectionUtils.isEmpty(deleteIdList)){
-            throw new WkRentException("删除订单失败，当前订单均不可删除");
-        }
+        checkOrderStatus(orderId);
         BgOrderVO orderVO = new BgOrderVO();
-        orderVO.setOrderIdList(deleteIdList);
+        orderVO.setBgOrderId(orderId);
         OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, orderVO, loginAccount);
         orderDao.delete(orderVO);
     }
 
-    private List<String> checkOrderStatus(List<String> orderIdList, BaseAjaxVO result){
-        List<String> deleteIdList = Lists.newArrayList();
-        if(CollectionUtils.isEmpty(orderIdList)){
-            return deleteIdList;
+    private void checkOrderStatus(String orderId){
+        if(StringUtils.isBlank(orderId)){
+            throw new WkRentException("删除订单失败，订单id不能为空");
         }
-        List<BgOrder> orderList = orderDao.findByIdList(orderIdList);
-        StringBuilder builder = new StringBuilder();
-        for(BgOrder order : orderList){
+        BgOrder order = orderDao.findById(orderId);
             //删除前校验，只有已完成 or 房源已出租 or 已取消预订可删除
-            if(OrderStatusEnum.ROOM_RENTED.getCode().equals(order.getBgOrderStatus()) ||
-                    OrderStatusEnum.FINISH.getCode().equals(order.getBgOrderStatus()) ||
-                    OrderStatusEnum.ORDER_CANCEL.getCode().equals(order.getBgOrderStatus())){
-                deleteIdList.add(order.getBgOrderId());
-            }else {
-                builder.append(order.getBgOrderNumber()).append("、");
-            }
+        if(!OrderStatusEnum.ROOM_RENTED.getCode().equals(order.getBgOrderStatus()) &&
+                !OrderStatusEnum.FINISH.getCode().equals(order.getBgOrderStatus()) &&
+                !OrderStatusEnum.ORDER_CANCEL.getCode().equals(order.getBgOrderStatus())){
+            throw new WkRentException("删除订单失败，当前状态不允许删除");
         }
-        if(StringUtils.isNotBlank(builder.toString())){
-            builder.insert(0, "订单编号：");
-            builder.append("删除失败，订单不允许删除");
-        }
-        result.setText(builder.toString());
-        return deleteIdList;
     }
 
     /**

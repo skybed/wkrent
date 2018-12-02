@@ -1,7 +1,6 @@
 package com.wkrent.web.interceptor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.wkrent.common.util.JwtUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -14,16 +13,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-    private final Logger log = LoggerFactory.getLogger(LoginInterceptor.class);
-	/*
-	 * 利用正则映射到需要拦截的路径
-
-    private String mappingURL;
-
-    public void setMappingURL(String mappingURL) {
-               this.mappingURL = mappingURL;
-    }
-  */
     /**
      * 在业务处理器处理请求之前被调用
      * 如果返回false
@@ -39,27 +28,19 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
         if ("GET".equalsIgnoreCase(request.getMethod())) {
-//            RequestUtil.saveRequest();
+            return true;
         }
-        log.info("==============执行顺序: 1、preHandle================");
-        String requestUri = request.getRequestURI();
+        response.setCharacterEncoding("utf-8");
+        String token = request.getHeader("wkToken");
+        if(null != token){
+            boolean result = JwtUtil.verify(token);
+            if(result){
+                return true;
+            }
+        }
         String contextPath = request.getContextPath();
-        String url = requestUri.substring(contextPath.length());
-
-        log.info("requestUri:"+requestUri);
-        log.info("contextPath:"+contextPath);
-        log.info("url:"+url);
-
-        String userAccount =  (String)request.getSession().getAttribute("userAccount");
-        //TODO 暂时不用拦截
+        response.sendRedirect(contextPath + "/system/authFailed");
         return true;
-//        if(userAccount == null){
-//            log.info("Interceptor：跳转到login页面！");
-//            request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
-//            return false;
-//        }else{
-//            return true;
-//        }
     }
 
     /**
@@ -70,11 +51,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-        log.info("==============执行顺序: 2、postHandle================");
-        //加入当前时间
-        if(modelAndView != null){
-            modelAndView.addObject("var", "测试postHandle");
-        }
     }
 
     /**
@@ -86,6 +62,5 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public void afterCompletion(HttpServletRequest request,
                                 HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        log.info("==============执行顺序: 3、afterCompletion================");
     }
 }

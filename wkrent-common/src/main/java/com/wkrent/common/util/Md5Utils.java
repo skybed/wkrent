@@ -74,4 +74,8 @@ public class Md5Utils {
     public static String encryptPassword(String password, String salt) {
         return Md5Utils.hash(password + salt);
     }
+
+    public static void main(String[] args){
+        System.out.println(encryptPassword("2542452", "123456", SALT));
+    }
 }
