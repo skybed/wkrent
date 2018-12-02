@@ -9,15 +9,15 @@ import java.util.Map;
 public enum OrderStatusEnum {
 
     /**
-     * 房源状态
+     * 订单状态
      */
-    ORDERING("1", "预约中"),
-    ORDER_CANCEL("2", "已取消预约"),
-    LOCKED("3", "房源锁定"),
-    ROOM_RENTED("4", "房屋已出租"),
-    SIGN_CONTRACT("5", "待签合同"),
-    FINISH("6", "已完成"),
-    SOLD_OUT("7", "房源已下架"),
+    ORDERING("0", "预约中"),
+    ORDER_CANCEL("1", "已取消预约"),
+    LOCKED("2", "房源锁定"),
+    ROOM_RENTED("3", "房屋已出租"),
+    SIGN_CONTRACT("4", "待签合同"),
+    FINISH("5", "已完成"),
+    SOLD_OUT("6", "房源已下架"),
     ;
 
     private static Map<String, OrderStatusEnum> enum_map;
