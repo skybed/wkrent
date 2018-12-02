@@ -4,10 +4,13 @@ import com.wkrent.business.bg.usermanagement.dao.BgUserRoleDao;
 import com.wkrent.business.bg.usermanagement.service.BgUserRoleService;
 import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.po.BgUserRole;
+import com.wkrent.common.entity.vo.BgUserRoleVO;
 import com.wkrent.common.util.UUIDUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Administrator
@@ -52,5 +55,16 @@ public class BgUserRoleServiceImpl implements BgUserRoleService {
         bgUserRole.setBgUserId(userId);
         bgUserRole.setIsDelete(Constants.STR_TRUE);
         return bgUserRoleDao.deleteByCondition(bgUserRole);
+    }
+
+    /**
+     * 根据条件查询用户角色信息
+     *
+     * @param bgUserRole 查询条件
+     * @return 符合条件未被删除记录
+     */
+    @Override
+    public List<BgUserRoleVO> findByCondition(BgUserRole bgUserRole) {
+        return bgUserRoleDao.findByCondition(bgUserRole);
     }
 }

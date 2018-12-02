@@ -57,10 +57,10 @@
       bu.is_delete= '0' AND bur.is_delete= '0'
       <choose>
         <when test="bgUserId != null and bgUserId != ''">
-          AND bg_user_id = #{bgUserId,jdbcType=VARCHAR}
+          AND bur.bg_user_id = #{bgUserId,jdbcType=VARCHAR}
         </when>
         <when test="bgRoleId != null and bgRoleId != ''">
-          AND bg_role_id = #{bgRoleId,jdbcType=VARCHAR}
+          AND bur.bg_role_id = #{bgRoleId,jdbcType=VARCHAR}
         </when>
         <otherwise>
           1 != 1

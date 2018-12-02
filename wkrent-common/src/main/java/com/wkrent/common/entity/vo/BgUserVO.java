@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Administrator
@@ -132,6 +133,11 @@ public class BgUserVO implements Serializable {
      * 性别字符串: 男/女
      */
     private String bgUserSexStr;
+
+    /**
+     * 菜单List
+     */
+    private List<BgMenuVO> menuList;
 
     public String getBgUserId() {
         return bgUserId;
@@ -315,5 +321,13 @@ public class BgUserVO implements Serializable {
 
     public void setBgUserSexStr(String bgUserSexStr) {
         this.bgUserSexStr = bgUserSexStr;
+    }
+
+    public List<BgMenuVO> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<BgMenuVO> menuList) {
+        this.menuList = menuList;
     }
 }

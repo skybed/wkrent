@@ -3,6 +3,7 @@ package com.wkrent.business.bg.usermanagement.service;
 import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.paging.PageResult;
 import com.wkrent.common.entity.po.BgUser;
+import com.wkrent.common.entity.vo.BgMenuVO;
 import com.wkrent.common.entity.vo.BgUserVO;
 
 import java.util.List;
@@ -16,7 +17,15 @@ public interface BgUserService {
      * @param userAccount 用户名
      * @return 符合条件用户信息
      */
-    BgUser findByUserAccount(String userAccount);
+    BgUserVO findByUserAccount(String userAccount);
+
+
+    /**
+     * 根据用户id获取当前用户下所有菜单权限
+     * @param userId id
+     * @return 用户菜单权限
+     */
+    List<BgMenuVO> queryMenuListByUser(String userId);
 
     /**
      * 分页查询用户信息

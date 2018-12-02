@@ -3,7 +3,8 @@ package com.wkrent.web.controller.system;
 import com.wkrent.business.bg.usermanagement.service.BgUserService;
 import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
-import com.wkrent.common.entity.po.BgUser;
+import com.wkrent.common.entity.vo.BgMenuVO;
+import com.wkrent.common.entity.vo.BgUserVO;
 import com.wkrent.common.entity.vo.LoginUserVO;
 import com.wkrent.common.util.JwtUtil;
 import com.wkrent.common.util.Md5Utils;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Administrator
@@ -42,13 +46,20 @@ public class SystemController {
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         String userAccount = loginUser.getUserAccount();
         String password = loginUser.getPassword();
-        BgUser user = bgUserService.findByUserAccount(userAccount);
+        BgUserVO user = bgUserService.findByUserAccount(userAccount);
         if(user!=null){
             if(user.getBgUserPwd().equals(Md5Utils.encryptPassword(userAccount, password, Md5Utils.SALT))){
+                Map<String, Object> resultMap = new HashMap<>();
+                //设置当前登录用户菜单信息
+                List<BgMenuVO> menuVOList = bgUserService.queryMenuListByUser(user.getBgUserId());
+                user.setMenuList(menuVOList);
+                resultMap.put("loginUser", user);
+                //获取当前登录用户token
                 String token = JwtUtil.sign(userAccount, user.getBgUserId());
                 if(token != null){
-                    baseAjaxVO.setResult(token);
+                    resultMap.put("wkToken", token);
                 }
+                baseAjaxVO.setResult(resultMap);
                 return baseAjaxVO;
             }else{
                 log.info("密码错误");

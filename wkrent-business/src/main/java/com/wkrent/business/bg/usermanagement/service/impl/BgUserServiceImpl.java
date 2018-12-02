@@ -1,5 +1,8 @@
 package com.wkrent.business.bg.usermanagement.service.impl;
 
+import com.google.common.collect.Lists;
+import com.wkrent.business.bg.menumanagement.service.BgMenuService;
+import com.wkrent.business.bg.rolemanagement.service.BgRoleAuthService;
 import com.wkrent.business.bg.usermanagement.dao.BgUserDao;
 import com.wkrent.business.bg.usermanagement.service.BgUserRoleService;
 import com.wkrent.business.bg.usermanagement.service.BgUserService;
@@ -7,19 +10,25 @@ import com.wkrent.common.entity.base.BaseAjaxVO;
 import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.enums.SexEnum;
 import com.wkrent.common.entity.paging.PageResult;
+import com.wkrent.common.entity.po.BgRoleAuth;
 import com.wkrent.common.entity.po.BgUser;
 import com.wkrent.common.entity.po.BgUserRole;
+import com.wkrent.common.entity.vo.BgMenuVO;
+import com.wkrent.common.entity.vo.BgUserRoleVO;
 import com.wkrent.common.entity.vo.BgUserVO;
 import com.wkrent.common.exception.WkRentException;
 import com.wkrent.common.util.BeanUtil;
 import com.wkrent.common.util.Md5Utils;
 import com.wkrent.common.util.OperatorUtil;
 import com.wkrent.common.util.UUIDUtil;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Administrator
@@ -32,6 +41,12 @@ public class BgUserServiceImpl implements BgUserService {
 
     @Autowired
     private BgUserRoleService bgUserRoleService;
+
+    @Autowired
+    private BgRoleAuthService bgRoleAuthService;
+
+    @Autowired
+    private BgMenuService bgMenuService;
 
     /**
      * 查询所有用户信息
@@ -49,11 +64,62 @@ public class BgUserServiceImpl implements BgUserService {
      * @return 符合条件用户信息
      */
     @Override
-    public BgUser findByUserAccount(String userAccount) {
+    public BgUserVO findByUserAccount(String userAccount) {
         if(StringUtils.isBlank(userAccount)){
             return null;
         }
-        return bgUserDao.findByUserAccount(userAccount);
+        //获取到当前角色下所有菜单信息
+        BgUser bgUser =  bgUserDao.findByUserAccount(userAccount);
+        if(bgUser == null){
+            return null;
+        }
+        return BeanUtil.copyBean(bgUser, BgUserVO.class);
+    }
+
+    /**
+     * 根据用户id获取当前用户下所有菜单权限
+     * @param userId id
+     * @return 用户菜单权限
+     */
+    @Override
+    public List<BgMenuVO> queryMenuListByUser(String userId){
+        List<BgMenuVO> menuVOList = Lists.newArrayList();
+        //根据角色id查询到当前用户菜单信息
+        BgUserRole bgUserRole = new BgUserRole();
+        bgUserRole.setBgUserId(userId);
+        List<BgUserRoleVO> bgUserRoleVOList = bgUserRoleService.findByCondition(bgUserRole);
+        if(CollectionUtils.isEmpty(bgUserRoleVOList)){
+            return menuVOList;
+        }
+        //获取当前用户角色idList
+        List<String> roleIdList = Lists.newArrayList();
+        bgUserRoleVOList.forEach(roleInfo -> roleIdList.add(roleInfo.getBgRoleId()));
+
+        List<BgRoleAuth> bgRoleAuthList =  bgRoleAuthService.queryByRoleIdList(roleIdList);
+        if(CollectionUtils.isEmpty(bgRoleAuthList)){
+            return menuVOList;
+        }
+        //获取菜单idList
+        Set<String> menuIdSet = new HashSet<>();
+        bgRoleAuthList.forEach(bgRoleAuth -> menuIdSet.add(bgRoleAuth.getBgMenuId()));
+        if(CollectionUtils.isEmpty(menuIdSet)){
+            return menuVOList;
+        }
+        //当前角色对应menuId为空，则返回
+        List<BgMenuVO> menuList = bgMenuService.findByIdList(Lists.newArrayList(menuIdSet));
+        if(CollectionUtils.isEmpty(menuList)){
+            return menuVOList;
+        }
+        //筛选当前用户一级菜单
+        for(BgMenuVO menuVO : menuList){
+            if(StringUtils.isBlank(menuVO.getBgMenuParentId())){
+                //获取到当前菜单下所有子菜单
+                List<BgMenuVO> childrenList = bgMenuService.queryMenuList(menuVO.getBgMenuId());
+                menuVO.setChildMenuList(childrenList);
+                menuVOList.add(menuVO);
+            }
+        }
+        return menuVOList;
     }
 
     /**
@@ -92,7 +158,7 @@ public class BgUserServiceImpl implements BgUserService {
         //校验用户信息
         if(checkUserInfo(bgUserVO)){
             //校验用户账号是否存在
-            BgUser existUser = findByUserAccount(bgUserVO.getBgUserAccount());
+            BgUser existUser = bgUserDao.findByUserAccount(bgUserVO.getBgUserAccount());
             if(existUser != null){
                 throw new WkRentException("新增用户失败，用户账号已存在！");
             }

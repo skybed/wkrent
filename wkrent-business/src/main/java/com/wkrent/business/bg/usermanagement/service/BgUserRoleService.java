@@ -1,6 +1,9 @@
 package com.wkrent.business.bg.usermanagement.service;
 
 import com.wkrent.common.entity.po.BgUserRole;
+import com.wkrent.common.entity.vo.BgUserRoleVO;
+
+import java.util.List;
 
 /**
  * @author Administrator
@@ -21,4 +24,11 @@ public interface BgUserRoleService {
      * @return 更新条数
      */
      int deleteByUserId(String userId);
+
+    /**
+     * 根据条件查询用户角色信息
+     * @param bgUserRole 查询条件
+     * @return 符合条件未被删除记录
+     */
+    List<BgUserRoleVO> findByCondition(BgUserRole bgUserRole);
 }

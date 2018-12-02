@@ -50,7 +50,7 @@ public class BgMenuServiceImpl implements BgMenuService{
      */
     @Override
     public List<BgMenuVO> findByIdList(List<String> menuIdList) {
-        if (CollectionUtils.isNotEmpty(menuIdList)) {
+        if (CollectionUtils.isEmpty(menuIdList)) {
             return Lists.newArrayList();
         }
         List<BgMenu> menuList = bgMenuDao.findByIdList(menuIdList);
