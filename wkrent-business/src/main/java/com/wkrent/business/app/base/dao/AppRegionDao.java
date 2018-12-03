@@ -54,4 +54,10 @@ public interface AppRegionDao {
      * @return
      */
     List<AppRegion> getAllRegionList(@Param("regionInfo")String regionInfo);
+    
+    /**
+     * 获取所有地区列表字母排序
+     * @return
+     */
+    List<AppRegion> getAllRegionListByCharacter(@Param("regionInfo")String regionInfo);
 }

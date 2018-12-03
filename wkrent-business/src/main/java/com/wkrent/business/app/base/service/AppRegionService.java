@@ -10,4 +10,6 @@ public interface AppRegionService {
 	public void insertAppRegin(AppRegion appRegion);
 
 	public List<RegionInfo> getAllRegionList(String regionInfo);
+	
+	public List<RegionInfo> getAllRegionListByCharacter(String regionInfo);
 }

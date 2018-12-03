@@ -39,4 +39,21 @@ public class AppRegionServiceImpl implements AppRegionService {
 		return regionInfos;
 	}
 
+	@Override
+	public List<RegionInfo> getAllRegionListByCharacter(String regionInfo) {
+		List<AppRegion> regions = appRegionDao.getAllRegionList(regionInfo);
+		List<RegionInfo> regionInfos = new ArrayList<RegionInfo>();
+		for(AppRegion region : regions) {
+			RegionInfo info = new RegionInfo();
+			info.setRegionId(region.getRegionId());
+			info.setRegionName(region.getRegionName());
+			info.setRegionCode(region.getRegionCode());
+			info.setRegionMark(region.getRegionMark());
+			info.setRegionCnName(region.getRegionCnName());
+			info.setDescription(region.getDescription());
+			regionInfos.add(info);
+		}
+		return regionInfos;
+	}
+
 }
