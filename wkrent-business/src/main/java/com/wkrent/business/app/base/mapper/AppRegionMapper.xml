@@ -186,4 +186,17 @@
         or region_cn_name like CONCAT('%',#{regionInfo,jdbcType=VARCHAR},'%'))
 	</if>
   </select>
+  
+  <select id="getAllRegionListByCharacter" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_region
+    where is_delete = 0 
+    <if test="regionInfo != null and regionInfo != ''">
+        and (region_name like CONCAT('%',#{regionInfo,jdbcType=VARCHAR},'%') 
+        or region_code like CONCAT('%',#{regionInfo,jdbcType=VARCHAR},'%') 
+        or region_cn_name like CONCAT('%',#{regionInfo,jdbcType=VARCHAR},'%')) 
+	</if>
+	order by region_name asc
+  </select>
 </mapper>

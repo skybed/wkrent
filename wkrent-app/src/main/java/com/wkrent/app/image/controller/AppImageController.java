@@ -60,7 +60,7 @@ public class AppImageController {
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
 		//获取登陆用户信息
-		String userId = request.getSession().getAttribute("userId").toString();
+		String userId = request.getSession().getAttribute("current_user_id").toString();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("fileId", "");
@@ -131,7 +131,7 @@ public class AppImageController {
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
 		//获取登陆用户信息
-		String userId = request.getSession().getAttribute("userId").toString();
+		String userId = request.getSession().getAttribute("current_user_id").toString();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("fileId", "");

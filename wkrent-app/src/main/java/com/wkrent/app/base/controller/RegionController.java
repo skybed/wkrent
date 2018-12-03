@@ -4,8 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.wkrent.app.util.UUIDUtil;
 import com.wkrent.business.app.base.obj.RegionInfo;
+import com.wkrent.business.app.base.obj.RegionItem;
 import com.wkrent.business.app.base.service.AppRegionService;
 import com.wkrent.common.constants.Constant;
 import com.wkrent.common.entity.AppRegion;
@@ -102,4 +107,47 @@ public class RegionController {
 		return JSON.toJSONString(resultData);
 	}
 	
+	
+	/**
+	  * 按照字母分类获取所有地区信息
+	 * @param request
+	 * @param regionName
+	 * @param regionCnName
+	 * @param regionCode
+	 * @return
+	 */
+	@ApiOperation(value = "按照字母分类获取所有地区信息", notes = "获取所有地区信息", httpMethod = "POST", response = String.class)
+	@RequestMapping(value = "/getCountryListByCharacter.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String getCountryListByCharacter(HttpServletRequest request, String regionInfo) {
+		List<RegionInfo> regionInfos = appRegionService.getAllRegionList(regionInfo);
+		
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		for(int i = 0; i < regionInfos.size(); i++) {
+			List<String> list = new ArrayList<String>();
+			String character = regionInfos.get(i).getRegionName().substring(0, 1).toUpperCase();
+			if(!map.containsKey(character)) {
+				list.add(regionInfos.get(i).getRegionName());
+				map.put(character, list);
+			} else {
+				map.get(character).add(regionInfos.get(i).getRegionName());
+			}
+		}
+		
+		List<RegionItem> items = new ArrayList<RegionItem>();
+		
+		//遍历Map返回结果
+		for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+			List<String> result = entry.getValue();
+			Collections.reverse(result);
+			RegionItem regionItem = new RegionItem(entry.getKey(), result);
+			items.add(regionItem);
+		}
+		
+		ResultData resultData = new ResultData();
+		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
+		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		resultData.setData(JSON.toJSONString(items));
+		return JSON.toJSONString(resultData);
+	}
 }

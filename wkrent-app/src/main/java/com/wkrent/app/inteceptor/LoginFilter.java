@@ -51,7 +51,7 @@ public class LoginFilter implements Filter {
         	}
         }
         
-        if (session.getAttribute("userId") != null) {
+        if (session.getAttribute("current_user_id") != null) {
         	chain.doFilter(request, response);
         } else {
         	httpResponse.setCharacterEncoding("UTF-8");  

@@ -236,6 +236,48 @@ public class UserController {
 	}
 	
 	/**
+	 * 修改用户邮箱
+	 * @param request
+	 * @return
+	 */
+	@ApiOperation(value = "修改用户邮箱", notes = "修改用户邮箱", httpMethod = "POST", response = String.class)
+	@RequestMapping(value = "/editUserEmail.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editUserEmail(HttpServletRequest request, String userId, String email) {
+		ResultData resultData = new ResultData();
+		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
+		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("flag", false);
+		
+		//必填项不能为空
+		if(StringUtils.isNotEmpty(userId) && StringUtils.isNotEmpty(email)) {
+			if(checkEmail(email)) {
+				//判断用户id是否存在
+				AppUser user = appUserService.getUserById(userId);
+				if(user != null) {
+					user.setAppUserEmail(email);
+					appUserService.updateUser(user);
+					
+					map.put("flag", true);
+				} else {
+					resultData.setCode(Constant.RESULT_USER_NOT_REGISTER_CODE);
+					resultData.setMsg(Constant.RESULT_USER_NOT_REGISTER_MSG);
+				}
+			} else {
+				resultData.setCode(Constant.RESULT_REQUIRE_PARAM_FORMAT_CODE);
+				resultData.setMsg(Constant.RESULT_REQUIRE_PARAM_FORMAT_MSG);
+			}
+		} else {
+			resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);
+			resultData.setMsg(Constant.RESULT_REQUIRE_PARAM_MSG);
+		}
+		resultData.setData(JSON.toJSONString(map));
+		return JSON.toJSONString(resultData);
+	}
+	
+	/**
 	 * 验证邮箱
 	 *
 	 * @param email
@@ -285,8 +327,7 @@ public class UserController {
 					map.put("userId", user.getAppUserId());
 					
 					//将用户信息写缓存
-					request.getSession().setAttribute("userId", user.getAppUserId());
-					request.getSession().setAttribute("phone", phone);
+					request.getSession().setAttribute("current_user_id", user.getAppUserId());
 				} else {//用户未注册
 					resultData.setCode(Constant.RESULT_USER_NOT_REGISTER_CODE);
 					resultData.setMsg(Constant.RESULT_USER_NOT_REGISTER_MSG);
@@ -319,7 +360,7 @@ public class UserController {
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
 		//获取登陆用户信息
-		String userId = request.getSession().getAttribute("userId").toString();
+		String userId = request.getSession().getAttribute("current_user_id").toString();
 		
 		//必填项不能为空
 		if(StringUtils.isNotEmpty(userId)) {
@@ -365,12 +406,12 @@ public class UserController {
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
 		//获取登陆用户信息
-		String userId = request.getSession().getAttribute("userId").toString();
+		String userId = request.getSession().getAttribute("current_user_id").toString();
 		
 		//必填项不能为空
 		if(StringUtils.isNotEmpty(userId)) {
 			//判断用户id是否存在
-			AppUser user = appUserService.getUserById(userInfo.getUserId());
+			AppUser user = appUserService.getUserById(userId);
 			if(user != null) {
 				if(StringUtils.isNotEmpty(userInfo.getEmail()) && checkEmail(userInfo.getEmail())) {
 					user.setAppUserEmail(userInfo.getEmail());
@@ -417,7 +458,7 @@ public class UserController {
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
 		//获取登陆用户信息
-		String userId = request.getSession().getAttribute("userId").toString();
+		String userId = request.getSession().getAttribute("current_user_id").toString();
 		
 		//必填项不能为空
 		if(StringUtils.isNotEmpty(userId)) {
@@ -464,7 +505,7 @@ public class UserController {
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
 		//获取登陆用户信息
-		String userId = request.getSession().getAttribute("userId").toString();
+		String userId = request.getSession().getAttribute("current_user_id").toString();
 		
 		//必填项不能为空
 		if(StringUtils.isNotEmpty(userId) && StringUtils.isNotEmpty(oldPhone) && StringUtils.isNotEmpty(newPhone) 
@@ -508,8 +549,7 @@ public class UserController {
 		resultData.setData("");
 		
 		//将用户信息缓存移除
-		request.getSession().removeAttribute("userId");
-		request.getSession().removeAttribute("phone");
+		request.getSession().removeAttribute("current_user_id");
 		
 		return JSON.toJSONString(resultData);
 	}
