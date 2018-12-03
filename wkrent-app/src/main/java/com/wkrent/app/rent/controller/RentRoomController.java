@@ -78,8 +78,8 @@ public class RentRoomController {
 		
 		//获取登陆用户信息
 		String userId = "";
-		if(request.getSession().getAttribute("userId") != null && StringUtils.isNotEmpty(request.getSession().getAttribute("userId").toString())) {
-			userId = request.getSession().getAttribute("userId").toString();
+		if(request.getSession().getAttribute("current_user_id") != null && StringUtils.isNotEmpty(request.getSession().getAttribute("current_user_id").toString())) {
+			userId = request.getSession().getAttribute("current_user_id").toString();
 			condition.setUserId(userId);
 		}
 		
@@ -111,8 +111,8 @@ public class RentRoomController {
 		
 		//获取登陆用户信息
 		String userId = "";
-		if(request.getSession().getAttribute("userId") != null && StringUtils.isNotEmpty(request.getSession().getAttribute("userId").toString())) {
-			userId = request.getSession().getAttribute("userId").toString();
+		if(request.getSession().getAttribute("current_user_id") != null && StringUtils.isNotEmpty(request.getSession().getAttribute("current_user_id").toString())) {
+			userId = request.getSession().getAttribute("current_user_id").toString();
 		}
 		
 		if(StringUtils.isNotEmpty(roomId)) {
@@ -193,8 +193,8 @@ public class RentRoomController {
 		
 		//获取登陆用户信息
 		String userId = "";
-		if(request.getSession().getAttribute("userId") != null && StringUtils.isNotEmpty(request.getSession().getAttribute("userId").toString())) {
-			userId = request.getSession().getAttribute("userId").toString();
+		if(request.getSession().getAttribute("current_user_id") != null && StringUtils.isNotEmpty(request.getSession().getAttribute("current_user_id").toString())) {
+			userId = request.getSession().getAttribute("current_user_id").toString();
 			apponitInfo.setUserId(userId);
 		}
 		
