@@ -103,8 +103,6 @@
   <update id="update" parameterType="com.wkrent.common.entity.po.BgRole">
     update bg_role
     set bg_role_name = #{bgRoleName,jdbcType=VARCHAR},
-      is_delete = #{isDelete,jdbcType=CHAR},
-      is_active = #{isActive,jdbcType=CHAR},
       description = #{description,jdbcType=VARCHAR},
       update_by = #{updateBy,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
