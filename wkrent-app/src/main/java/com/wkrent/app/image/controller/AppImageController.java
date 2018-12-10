@@ -103,6 +103,7 @@ public class AppImageController {
                 picAttach.setCreateTime(new Date());
                 picAttach.setUpdateBy(userId);
                 picAttach.setUpdateTime(new Date());
+                picAttach.setPicAttachUrl(filePath);
                 appImageService.savePicAttach(picAttach);
                 
                 map.put("fileId", fileUUID);
@@ -167,17 +168,18 @@ public class AppImageController {
                 	// 转存文件
                 	file.transferTo(new File(filePath));
                 	
-                	 BgPicAttach picAttach = new BgPicAttach();
-                     picAttach.setPicAttachId(fileUUID);
-                     picAttach.setPicAttachName(filename);
-                     picAttach.setIsDelete("0");
-                     picAttach.setPicAttachFileType(prefix);
-                     picAttach.setPicAttachFileVolume("" + file.getSize());
-                     picAttach.setCreateBy(userId);
-                     picAttach.setCreateTime(new Date());
-                     picAttach.setUpdateBy(userId);
-                     picAttach.setUpdateTime(new Date());
-                     appImageService.savePicAttach(picAttach);
+                	BgPicAttach picAttach = new BgPicAttach();
+                	picAttach.setPicAttachId(fileUUID);
+                	picAttach.setPicAttachName(filename);
+                	picAttach.setIsDelete("0");
+                	picAttach.setPicAttachFileType(prefix);
+                	picAttach.setPicAttachFileVolume("" + file.getSize());
+                	picAttach.setCreateBy(userId);
+                	picAttach.setCreateTime(new Date());
+                	picAttach.setUpdateBy(userId);
+                	picAttach.setUpdateTime(new Date());
+                	picAttach.setPicAttachUrl(filePath);
+                	appImageService.savePicAttach(picAttach);
                      
                 	idsList.add(fileUUID);
                 } catch (IOException e) {

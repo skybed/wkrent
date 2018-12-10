@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.wkrent.business.app.base.obj.DataDict;
+import com.wkrent.business.app.base.service.AppDataDictValueService;
 import com.wkrent.business.app.order.obj.OrderDetailInfo;
 import com.wkrent.business.app.order.obj.RentOrder;
 import com.wkrent.business.app.order.service.AppOrderService;
 import com.wkrent.business.app.picture.service.AppImageService;
 import com.wkrent.business.app.rent.service.RentRoomInfoService;
 import com.wkrent.business.app.rent.service.RentRoomService;
-import com.wkrent.business.app.user.service.AppUserService;
 import com.wkrent.common.constants.Constant;
-import com.wkrent.common.entity.AppUser;
 import com.wkrent.common.entity.BgOrder;
 import com.wkrent.common.entity.BgPicAttach;
 import com.wkrent.common.entity.BgRoom;
@@ -51,8 +51,11 @@ public class OrderController {
 	@Autowired
 	private AppImageService appImageService;
 	
+//	@Autowired
+//	private AppUserService appUserService;
+	
 	@Autowired
-	private AppUserService appUserService;
+	private AppDataDictValueService appDataDictValueService;
 
 	/**
 	  * 查看订单分页列表
@@ -226,15 +229,31 @@ public class OrderController {
 				
 				orderInfo.setPrice(room.getBgRoomPrice() + "/" + getPriceUnit(room.getBgRoomPriceUnit()));
 				orderInfo.setOrderStatus(order.getBgOrderStatus());
-				orderInfo.setRoomTips(room.getBgRoomTips());
+				
+				String roomTips = "";
+				List<DataDict> dataDicts = appDataDictValueService.queryDictValueList("房源标签");
+				for(int j = 0; j < dataDicts.size(); j++) {
+					String roomTipids = room.getBgRoomTips();
+					if(StringUtils.isNotEmpty(roomTipids)) {
+						if(roomTipids.contains(dataDicts.get(j).getDataDictId())) {
+							roomTips = roomTips + dataDicts.get(j).getDataDictName() + ",";
+						}
+					}
+				}
+				
+				if(roomTips.length() > 0) {
+					roomTips = roomTips.substring(0, roomTips.length() - 1);
+				}
+				orderInfo.setRoomTips(roomTips);
+				
 				orderInfo.setAddressCountry(room.getBgRoomAddressCountry());
 				orderInfo.setAddressCity(room.getBgRoomAddressCity());
 				orderInfo.setAddressDetail(room.getBgRoomAddressDetail());
 				orderInfo.setOrderNum(order.getBgOrderNumber());
 				
 				//获取用户信息
-				AppUser user = appUserService.getUserById(order.getBgOrderUserId());
-				orderInfo.setOrderUser(user.getAppUserName());
+//				AppUser user = appUserService.getUserById(order.getBgOrderUserId());
+				orderInfo.setOrderUser(order.getBgRenterName());
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String orderTime = sdf.format(order.getBgOrderCreateTime());

@@ -41,7 +41,7 @@ public class WxController {
 	* 
 	* 用户同意授权，获取code
 	*/
-    @RequestMapping(value = "/authorize", method = RequestMethod.GET)
+    @RequestMapping(value = "/wxLogin", method = RequestMethod.GET)
     public void authorize(HttpServletRequest request, HttpServletResponse response) {
     	String appid = PropertiesUtils.getProperty("wechat.appid");
         String uri = urlEncodeUTF8(PropertiesUtils.getProperty("wechat.redirect.url"));
@@ -56,7 +56,7 @@ public class WxController {
     }
     
     @SuppressWarnings("unchecked")
-	@RequestMapping(value = "/weixinLogin", method = RequestMethod.GET)
+	@RequestMapping(value = "/callback", method = RequestMethod.GET)
     @ResponseBody
     public void weixinLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 用户同意授权后，能获取到code
@@ -81,12 +81,11 @@ public class WxController {
             // 获取用户信息
             SNSUserInfo snsUserInfo = getSNSUserInfo(accessToken, openId);
             
-            log.info("**用户信息unionId：" + snsUserInfo.getUnionid() + "***:" + snsUserInfo.getNickname());
-            
-            // 设置要传递的参数
+            log.info("**用户信息：" + JSON.toJSONString(snsUserInfo));
             
             //具体业务start
-
+            
+            
             //具体业务end
 
             return ;

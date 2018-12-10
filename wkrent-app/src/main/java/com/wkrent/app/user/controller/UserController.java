@@ -219,6 +219,10 @@ public class UserController {
 					//注册用户
 					appUserService.insertAppUser(user);
 					
+					//注册完免登陆
+					//将用户信息写缓存
+					request.getSession().setAttribute("current_user_id", user.getAppUserId());
+					
 					map.put("flag", true);
 					map.put("userId", user.getAppUserId());
 				}
