@@ -37,7 +37,7 @@ public class AppOrderServiceImpl implements AppOrderService {
 	public List<RentOrder> getRentOrderByPager(String userId, Integer index, Integer pageSize) {
 
 		List<RentOrder> rentOrders = new ArrayList<RentOrder>();
-		List<BgOrder> bgOrders = appOrderDao.getAppOrderByPager(userId, (index - 1) * pageSize, index * pageSize);
+		List<BgOrder> bgOrders = appOrderDao.getAppOrderByPager(userId, (index - 1) * pageSize, pageSize);
 		if(CollectionUtils.isNotEmpty(bgOrders)) {
 			for(int i = 0; i < bgOrders.size(); i++) {
 				RentOrder order = new RentOrder();
