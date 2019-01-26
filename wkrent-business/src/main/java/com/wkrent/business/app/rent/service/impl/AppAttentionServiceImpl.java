@@ -22,7 +22,7 @@ public class AppAttentionServiceImpl implements AppAttentionService {
 	@Override
 	public List<RoomInfo> getAppAttentionByPager(String userId, Integer index, Integer pageSize) {
 		List<RoomInfo> infos = new ArrayList<RoomInfo>();
-		List<BgRoom> roomInfos = appAttentionDao.getAppAttentionByPager((index - 1) * pageSize, index * pageSize, userId);
+		List<BgRoom> roomInfos = appAttentionDao.getAppAttentionByPager((index - 1) * pageSize, pageSize, userId);
 		if(roomInfos != null && roomInfos.size() > 0) {
 			for(int i = 0; i < roomInfos.size(); i++) {
 				RoomInfo roomInfo = new RoomInfo();

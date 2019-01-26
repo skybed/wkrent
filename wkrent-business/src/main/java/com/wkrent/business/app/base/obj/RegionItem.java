@@ -1,7 +1,6 @@
 package com.wkrent.business.app.base.obj;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class RegionItem implements Serializable {
 
@@ -14,13 +13,13 @@ public class RegionItem implements Serializable {
 	private String index;
 	
 	//首字母城市名
-	private List<String> items;
+	private String items;
 
 	public RegionItem() {
 		super();
 	}
 
-	public RegionItem(String index, List<String> items) {
+	public RegionItem(String index, String items) {
 		super();
 		this.index = index;
 		this.items = items;
@@ -34,13 +33,12 @@ public class RegionItem implements Serializable {
 		this.index = index;
 	}
 
-	public List<String> getItems() {
+	public String getItems() {
 		return items;
 	}
 
-	public void setItems(List<String> items) {
+	public void setItems(String items) {
 		this.items = items;
 	}
-
 	
 }

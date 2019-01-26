@@ -9,12 +9,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wkrent.business.app.base.obj.DataDict;
+import com.wkrent.business.app.base.service.AppDataDictValueService;
+import com.wkrent.business.app.picture.service.AppImageService;
 import com.wkrent.business.app.rent.dao.AppAttentionDao;
 import com.wkrent.business.app.rent.dao.RentRoomDao;
 import com.wkrent.business.app.rent.obj.RentRoomCondition;
 import com.wkrent.business.app.rent.obj.RoomInfo;
 import com.wkrent.business.app.rent.service.RentRoomService;
 import com.wkrent.common.entity.AppAttention;
+import com.wkrent.common.entity.BgPicAttach;
 import com.wkrent.common.entity.BgRoom;
 
 @Service
@@ -25,6 +29,12 @@ public class RentRoomServiceImpl implements RentRoomService {
 
 	@Autowired
 	private AppAttentionDao appAttentionDao;
+	
+	@Autowired
+	private AppImageService appImageService;
+	
+	@Autowired
+	private AppDataDictValueService appDataDictValueService;
 	
 	@Override
 	public Integer getRentRoomCount(RentRoomCondition condition) {
@@ -41,7 +51,7 @@ public class RentRoomServiceImpl implements RentRoomService {
 		List<RoomInfo> infos = new ArrayList<RoomInfo>();
 		if(condition != null && condition.getCurrentIndex() != null && condition.getPageSize() != null) {
 			condition.setStartIndex((condition.getCurrentIndex() - 1) * condition.getPageSize());
-			condition.setEndIndex(condition.getCurrentIndex() * condition.getPageSize());
+			condition.setEndIndex(condition.getPageSize());
 			
 			List<String> tips = new ArrayList<String>();
 			if(StringUtils.isNotEmpty(condition.getRoomType())) {
@@ -60,7 +70,23 @@ public class RentRoomServiceImpl implements RentRoomService {
 					roomInfo.setAddressDetail(roomInfos.get(i).getBgRoomAddressDetail());
 					roomInfo.setPrice(roomInfos.get(i).getBgRoomPrice() + "/" + getPriceUnit(roomInfos.get(i).getBgRoomPriceUnit()));
 					roomInfo.setStatus(roomInfos.get(i).getBgRoomStatus());
-					roomInfo.setRoomTips(roomInfos.get(i).getBgRoomTips());
+					
+					String roomTips = "";
+					List<DataDict> dataDicts = appDataDictValueService.queryDictValueList("房源标签");
+					for(int j = 0; j < dataDicts.size(); j++) {
+						String roomTipids = roomInfos.get(i).getBgRoomTips();
+						if(StringUtils.isNotEmpty(roomTipids)) {
+							if(roomTipids.contains(dataDicts.get(j).getDataDictId())) {
+								roomTips = roomTips + dataDicts.get(j).getDataDictName() + ",";
+							}
+						}
+					}
+					
+					if(roomTips.length() > 0) {
+						roomTips = roomTips.substring(0, roomTips.length() - 1);
+					}
+					
+					roomInfo.setRoomTips(roomTips);
 					roomInfo.setAddressCountry(roomInfos.get(i).getBgRoomAddressCountry());
 					roomInfo.setAddressCity(roomInfos.get(i).getBgRoomAddressCity());
 					roomInfo.setAddressDetail(roomInfos.get(i).getBgRoomAddressDetail());
@@ -71,6 +97,11 @@ public class RentRoomServiceImpl implements RentRoomService {
 						roomInfo.setIsAttention("0");
 					} else {
 						roomInfo.setIsAttention("1");
+					}
+					
+					List<BgPicAttach> picAttachs = appImageService.selectByOwnerId(roomInfos.get(i).getBgRoomId());
+					if(picAttachs != null && picAttachs.size() > 0) {
+						roomInfo.setRoomPic(picAttachs.get(0).getPicAttachId());
 					}
 				
 					infos.add(roomInfo);

@@ -122,25 +122,25 @@ public class RegionController {
 	public String getCountryListByCharacter(HttpServletRequest request, String regionInfo) {
 		List<RegionInfo> regionInfos = appRegionService.getAllRegionList(regionInfo);
 		
-		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		Map<String, List<RegionInfo>> map = new HashMap<String, List<RegionInfo>>();
 		for(int i = 0; i < regionInfos.size(); i++) {
-			List<String> list = new ArrayList<String>();
+			List<RegionInfo> list = new ArrayList<RegionInfo>();
 			String character = regionInfos.get(i).getRegionName().substring(0, 1).toUpperCase();
 			if(!map.containsKey(character)) {
-				list.add(regionInfos.get(i).getRegionName());
+				list.add(regionInfos.get(i));
 				map.put(character, list);
 			} else {
-				map.get(character).add(regionInfos.get(i).getRegionName());
+				map.get(character).add(regionInfos.get(i));
 			}
 		}
 		
 		List<RegionItem> items = new ArrayList<RegionItem>();
 		
 		//遍历Map返回结果
-		for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-			List<String> result = entry.getValue();
+		for (Map.Entry<String, List<RegionInfo>> entry : map.entrySet()) {
+			List<RegionInfo> result = entry.getValue();
 			Collections.reverse(result);
-			RegionItem regionItem = new RegionItem(entry.getKey(), result);
+			RegionItem regionItem = new RegionItem(entry.getKey(), JSON.toJSONString(result));
 			items.add(regionItem);
 		}
 		
