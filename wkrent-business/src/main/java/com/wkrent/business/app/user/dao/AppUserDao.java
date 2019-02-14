@@ -23,4 +23,6 @@ public interface AppUserDao {
     int updateByPrimaryKey(AppUser record);
     
     AppUser selectByUserPhone(String phone);
+    
+    AppUser selectByOpenId(String openId);
 }

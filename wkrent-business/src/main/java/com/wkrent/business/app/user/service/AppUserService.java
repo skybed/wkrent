@@ -11,5 +11,7 @@ public interface AppUserService {
 	public AppUser getUserById(String userId);
 	
 	public void updateUser(AppUser appUser);
+	
+	public AppUser getUserByOpenId(String openId);
 
 }

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wkrent.business.app.base.obj.DataDict;
+import com.wkrent.business.app.base.service.AppDataDictValueService;
 import com.wkrent.business.app.rent.dao.AppAttentionDao;
 import com.wkrent.business.app.rent.obj.RoomInfo;
 import com.wkrent.business.app.rent.service.AppAttentionService;
@@ -18,6 +21,9 @@ public class AppAttentionServiceImpl implements AppAttentionService {
 	
 	@Autowired
 	private AppAttentionDao appAttentionDao;
+	
+	@Autowired
+	private AppDataDictValueService appDataDictValueService;
 
 	@Override
 	public List<RoomInfo> getAppAttentionByPager(String userId, Integer index, Integer pageSize) {
@@ -33,7 +39,19 @@ public class AppAttentionServiceImpl implements AppAttentionService {
 				roomInfo.setAddressDetail(roomInfos.get(i).getBgRoomAddressDetail());
 				roomInfo.setPrice(roomInfos.get(i).getBgRoomPrice() + "/" + getPriceUnit(roomInfos.get(i).getBgRoomPriceUnit()));
 				roomInfo.setStatus(roomInfos.get(i).getBgRoomStatus());
-				roomInfo.setRoomTips(roomInfos.get(i).getBgRoomTips());
+				
+				String roomTips = "";
+				List<DataDict> dataDicts = appDataDictValueService.queryDictValueList("房源标签");
+				for(int j = 0; j < dataDicts.size(); j++) {
+					String roomTipids = roomInfos.get(i).getBgRoomTips();
+					if(StringUtils.isNotEmpty(roomTipids)) {
+						if(roomTipids.contains(dataDicts.get(j).getDataDictId())) {
+							roomTips = roomTips + dataDicts.get(j).getDataDictName() + ",";
+						}
+					}
+				}
+				roomInfo.setRoomTips(roomTips);
+				
 				roomInfo.setAddressCountry(roomInfos.get(i).getBgRoomAddressCountry());
 				roomInfo.setAddressCity(roomInfos.get(i).getBgRoomAddressCity());
 				roomInfo.setAddressDetail(roomInfos.get(i).getBgRoomAddressDetail());

@@ -252,4 +252,11 @@
     from app_user
     where app_user_phone = #{phone,jdbcType=VARCHAR} and is_delete = '0'
   </select>
+  
+  <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_user
+    where app_user_wechat_openId = #{openId,jdbcType=VARCHAR} and is_delete = '0'
+  </select>
 </mapper>
