@@ -32,6 +32,7 @@
   <resultMap id="QueryRoomMap" type="com.wkrent.common.entity.vo.BgRoomVO" extends="BaseResultMap">
     <result column="bg_room_appoint_num" jdbcType="TINYINT" property="bgRoomAppointNum" />
     <result column="bg_room_view_num" jdbcType="INTEGER" property="bgRoomViewNum" />
+    <result column="bg_merchant_name" jdbcType="VARCHAR" property="bgMerchantName" />
   </resultMap>
 
   <sql id="Base_Column_List">
@@ -50,7 +51,7 @@
     ro.bg_room_tips, ro.bg_room_merchant_id, ro.bg_room_property,
     ro.bg_room_type, ro.bg_room_detail, ro.is_delete, ro.description,
     ro.create_by, ro.create_time, ro.update_by, ro.update_time, ro.remark,
-    roi.bg_room_appoint_num, roi.bg_room_view_num
+    roi.bg_room_appoint_num, roi.bg_room_view_num, mer.bg_merchant_name
   </sql>
 
   <sql id="Base_Condition_Where">
@@ -142,6 +143,7 @@
     <include refid="Query_Column_List" />
     from bg_room ro
     left JOIN bg_room_info roi on ro.bg_room_id = roi.bg_room_id
+    LEFT JOIN bg_merchant mer on ro.bg_room_merchant_id = mer.bg_merchant_id
     <include refid="Base_Condition_Where" />
     ORDER BY create_time,bg_room_id
     LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
@@ -152,6 +154,7 @@
     select
     count(ro.bg_room_id)
     from bg_room ro left JOIN bg_room_info roi on ro.bg_room_id = roi.bg_room_id
+    LEFT JOIN bg_merchant mer on ro.bg_room_merchant_id = mer.bg_merchant_id
     <include refid="Base_Condition_Where" />
   </select>
 

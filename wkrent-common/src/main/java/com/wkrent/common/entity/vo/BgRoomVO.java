@@ -205,6 +205,11 @@ public class BgRoomVO implements Serializable {
     private List<String> attachIdList;
 
     /**
+     * 商家名称
+     */
+    private String bgMerchantName;
+
+    /**
      * 
      * @return bg_room_id 后台房源id,唯一标识
      */
@@ -690,5 +695,13 @@ public class BgRoomVO implements Serializable {
 
     public void setBgRoomTypeText(String bgRoomTypeText) {
         this.bgRoomTypeText = bgRoomTypeText;
+    }
+
+    public String getBgMerchantName() {
+        return bgMerchantName;
+    }
+
+    public void setBgMerchantName(String bgMerchantName) {
+        this.bgMerchantName = bgMerchantName;
     }
 }

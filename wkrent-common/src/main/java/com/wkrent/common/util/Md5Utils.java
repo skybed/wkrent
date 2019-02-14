@@ -76,6 +76,6 @@ public class Md5Utils {
     }
 
     public static void main(String[] args){
-        System.out.println(encryptPassword("2542452", "123456", SALT));
+        System.out.println(encryptPassword("admin", "123456", SALT));
     }
 }
