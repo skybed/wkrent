@@ -54,13 +54,17 @@ public class AppImageController {
 	@ApiOperation(value = "上传文件", notes = "上传文件", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/uploadPicture.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String uploadPicture(HttpServletRequest request, MultipartFile uploadfile) {
+	public String uploadPicture(HttpServletRequest request, MultipartFile uploadfile, String userId) {
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
 		//获取登陆用户信息
-		String userId = request.getSession().getAttribute("current_user_id").toString();
+		Object object = request.getSession().getAttribute("current_user_id");
+		String temp = object == null ? "" : object.toString();
+		if(StringUtils.isNotEmpty(temp)) {
+			userId = temp;
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("fileId", "");
@@ -111,6 +115,9 @@ public class AppImageController {
             } catch (Exception e) {
             	Logger.getRootLogger().error("上传图片抛异常，异常信息为：" + e.getMessage(), e);
             }
+        } else {
+        	resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);
+			resultData.setMsg(Constant.RESULT_REQUIRE_PARAM_MSG);
         }
         resultData.setData(JSON.toJSONString(map));
 		return JSON.toJSONString(resultData);
@@ -126,13 +133,17 @@ public class AppImageController {
 	@ApiOperation(value = "上传多文件", notes = "上传多文件", httpMethod = "POST", response = String.class)
 	@RequestMapping(value = "/uploadPictures.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String uploadPictures(HttpServletRequest request, MultipartFile[] uploadfiles) {
+	public String uploadPictures(HttpServletRequest request, MultipartFile[] uploadfiles, String userId) {
 		ResultData resultData = new ResultData();
 		resultData.setCode(Constant.RESULT_SUCCESS_CODE);
 		resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
 		
 		//获取登陆用户信息
-		String userId = request.getSession().getAttribute("current_user_id").toString();
+		Object object = request.getSession().getAttribute("current_user_id");
+		String temp = object == null ? "" : object.toString();
+		if(StringUtils.isNotEmpty(temp)) {
+			userId = temp;
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("fileId", "");
@@ -187,6 +198,9 @@ public class AppImageController {
                 }
             }
             map.put("fileId", idsList);
+        } else {
+        	resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);
+			resultData.setMsg(Constant.RESULT_REQUIRE_PARAM_MSG);
         }
         resultData.setData(JSON.toJSONString(map));
 		return JSON.toJSONString(resultData);
@@ -204,7 +218,7 @@ public class AppImageController {
 	public void getPicture(HttpServletRequest request, HttpServletResponse response, String picId) {
 		BgPicAttach picAttach = appImageService.selectById(picId);
 		if(picAttach != null) {
-			String path = UPLOAD_DIRECTORY + "/" + picId + "." + picAttach.getPicAttachFileType();
+			String path = picAttach.getPicAttachUrl();
 			File file = new File(path);
 			
 			//如果文件存在  

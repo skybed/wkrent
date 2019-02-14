@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.wkrent.app.util.AliSmsUtil;
 import com.wkrent.app.util.RandomNumUtil;
 import com.wkrent.app.util.UUIDUtil;
 import com.wkrent.business.app.picture.service.AppImageService;
@@ -69,7 +71,6 @@ public class UserController {
 			//调用阿里api发送短信验证码
 			try {
 				String code = RandomNumUtil.getRandomNum(4);
-				/**
 				SendSmsResponse response = AliSmsUtil.sendSms(phone, code);
 				if(response.getCode() != null && response.getCode().equals("OK")) {
 					
@@ -83,23 +84,9 @@ public class UserController {
 					
 					//返回处理编号
 					map.put("bizId", codeHistory.getPhoneCodeHistoryId());
-					map.put("code", code);
+//					map.put("code", code);
 					map.put("flag", true);
 				}
-				**/
-				
-				AppPhoneCodeHistory codeHistory = new AppPhoneCodeHistory();
-				codeHistory.setPhoneCodeHistoryId(UUIDUtil.getUUIDString());
-				codeHistory.setPhone(phone);
-				codeHistory.setCode(code);
-				codeHistory.setCreateTime(new Date());
-				codeHistory.setIsValidate("0");
-				appPhoneCodeHistoryService.insertCodeHistory(codeHistory);
-				
-				//返回处理编号
-				map.put("bizId", codeHistory.getPhoneCodeHistoryId());
-				map.put("code", code);
-				map.put("flag", true);
 			} catch (Exception e) {
 				resultData.setCode(Constant.RESULT_FAIL_CODE);
 				resultData.setMsg(Constant.RESULT_FAIL_MSG);
@@ -201,23 +188,36 @@ public class UserController {
 				&& StringUtils.isNotEmpty(userInfo.getMsgCode()) &&StringUtils.isNotEmpty(userInfo.getBizId())) {
 			//判断短信验证码是否正确
 			if(validateAuthCode(userInfo.getPhone(), userInfo.getMsgCode(), userInfo.getBizId())) {
+				
 				//判断用户手机号是存在
 				AppUser user = appUserService.getUserByPhone(userInfo.getPhone());
 				if(user != null) {
 					resultData.setCode(Constant.RESULT_USER_EXIST_CODE);
 					resultData.setMsg(Constant.RESULT_USER_EXIST_MSG);
 				} else {
-					user = new AppUser();
-					user.setAppUserId(UUIDUtil.getUUIDString());
-					//生成用户编号
-					user.setAppUserNumber(RandomNumUtil.getRandomNum());
-					user.setAppUserPhone(userInfo.getPhone());
-					user.setIsDelete("0");
-					user.setCreateBy("register");
-					user.setCreateTime(new Date());
+					Object object = request.getSession().getAttribute("current_user_open_id");
+					String openId = object == null ? null : object.toString();
 					
-					//注册用户
-					appUserService.insertAppUser(user);
+					if(openId != null) {
+						user = appUserService.getUserByOpenId(openId);
+						user.setAppUserPhone(userInfo.getPhone());
+						
+						//注册用户
+						appUserService.updateUser(user);
+					} else {
+						user = new AppUser();
+						user.setAppUserId(UUIDUtil.getUUIDString());
+						//生成用户编号
+						user.setAppUserNumber(RandomNumUtil.getRandomNum());
+						user.setAppUserPhone(userInfo.getPhone());
+						user.setIsDelete("0");
+						user.setCreateBy("register");
+						user.setCreateTime(new Date());
+						user.setAppUserPhone(userInfo.getPhone());
+						
+						//注册用户
+						appUserService.insertAppUser(user);
+					}
 					
 					//注册完免登陆
 					//将用户信息写缓存

@@ -1,26 +1,49 @@
 package com.wkrent.app.wechat.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.wkrent.app.util.RandomNumUtil;
+import com.wkrent.app.util.UUIDUtil;
+import com.wkrent.business.app.picture.service.AppImageService;
+import com.wkrent.business.app.user.service.AppUserService;
+import com.wkrent.common.entity.AppUser;
+import com.wkrent.common.entity.BgPicAttach;
 import com.wkrent.common.util.PropertiesUtils;
 
 @Controller
 @RequestMapping("/wx")
 public class WxController {
+	
+	//图片存放地址
+	private static final String UPLOAD_DIRECTORY = PropertiesUtils.getProperty("fileupload.directory", "/wkrent/app/upload/image");
+	
+	@Autowired
+	private AppUserService appUserService;
+	
+	@Autowired
+	private AppImageService appImageService;
 
 	private static String authUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=URI&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 	
@@ -57,7 +80,6 @@ public class WxController {
     
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
-    @ResponseBody
     public void weixinLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 用户同意授权后，能获取到code
         Map<String, String[]> params = request.getParameterMap();//针对get获取get参数
@@ -78,19 +100,108 @@ public class WxController {
             // 用户标识
             String openId = oauth2Token.getOpenId();
             
-            // 获取用户信息
-            SNSUserInfo snsUserInfo = getSNSUserInfo(accessToken, openId);
-            
-            log.info("**用户信息：" + JSON.toJSONString(snsUserInfo));
-            
-            //具体业务start
-            
-            
-            //具体业务end
-
-            return ;
+            if(StringUtils.isNotEmpty(openId)) {
+            	 //判断openId是否存在
+                AppUser user = appUserService.getUserByOpenId(openId);
+                if(user == null) {
+                	// 获取用户信息
+                    SNSUserInfo snsUserInfo = getSNSUserInfo(accessToken, openId);
+                    
+                    log.info("**用户信息：" + JSON.toJSONString(snsUserInfo));
+                    
+                    //注册新用户
+                    user = new AppUser();
+                    user.setAppUserId(UUIDUtil.getUUIDString());
+					//生成用户编号
+					user.setAppUserNumber(RandomNumUtil.getRandomNum());
+					user.setIsDelete("0");
+					user.setCreateBy("register");
+					user.setCreateTime(new Date());
+					user.setAppUserCity(snsUserInfo.getCity());
+					user.setAppUserCountry(snsUserInfo.getCountry());
+					user.setAppUserName(snsUserInfo.getNickname());
+					user.setAppUserWechatOpenid(openId);
+					
+					if(1 == snsUserInfo.getSex()) {
+						user.setAppUserSex("0");
+					} else if(2 == snsUserInfo.getSex()) {
+						user.setAppUserSex("1");
+					} else {
+						user.setAppUserSex("2");
+					}
+					appUserService.insertAppUser(user);
+					
+					String headUrl = snsUserInfo.getHeadImgUrl();
+					downloadPicture(headUrl, user.getAppUserId());
+                }
+                request.getSession().setAttribute("current_user_open_id", openId);
+                
+                String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/guoke/#!/login";
+                //跳转到注册页
+                response.sendRedirect(basePath);
+            }
         }
-    }  
+    }
+    
+	/**链接url下载图片
+	 * 
+	 * @param urlList
+	 */
+    private void downloadPicture(String urlList, String ownerId) {
+        URL url = null;
+        try {
+            url = new URL(urlList);
+            DataInputStream dataInputStream = new DataInputStream(url.openStream());
+            
+            //修改文件名称 uuid
+            String fileUUID = UUIDUtil.getUUIDString();
+            
+            //获取后缀
+            String prefix = "png";
+            
+            //修改后完整的文件名称
+            String nFileName = fileUUID + "." + prefix;
+            
+            // 文件保存路径
+            String filePath = FilenameUtils.concat(UPLOAD_DIRECTORY, nFileName);
+            
+            //判断文件目录是否存在，否则自动生成
+            File directory = new File(UPLOAD_DIRECTORY);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(filePath));
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = dataInputStream.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            fileOutputStream.write(output.toByteArray());
+            dataInputStream.close();
+            fileOutputStream.close();
+            
+            //取消该用户之前的头像
+            appImageService.deletePicAttachByOwnerId(ownerId);
+            
+            //写附件表
+            BgPicAttach picAttach = new BgPicAttach();
+            picAttach.setPicAttachId(fileUUID);
+            picAttach.setPicAttachName(nFileName);
+            picAttach.setIsDelete("0");
+            picAttach.setPicAttachFileType(prefix);
+            picAttach.setCreateTime(new Date());
+            picAttach.setUpdateTime(new Date());
+            picAttach.setPicAttachUrl(filePath);
+            picAttach.setPicAttachOwner(ownerId);
+            appImageService.savePicAttach(picAttach);
+        } catch (Exception e) {
+            log.error("保持图片异常，异常信息为:" + e.getMessage(), e);
+        }
+    }
 
     
    /**
