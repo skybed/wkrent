@@ -1,6 +1,8 @@
 package com.wkrent.business.bg.modulemanagement.service;
 
 import com.wkrent.common.entity.vo.BgModuleVO;
+import com.wkrent.common.entity.vo.BgPicAttachVO;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Administrator
@@ -20,5 +22,12 @@ public interface BgModuleService {
      * @return 符合条件模块设置
      */
     BgModuleVO findByType(String moduleType);
+
+    /**
+     * 保存租房说明微信二维码
+     * @param uploadFile 图片
+     * @param fileOwnerType 上传类型
+     */
+    BgPicAttachVO saveModuleFile(MultipartFile uploadFile, String fileOwnerType);
 
 }

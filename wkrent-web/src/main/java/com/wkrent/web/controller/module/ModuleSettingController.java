@@ -4,9 +4,12 @@ import com.wkrent.business.bg.attach.service.BgPicAttachService;
 import com.wkrent.business.bg.modulemanagement.service.BgModuleService;
 import com.wkrent.common.base.BaseController;
 import com.wkrent.common.entity.base.BaseAjaxVO;
+import com.wkrent.common.entity.base.Constants;
 import com.wkrent.common.entity.enums.ModuleTypeEnum;
 import com.wkrent.common.entity.enums.UploadFileTypeEnum;
 import com.wkrent.common.entity.vo.BgModuleVO;
+import com.wkrent.common.entity.vo.BgPicAttachVO;
+import com.wkrent.common.exception.WkRentException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -87,7 +90,19 @@ public class ModuleSettingController extends BaseController{
     @ResponseBody
     public BaseAjaxVO uploadPictures(@ApiParam(name = "uploadFile", value = "附件信息")
                                              MultipartFile uploadFile) {
-        return bgPicAttachService.savePicAttach(uploadFile, UploadFileTypeEnum.CUSTOMER_FILE.getCode());
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+        try {
+            BgPicAttachVO picAttachVO = bgModuleService.saveModuleFile(uploadFile, UploadFileTypeEnum.CUSTOMER_FILE.getCode());
+            baseAjaxVO.setResult(picAttachVO);
+        }catch (WkRentException e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(e.getMessage());
+        }catch (Exception e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText("系统异常，请稍后重试！");
+            log.error("上传租房说明二维码失败！", e);
+        }
+        return baseAjaxVO;
     }
 
     /**
@@ -100,7 +115,19 @@ public class ModuleSettingController extends BaseController{
     @ResponseBody
     public BaseAjaxVO platformUpload( @ApiParam(name = "uploadFile", value = "附件信息")
                                               MultipartFile uploadFile) {
-        return bgPicAttachService.savePicAttach(uploadFile, UploadFileTypeEnum.PLATFORM_FILE.getCode());
+        BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
+        try {
+            BgPicAttachVO picAttachVO = bgModuleService.saveModuleFile(uploadFile, UploadFileTypeEnum.PLATFORM_FILE.getCode());
+            baseAjaxVO.setResult(picAttachVO);
+        }catch (WkRentException e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText(e.getMessage());
+        }catch (Exception e){
+            baseAjaxVO.setCode(Constants.FAILED_CODE);
+            baseAjaxVO.setText("系统异常，请稍后重试！");
+            log.error("上传租房说明二维码失败！", e);
+        }
+        return baseAjaxVO;
     }
 
 }

@@ -46,7 +46,7 @@ public interface BgPicAttachDao {
      * 根据附件id删除附件信息
      * @param picIdList 附件id
      */
-    void deletePicAttachList(List<String> picIdList);
+    void deletePicAttachList(@Param("picIdList") List<String> picIdList);
 
     /**
      * 更新附件所属id信息

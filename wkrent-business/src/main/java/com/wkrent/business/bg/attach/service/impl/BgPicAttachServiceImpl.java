@@ -244,7 +244,8 @@ public class BgPicAttachServiceImpl implements BgPicAttachService{
         bgPicAttachDao.deletePicAttachList(picIdList);
     }
 
-    private void updatePicAttachOwner(List<String> picIdList, String ownerId) {
+    @Override
+    public void updatePicAttachOwner(List<String> picIdList, String ownerId) {
         if(CollectionUtils.isNotEmpty(picIdList) && StringUtils.isNotBlank(ownerId)){
             bgPicAttachDao.updatePicAttachOwner(picIdList, ownerId);
         }
