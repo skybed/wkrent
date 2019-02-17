@@ -33,4 +33,9 @@ public class AppUserServiceImpl implements AppUserService {
 		appUserDao.updateByPrimaryKeySelective(appUser);
 	}
 
+	@Override
+	public AppUser getUserByOpenId(String openId) {
+		return appUserDao.selectByOpenId(openId);
+	}
+
 }

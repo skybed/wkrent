@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.wkrent.app.util.RandomNumUtil;
 import com.wkrent.app.util.UUIDUtil;
+import com.wkrent.business.app.base.obj.DataDict;
+import com.wkrent.business.app.base.service.AppDataDictValueService;
 import com.wkrent.business.app.order.service.AppOrderService;
 import com.wkrent.business.app.picture.service.AppImageService;
 import com.wkrent.business.app.rent.obj.ApponitInfo;
@@ -60,6 +62,9 @@ public class RentRoomController {
 	
 	@Autowired
 	private AppOrderService appOrderService;
+	
+	@Autowired
+	private AppDataDictValueService appDataDictValueService;
 	
 	/**
 	  * 获取房源列表信息
@@ -134,7 +139,24 @@ public class RentRoomController {
 				detailInfo.setRoomName(room.getBgRoomName());
 				detailInfo.setPrice(room.getBgRoomPrice() + "/" + getPriceUnit(room.getBgRoomPriceUnit()));
 				detailInfo.setStatus(room.getBgRoomStatus());
-				detailInfo.setRoomTips(room.getBgRoomTips());
+				
+				String roomTips = "";
+				List<DataDict> dataDicts = appDataDictValueService.queryDictValueList("房源标签");
+				for(int j = 0; j < dataDicts.size(); j++) {
+					String roomTipids = room.getBgRoomTips();
+					if(StringUtils.isNotEmpty(roomTipids)) {
+						if(roomTipids.contains(dataDicts.get(j).getDataDictId())) {
+							roomTips = roomTips + dataDicts.get(j).getDataDictName() + ",";
+						}
+					}
+				}
+				
+				if(roomTips.length() > 0) {
+					roomTips = roomTips.substring(0, roomTips.length() - 1);
+				}
+				
+				detailInfo.setRoomTips(roomTips);
+				
 				detailInfo.setAddressCountry(room.getBgRoomAddressCountry());
 				detailInfo.setAddressCity(room.getBgRoomAddressCity());
 				detailInfo.setAddressDetail(room.getBgRoomAddressDetail());
@@ -227,7 +249,7 @@ public class RentRoomController {
 							order.setBgOrderNumber(RandomNumUtil.getRandomNum());
 							
 							try {
-								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 								Date utilDate = sdf.parse(apponitInfo.getCheckInTime());
 								order.setBgOrderCheckinDate(utilDate);
 							} catch (ParseException e) {

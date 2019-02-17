@@ -135,9 +135,16 @@
     where pic_attach_id = #{picId,jdbcType=VARCHAR}
   </update>
   
-   <update id="updatePicAttachOwner">
+  <update id="updatePicAttachOwner">
     update bg_pic_attach 
     set pic_attach_owner = #{ownerId,jdbcType=VARCHAR} 
     where pic_attach_id = #{picId,jdbcType=VARCHAR}
   </update>
+  
+  <update id="deletePicAttachByOwnerId">
+    update bg_pic_attach 
+    set is_delete = '1' 
+    where pic_attach_owner = #{ownerId,jdbcType=VARCHAR}
+  </update>
+  
 </mapper>

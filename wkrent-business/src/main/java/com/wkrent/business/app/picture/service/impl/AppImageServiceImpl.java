@@ -38,4 +38,9 @@ public class AppImageServiceImpl implements AppImageService {
 	public void updatePicAttachOwner(String picId, String ownerId) {
 		appImageDao.updatePicAttachOwner(picId, ownerId);
 	}
+
+	@Override
+	public void deletePicAttachByOwnerId(String ownerId) {
+		appImageDao.selectByOwnerId(ownerId);
+	}
 }
