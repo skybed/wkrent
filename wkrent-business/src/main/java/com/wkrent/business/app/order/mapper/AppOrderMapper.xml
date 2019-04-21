@@ -463,6 +463,6 @@
     select 
     <include refid="Base_Column_List" />
     from bg_order 
-    where bg_order_room_id = #{roomId,jdbcType=VARCHAR} and bg_order_user_id = #{userId,jdbcType=VARCHAR} and is_delete = '0'
+    where bg_order_room_id = #{roomId,jdbcType=VARCHAR} and bg_order_user_id = #{userId,jdbcType=VARCHAR} and is_delete = '0' and bg_order_status != '1'
   </select>
 </mapper>

@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.wkrent.business.app.base.obj.DataDict;
 import com.wkrent.business.app.base.service.AppDataDictValueService;
+import com.wkrent.business.app.picture.service.AppImageService;
 import com.wkrent.business.app.rent.dao.AppAttentionDao;
 import com.wkrent.business.app.rent.obj.RoomInfo;
 import com.wkrent.business.app.rent.service.AppAttentionService;
 import com.wkrent.common.entity.AppAttention;
+import com.wkrent.common.entity.BgPicAttach;
 import com.wkrent.common.entity.BgRoom;
 
 @Service
@@ -21,6 +23,9 @@ public class AppAttentionServiceImpl implements AppAttentionService {
 	
 	@Autowired
 	private AppAttentionDao appAttentionDao;
+	
+	@Autowired
+	private AppImageService appImageService;
 	
 	@Autowired
 	private AppDataDictValueService appDataDictValueService;
@@ -56,6 +61,11 @@ public class AppAttentionServiceImpl implements AppAttentionService {
 				roomInfo.setAddressCity(roomInfos.get(i).getBgRoomAddressCity());
 				roomInfo.setAddressDetail(roomInfos.get(i).getBgRoomAddressDetail());
 				roomInfo.setIsAttention("1");
+				
+				List<BgPicAttach> picAttachs = appImageService.selectByOwnerId(roomInfos.get(i).getBgRoomId());
+				if(picAttachs != null && picAttachs.size() > 0) {
+					roomInfo.setRoomPic(picAttachs.get(0).getPicAttachId());
+				}
 			
 				infos.add(roomInfo);
 			}

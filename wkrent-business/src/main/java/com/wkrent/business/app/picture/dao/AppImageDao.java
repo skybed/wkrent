@@ -17,4 +17,6 @@ public interface AppImageDao {
 	public void deletePicAttach(String picId);
 	
 	public void updatePicAttachOwner(@Param("picId")String picId, @Param("ownerId")String ownerId);
+	
+	public List<BgPicAttach> selectByPicType(String attachType);
 }

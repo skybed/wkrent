@@ -147,4 +147,11 @@
     where pic_attach_owner = #{ownerId,jdbcType=VARCHAR}
   </update>
   
+  <select id="selectByPicType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bg_pic_attach
+    where pic_attach_type = #{attachType,jdbcType=VARCHAR} and is_delete = '0';
+  </select>
+  
 </mapper>

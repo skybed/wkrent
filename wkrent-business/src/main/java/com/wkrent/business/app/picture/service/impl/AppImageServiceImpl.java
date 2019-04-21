@@ -43,4 +43,9 @@ public class AppImageServiceImpl implements AppImageService {
 	public void deletePicAttachByOwnerId(String ownerId) {
 		appImageDao.selectByOwnerId(ownerId);
 	}
+
+	@Override
+	public List<BgPicAttach> selectByPicType(String attachType) {
+		return appImageDao.selectByPicType(attachType);
+	}
 }

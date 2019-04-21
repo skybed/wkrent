@@ -17,4 +17,6 @@ public interface AppImageService {
 	public void deletePicAttachByOwnerId(String ownerId);
 	
 	public void updatePicAttachOwner(String picId, String ownerId);
+	
+	public List<BgPicAttach> selectByPicType(String attachType);
 }
