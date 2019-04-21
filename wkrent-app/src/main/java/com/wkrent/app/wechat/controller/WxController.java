@@ -90,6 +90,7 @@ public class WxController {
         if (!"authdeny".equals(code)) {
         	String appid = PropertiesUtils.getProperty("wechat.appid");
         	String appSecret = PropertiesUtils.getProperty("wechat.appsecret");
+        	String loginPage = PropertiesUtils.getProperty("wechat.login.page");
         	
         	// 获取网页授权access_token
             Oauth2Token oauth2Token = getOauth2AccessToken(appid, appSecret, code);
@@ -136,10 +137,12 @@ public class WxController {
                 }
                 request.getSession().setAttribute("current_user_open_id", openId);
                 
-                String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/guoke/#!/login";
                 //跳转到注册页
-                response.sendRedirect(basePath);
+                response.sendRedirect(loginPage);
             }
+        }
+        else {
+        	log.info("未授权");
         }
     }
     

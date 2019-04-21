@@ -67,7 +67,7 @@
 		<filter-class>com.wkrent.app.inteceptor.LoginFilter</filter-class>
 		<init-param>
 			<param-name>noAuthUrls</param-name>
-			<param-value>/sendAuthCode.do,/checkPhoneAvailable.do,/userRegister.do,/userLogin.do,/getRentRoomListByPager.do,/getRentRoomDetail.do,/editUserEmail.do,/getCountryListByCharacter.do,/getPicture.do,/uploadPicture.do,/uploadPictures.do</param-value>
+			<param-value>/sendAuthCode.do,/checkPhoneAvailable.do,/userRegister.do,/userLogin.do,/getRentRoomListByPager.do,/getRentRoomDetail.do,/editUserEmail.do,/getCountryListByCharacter.do,/getPicture.do,/uploadPicture.do,/uploadPictures.do,/wx/wxLogin,/queryAgreement.do,/queryRentExplain.do,/getDataDictList.do</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

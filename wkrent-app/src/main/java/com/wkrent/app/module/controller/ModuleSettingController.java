@@ -27,7 +27,7 @@ public class ModuleSettingController extends BaseController{
     private BgModuleService bgModuleService;
 
     @ApiOperation(value = "查看服务协议", notes = "查看服务协议", httpMethod = "POST", response = BaseAjaxVO.class)
-    @RequestMapping(value = "/queryAgreement", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryAgreement.do", method = RequestMethod.POST)
     @ResponseBody
     public String queryAgreement() {
     	ResultData resultData = new ResultData();
@@ -40,7 +40,7 @@ public class ModuleSettingController extends BaseController{
     }
 
     @ApiOperation(value = "查看租房说明", notes = "查看租房说明", httpMethod = "POST", response = BaseAjaxVO.class)
-    @RequestMapping(value = "/queryRentExplain", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryRentExplain.do", method = RequestMethod.POST)
     @ResponseBody
     public String queryRentExplain(){
     	ResultData resultData = new ResultData();
