@@ -64,6 +64,13 @@ public interface BgPicAttachService {
     void deletePicAttachList(List<String> picIdList);
 
     /**
+     * 更新附件所属id（不变更已有附件信息）
+     * @param picIdList 附件idList
+     * @param ownerId 所属id
+     */
+    void updatePicAttachOwner(List<String> picIdList, String ownerId);
+
+    /**
      * 更新附件所属id信息
      * @param picIdList 附件idList
      * @param ownerId 附件所属id
