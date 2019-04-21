@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.wkrent.common.entity.enums.AppUserSourceEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -214,6 +215,8 @@ public class UserController {
 						user.setCreateBy("register");
 						user.setCreateTime(new Date());
 						user.setAppUserPhone(userInfo.getPhone());
+						//微信公众号注册来源
+						user.setRemark(AppUserSourceEnum.WE_CHART.getDesc());
 						
 						//注册用户
 						appUserService.insertAppUser(user);
@@ -238,7 +241,7 @@ public class UserController {
 		resultData.setData(JSON.toJSONString(map));
 		return JSON.toJSONString(resultData);
 	}
-	
+
 	/**
 	 * 修改用户邮箱
 	 * @param request
@@ -557,5 +560,71 @@ public class UserController {
 		
 		return JSON.toJSONString(resultData);
 	}
-	
+
+    /**
+     * 用户注册
+     * @param request
+     * @param userInfo
+     * @return
+     */
+    @ApiOperation(value = "用户注册(PC端)", notes = "用户注册(PC端)", httpMethod = "POST", response = String.class)
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String register(HttpServletRequest request, UserInfo userInfo) {
+        ResultData resultData = new ResultData();
+        resultData.setCode(Constant.RESULT_SUCCESS_CODE);
+        resultData.setMsg(Constant.RESULT_SUCCESS_MSG);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("flag", false);
+        map.put("userId", "");
+
+        //必填项不能为空
+        if(userInfo != null && StringUtils.isNotEmpty(userInfo.getPhone())
+                && StringUtils.isNotEmpty(userInfo.getMsgCode()) &&StringUtils.isNotEmpty(userInfo.getBizId())) {
+            //判断短信验证码是否正确
+            if(validateAuthCode(userInfo.getPhone(), userInfo.getMsgCode(), userInfo.getBizId())) {
+
+                //判断用户手机号是存在
+                AppUser user = appUserService.getUserByPhone(userInfo.getPhone());
+                if(user != null) {
+                    resultData.setCode(Constant.RESULT_USER_EXIST_CODE);
+                    resultData.setMsg(Constant.RESULT_USER_EXIST_MSG);
+                } else {
+                    user = new AppUser();
+                    user.setAppUserId(UUIDUtil.getUUIDString());
+                    //生成用户编号
+                    user.setAppUserNumber(RandomNumUtil.getRandomNum());
+                    user.setAppUserPhone(userInfo.getPhone());
+                    user.setAppUserEmail(userInfo.getEmail());
+                    user.setIsDelete("0");
+                    user.setCreateBy("register");
+                    user.setCreateTime(new Date());
+                    user.setAppUserPhone(userInfo.getPhone());
+                    //PC官网注册来源
+                    user.setRemark(AppUserSourceEnum.PC.getDesc());
+
+                    //注册用户
+                    appUserService.insertAppUser(user);
+
+                    //注册完免登陆
+                    //将用户信息写缓存
+                    request.getSession().setAttribute("current_user_id", user.getAppUserId());
+
+                    map.put("flag", true);
+                    map.put("userId", user.getAppUserId());
+                }
+            } else {//验证码不正确
+                resultData.setCode(Constant.RESULT_PHONE_CODE_ERROR_CODE);
+                resultData.setMsg(Constant.RESULT_PHONE_CODE_ERROR_MSG);
+            }
+        } else {
+            resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);
+            resultData.setMsg(Constant.RESULT_REQUIRE_PARAM_MSG);
+        }
+
+        resultData.setData(JSON.toJSONString(map));
+        return JSON.toJSONString(resultData);
+    }
+
 }

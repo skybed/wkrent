@@ -46,11 +46,8 @@
 	<if test="minPrice != null and minPrice != '' and maxPrice != null and maxPrice != ''">
 	  and bg_room_price &gt;= #{minPrice,jdbcType=DOUBLE} and bg_room_price &lt;= #{maxPrice,jdbcType=DOUBLE} 
 	</if>
-	<if test="roomTypes != null">
-	  and 
-	  <foreach item="item" index="index" collection="roomTypes" open="(" separator="or" close=")">
-	   FIND_IN_SET(#{item},bg_room_type) 
-	  </foreach>
+	<if test="roomType != null and roomType != ''">
+	  and bg_room_type = #{roomType,jdbcType=VARCHAR}
 	</if>
 	
 	<if test='(timeSort == null or timeSort == "") and "0" eq priceSort'>
@@ -90,12 +87,9 @@
 	<if test="minPrice != null and minPrice != '' and maxPrice != null and maxPrice != ''">
 	  and bg_room_price &gt;= #{minPrice,jdbcType=DOUBLE} and bg_room_price &lt;= #{maxPrice,jdbcType=DOUBLE} 
 	</if>
-	<if test="roomTypes != null">
-	  and 
-	  <foreach item="item" index="index" collection="roomTypes" open="(" separator="or" close=")">
-	   FIND_IN_SET(#{item},bg_room_type) 
-	  </foreach>
-	</if>
+    <if test="roomType != null and roomType != ''">
+      and bg_room_type = #{roomType,jdbcType=VARCHAR}
+    </if>
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
