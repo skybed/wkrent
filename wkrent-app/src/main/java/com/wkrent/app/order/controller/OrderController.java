@@ -230,7 +230,7 @@ public class OrderController {
 				orderInfo.setPrice(room.getBgRoomPrice() + "/" + getPriceUnit(room.getBgRoomPriceUnit()));
 				orderInfo.setOrderStatus(order.getBgOrderStatus());
 				
-				String roomTips = "";
+				String roomTips = StringUtils.EMPTY;
 				List<DataDict> dataDicts = appDataDictValueService.queryDictValueList("房源标签");
 				for(int j = 0; j < dataDicts.size(); j++) {
 					String roomTipids = room.getBgRoomTips();
@@ -241,7 +241,7 @@ public class OrderController {
 					}
 				}
 				
-				if(roomTips.length() > 0) {
+				if(StringUtils.isNotBlank(roomTips)) {
 					roomTips = roomTips.substring(0, roomTips.length() - 1);
 				}
 				orderInfo.setRoomTips(roomTips);
@@ -256,12 +256,17 @@ public class OrderController {
 				orderInfo.setOrderUser(order.getBgRenterName());
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String orderTime = sdf.format(order.getBgOrderCreateTime());
-				orderInfo.setOrderTime(orderTime);
-				
-				String checkTime = sdf.format(order.getBgOrderCheckinDate());
-				orderInfo.setCheckInTime(checkTime);
-				
+
+				if(order.getCreateTime() != null){
+					String orderTime = sdf.format(order.getBgOrderCreateTime());
+					orderInfo.setOrderTime(orderTime);
+				}
+
+				if(order.getBgOrderCheckinDate() != null){
+					String checkTime = sdf.format(order.getBgOrderCheckinDate());
+					orderInfo.setCheckInTime(checkTime);
+				}
+
 				resultData.setData(JSON.toJSONString(orderInfo));
 				
 			} else {
