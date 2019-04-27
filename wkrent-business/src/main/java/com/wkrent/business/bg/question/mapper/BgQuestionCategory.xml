@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkrent.business.bg.question.dao.BgQuestionCategoryDao">
+  <resultMap id="BaseResultMap" type="com.wkrent.common.entity.po.BgQuestionCategory">
+    <id column="bg_question_cat_id" jdbcType="VARCHAR" property="bgQuestionCatId" />
+    <result column="bg_question_cat_name" jdbcType="VARCHAR" property="bgQuestionCatName" />
+    <result column="bg_question_cat_index" jdbcType="INTEGER" property="bgQuestionCatIndex" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+
+  <!-- 问题分类名称查询 -->
+  <resultMap id="QueryResultMap" type="com.wkrent.common.entity.vo.BgQuestionCategoryVO" extends="BaseResultMap">
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    bg_question_cat_id, bg_question_cat_name,
+    bg_question_cat_index, is_delete, description,
+    create_by, create_time,
+    update_by, update_time, remark
+  </sql>
+
+  <sql id="Base_Condition_Where">
+    <where>
+      is_delete = '0'
+      <if test="bgQuestionCatName != null and bgQuestionCatName !=''">
+        AND bg_question_cat_name LIKE  '%' || #{bgQuestionCatName,jdbcType=VARCHAR} || '%'
+      </if>
+    </where>
+  </sql>
+
+  <update id="delete" parameterType="com.wkrent.common.entity.vo.BgQuestionCategoryVO">
+    update bg_question_category
+    set is_delete = '1',
+    update_by = #{updateBy, jdbcType=VARCHAR},
+    update_time = #{updateTime, jdbcType=VARCHAR}
+    <where>
+      is_delete = '0'
+      <choose>
+        <when test="bgQuestionCatIdList != null and bgQuestionCatIdList.size() > 0">
+          AND bg_question_cat_id IN
+          <foreach collection="bgQuestionCatIdList" item="bgQuestionCatId" separator="," open="(" close=")">
+            #{bgQuestionCatId,jdbcType=VARCHAR}
+          </foreach>
+        </when>
+        <when test="bgQuestionCatId != null and bgQuestionCatId != ''">
+          AND bg_question_cat_id = #{bgQuestionCatId,jdbcType=VARCHAR}
+        </when>
+        <otherwise>
+          1 != 1
+        </otherwise>
+      </choose>
+    </where>
+  </update>
+
+  <insert id="insert" parameterType="com.wkrent.common.entity.po.BgQuestionCategory">
+    insert into bg_question_category
+    (
+      bg_question_cat_id,
+      bg_question_cat_name,
+      bg_question_cat_index,
+      description,
+      is_delete,
+      create_by, create_time, update_by, update_time, remark
+    )
+    values (
+      #{bgQuestionCatId,jdbcType=VARCHAR},
+      #{bgQuestionCatName,jdbcType=VARCHAR},
+      #{bgQuestionCatIndex,jdbcType=INTEGER},
+      #{description,jdbcType=VARCHAR},
+      '0',
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{remark,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_question_category
+    where
+    is_delete = '0'
+    AND bg_question_cat_id = #{bgQuestionCatId,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="com.wkrent.common.entity.po.BgQuestionCategory">
+    update bg_question_category
+    set
+    bg_question_cat_name = #{bgQuestionCatName,jdbcType=VARCHAR},
+    description = #{description,jdbcType=VARCHAR},
+    update_by = #{updateBy,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    remark = #{remark,jdbcType=VARCHAR}
+    where
+    bg_question_cat_id = #{bgQuestionCatId,jdbcType=VARCHAR} AND  is_delete = '0'
+  </update>
+
+  <select id="findByCondition" parameterType="com.wkrent.common.entity.vo.BgQuestionCategoryVO" resultMap="QueryResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_question_category
+    <include refid="Base_Condition_Where" />
+    ORDER BY bg_question_cat_index ASC
+    LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
+  </select>
+
+  <!-- 根据条件查询总条数 -->
+  <select id="countByCondition" parameterType="com.wkrent.common.entity.vo.BgQuestionCategoryVO" resultType="java.lang.Integer">
+    select
+    count(*)
+    from bg_question_category
+    <include refid="Base_Condition_Where" />
+  </select>
+
+  <select id="queryByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_question_category
+    where
+    is_delete = '0'
+    AND bg_question_cat_name = #{bgQuestionCatName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryCategoryList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bg_question_category
+    where
+      is_delete = '0'
+  </select>
+
+</mapper>
