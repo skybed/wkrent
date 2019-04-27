@@ -2,6 +2,7 @@ package com.wkrent.business.bg.question.dao;
 
 import com.wkrent.common.entity.po.BgQuestion;
 import com.wkrent.common.entity.vo.BgQuestionVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,10 +29,10 @@ public interface BgQuestionDao {
 
     /**
      * 根据id查询未删除问题举值信息
-     * @param questionCategoryId 枚举值信息
+     * @param bgQuestionId 枚举值信息
      * @return 枚举值信息
      */
-    BgQuestion selectByPrimaryKey(String questionCategoryId);
+    BgQuestion selectByPrimaryKey(@Param("bgQuestionId") String bgQuestionId);
 
     /**
      * 根据id更新问题信息
@@ -59,12 +60,12 @@ public interface BgQuestionDao {
      * @param categoryId 查询条件
      * @return 符合条件信息
      */
-    List<BgQuestion> findByCatId(String categoryId);
+    List<BgQuestion> findByCatId(@Param("categoryId") String categoryId);
 
     /**
      * 根据名称查询未删除问题信息
      * @param questionName 问题名称
      * @return 符合条件信息
      */
-    List<BgQuestion> queryByName(String questionName);
+    List<BgQuestion> queryByName(@Param("questionName") String questionName);
 }

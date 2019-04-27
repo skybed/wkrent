@@ -124,10 +124,10 @@
     from bg_question_category
     where
     is_delete = '0'
-    AND bg_question_cat_name = #{bgQuestionCatName,jdbcType=VARCHAR}
+    AND bg_question_cat_name = #{categoryName,jdbcType=VARCHAR}
   </select>
 
-  <select id="queryCategoryList" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="queryCategoryList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from bg_question_category

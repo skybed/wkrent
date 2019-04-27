@@ -38,7 +38,12 @@ public class QuestionCategoryController extends BaseController{
     @ResponseBody
     public PageResult<BgQuestionCategoryVO> findByCondition(@RequestBody @ApiParam(name = "questionCategoryVO", value = "问题分类查询条件")
                                                          BgQuestionCategoryVO questionCategoryVO){
-        return bgQuestionCategoryService.findByCondition(questionCategoryVO);
+        try {
+            return bgQuestionCategoryService.findByCondition(questionCategoryVO);
+        }catch (Exception e){
+            log.error("查询失败，系统异常", e, JSON.toJSON(questionCategoryVO));
+            return new PageResult<>();
+        }
     }
 
     @ApiOperation(value = "查询所有未删除问题分类信息", notes = "查询所有未删除问题分类信息", httpMethod = "POST", response = BgQuestionCategoryVO.class)
@@ -70,7 +75,7 @@ public class QuestionCategoryController extends BaseController{
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             //设置枚举类型为房源标签
-            bgQuestionCategoryService.insert(questionCategoryVO, getLoginAccount(session));
+            baseAjaxVO = bgQuestionCategoryService.insert(questionCategoryVO, getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());

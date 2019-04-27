@@ -47,8 +47,8 @@
             <if test="bgQuestion != null and bgQuestion !=''">
                 AND q.bg_question LIKE  '%' || #{bgQuestion,jdbcType=VARCHAR} || '%'
             </if>
-            <if test="bg_question_cat_id != null and bg_question_cat_id !=''">
-                AND q.bgQuestionCatId  = #{bgQuestionCatId,jdbcType=VARCHAR}
+            <if test="bgQuestionCatId != null and bgQuestionCatId !=''">
+                AND q.bg_question_cat_id  = #{bgQuestionCatId,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>
@@ -126,7 +126,7 @@
         from bg_question q
         INNER JOIN bg_question_category cat ON q.bg_question_cat_id = cat.bg_question_cat_id
         <include refid="Base_Condition_Where" />
-        ORDER BY o.create_time,bg_question_id DESC
+        ORDER BY q.create_time,bg_question_id DESC
         LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
     </select>
 
@@ -145,7 +145,7 @@
         from bg_question
         where
         is_delete = '0'
-        AND bg_question_cat_id = #{bgQuestionCatId,jdbcType=VARCHAR}
+        AND bg_question_cat_id = #{categoryId,jdbcType=VARCHAR}
     </select>
 
     <select id="queryByName" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -154,6 +154,6 @@
         from bg_question
         where
         is_delete = '0'
-        AND bg_question = #{bgQuestion,jdbcType=VARCHAR}
+        AND bg_question = #{questionName,jdbcType=VARCHAR}
     </select>
 </mapper>

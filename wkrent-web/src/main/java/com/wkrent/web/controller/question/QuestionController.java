@@ -37,7 +37,13 @@ public class QuestionController extends BaseController{
     @ResponseBody
     public PageResult<BgQuestionVO> findByCondition(@RequestBody @ApiParam(name = "questionVO", value = "问题查询条件")
                                                          BgQuestionVO questionVO){
-        return bgQuestionService.findByCondition(questionVO);
+        try {
+            //设置枚举类型为房源标签
+            return bgQuestionService.findByCondition(questionVO);
+        }catch (Exception e){
+            log.error("查询失败，系统异常", e, JSON.toJSON(questionVO));
+            return new PageResult<>();
+        }
     }
 
     @ApiOperation(value = "根据id查询问题信息", notes = "根据id查询问题信息", httpMethod = "POST", response = BaseAjaxVO.class)
@@ -62,7 +68,7 @@ public class QuestionController extends BaseController{
         BaseAjaxVO baseAjaxVO = new BaseAjaxVO();
         try {
             //设置枚举类型为房源标签
-            bgQuestionService.insert(questionVO, getLoginAccount(session));
+            baseAjaxVO = bgQuestionService.insert(questionVO, getLoginAccount(session));
         }catch (WkRentException e){
             baseAjaxVO.setCode(Constants.FAILED_CODE);
             baseAjaxVO.setText(e.getMessage());
