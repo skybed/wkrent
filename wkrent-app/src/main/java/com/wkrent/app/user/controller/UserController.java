@@ -1,23 +1,5 @@
 package com.wkrent.app.user.controller;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.wkrent.common.entity.enums.AppUserSourceEnum;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.wkrent.app.util.AliSmsUtil;
@@ -31,10 +13,26 @@ import com.wkrent.common.constants.Constant;
 import com.wkrent.common.entity.AppPhoneCodeHistory;
 import com.wkrent.common.entity.AppUser;
 import com.wkrent.common.entity.BgPicAttach;
+import com.wkrent.common.entity.enums.AppUserSourceEnum;
 import com.wkrent.common.obj.ResultData;
-
+import com.wkrent.common.util.PropertiesUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Api(value = "userinfo", tags = "用户信息")
 @Controller
@@ -109,22 +107,33 @@ public class UserController {
 	 * @param bizId
 	 * @return
 	 */
-	private boolean validateAuthCode(String phone, String code, String bizId) {
+	private boolean validateAuthCode(String phone, String code, String bizId, ResultData resultData) {
 		//返回
 		boolean flag = false;
 		
 		//不为空
 		if(StringUtils.isNotEmpty(phone) && StringUtils.isNotEmpty(bizId) && StringUtils.isNotEmpty(code)) {
 			AppPhoneCodeHistory codeHistory = appPhoneCodeHistoryService.getPhoneCodeById(bizId);
-			
-			//存在 手机号一致 未被校验
-			if(codeHistory != null && codeHistory.getPhone().equals(phone) 
+            if(codeHistory == null){
+                resultData.setMsg(Constant.RESULT_PHONE_CODE_NOT_EXIST_MSG);
+                return false;
+            }
+            String expirationTime = PropertiesUtils.getProperty("valid.code.expiration.time");
+            //校验验证码是否过期（当前时间减去验证码发送时间是否超过5分钟）
+            if(System.currentTimeMillis() - codeHistory.getCreateTime().getTime() > Long.parseLong(expirationTime)){
+                resultData.setMsg(Constant.RESULT_PHONE_CODE_INVALID_MSG);
+                return false;
+            }
+            //存在 手机号一致 未被校验
+			if(codeHistory.getPhone().equals(phone)
 					&& "0".equals(codeHistory.getIsValidate()) && code.equals(codeHistory.getCode())) {
 				flag = true;
 				
 				//修改验证码已被验证
 				appPhoneCodeHistoryService.validatePhoeCode(codeHistory.getPhoneCodeHistoryId());
-			}
+			}else {
+                resultData.setMsg(Constant.RESULT_PHONE_CODE_ERROR_MSG);
+            }
 		}
 		return flag;
 	}
@@ -188,7 +197,7 @@ public class UserController {
 		if(userInfo != null && StringUtils.isNotEmpty(userInfo.getPhone()) 
 				&& StringUtils.isNotEmpty(userInfo.getMsgCode()) &&StringUtils.isNotEmpty(userInfo.getBizId())) {
 			//判断短信验证码是否正确
-			if(validateAuthCode(userInfo.getPhone(), userInfo.getMsgCode(), userInfo.getBizId())) {
+			if(validateAuthCode(userInfo.getPhone(), userInfo.getMsgCode(), userInfo.getBizId(), resultData)) {
 				
 				//判断用户手机号是存在
 				AppUser user = appUserService.getUserByPhone(userInfo.getPhone());
@@ -231,7 +240,6 @@ public class UserController {
 				}
 			} else {//验证码不正确
 				resultData.setCode(Constant.RESULT_PHONE_CODE_ERROR_CODE);
-				resultData.setMsg(Constant.RESULT_PHONE_CODE_ERROR_MSG);
 			}
 		} else {
 			resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);
@@ -327,7 +335,7 @@ public class UserController {
 		//必填项不能为空
 		if(StringUtils.isNotEmpty(phone) && StringUtils.isNotEmpty(code) && StringUtils.isNotEmpty(bizId)) {
 			//判断短信验证码是否正确
-			if(validateAuthCode(phone, code, bizId)) {
+			if(validateAuthCode(phone, code, bizId, resultData)) {
 				AppUser user = appUserService.getUserByPhone(phone);
 				if(user != null) {//用户存在
 					map.put("flag", true);
@@ -341,7 +349,6 @@ public class UserController {
 				}
 			} else {//验证码不正确
 				resultData.setCode(Constant.RESULT_PHONE_CODE_ERROR_CODE);
-				resultData.setMsg(Constant.RESULT_PHONE_CODE_ERROR_MSG);
 			}
 		} else {
 			resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);
@@ -520,15 +527,13 @@ public class UserController {
 			//判断用户id是否存在
 			AppUser user = appUserService.getUserById(userId);
 			if(user != null && oldPhone.equals(user.getAppUserPhone())) {
-				boolean flag = validateAuthCode(oldPhone, code, bizId);
-				if(flag) {//校验通过
+                //校验通过
+				if(validateAuthCode(oldPhone, code, bizId, resultData)) {
 					user.setAppUserPhone(newPhone);
 					appUserService.updateUser(user);
 				} else {
 					resultData.setCode(Constant.RESULT_PHONE_CODE_ERROR_CODE);
-					resultData.setMsg(Constant.RESULT_PHONE_CODE_ERROR_MSG);
 				}
-				
 				resultData.setData("");
 			} else {
 				resultData.setCode(Constant.RESULT_USER_NOT_REGISTER_CODE);
@@ -583,7 +588,7 @@ public class UserController {
         if(userInfo != null && StringUtils.isNotEmpty(userInfo.getPhone())
                 && StringUtils.isNotEmpty(userInfo.getMsgCode()) &&StringUtils.isNotEmpty(userInfo.getBizId())) {
             //判断短信验证码是否正确
-            if(validateAuthCode(userInfo.getPhone(), userInfo.getMsgCode(), userInfo.getBizId())) {
+            if(validateAuthCode(userInfo.getPhone(), userInfo.getMsgCode(), userInfo.getBizId(), resultData)) {
 
                 //判断用户手机号是存在
                 AppUser user = appUserService.getUserByPhone(userInfo.getPhone());
@@ -616,7 +621,6 @@ public class UserController {
                 }
             } else {//验证码不正确
                 resultData.setCode(Constant.RESULT_PHONE_CODE_ERROR_CODE);
-                resultData.setMsg(Constant.RESULT_PHONE_CODE_ERROR_MSG);
             }
         } else {
             resultData.setCode(Constant.RESULT_REQUIRE_PARAM_CODE);

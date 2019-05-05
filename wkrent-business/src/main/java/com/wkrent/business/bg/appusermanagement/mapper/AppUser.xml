@@ -31,10 +31,10 @@
     <where>
       is_delete = '0'
       <if test="appUserName != null and appUserName !=''">
-        AND app_user_name LIKE  '%' || #{appUserName,jdbcType=VARCHAR} || '%'
+        AND app_user_name LIKE  concat('%',#{appUserName,jdbcType=VARCHAR},'%')
       </if>
       <if test="appUserPhone != null and appUserPhone !=''">
-        AND app_user_phone LIKE  '%' || #{appUserPhone,jdbcType=VARCHAR} || '%'
+        AND app_user_phone LIKE  concat('%',#{appUserPhone,jdbcType=VARCHAR},'%')
       </if>
       <if test="startDate != null">
         AND create_time <![CDATA[ >= ]]> #{startDate,jdbcType=DATE}
@@ -81,7 +81,7 @@
     <include refid="Base_Column_List" />
     from app_user
     <include refid="Base_Condition_Where" />
-    ORDER BY create_time,app_user_id
+    ORDER BY create_time,app_user_id desc
     LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
   </select>
 

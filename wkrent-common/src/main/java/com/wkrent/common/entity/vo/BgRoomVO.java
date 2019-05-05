@@ -47,6 +47,11 @@ public class BgRoomVO implements Serializable {
     private String bgRoomAddressCountry;
 
     /**
+     * 所属省份
+     */
+    private String bgRoomAddressProvince;
+
+    /**
      * 所属城市
      */
     private String bgRoomAddressCity;
@@ -703,5 +708,13 @@ public class BgRoomVO implements Serializable {
 
     public void setBgMerchantName(String bgMerchantName) {
         this.bgMerchantName = bgMerchantName;
+    }
+
+    public String getBgRoomAddressProvince() {
+        return bgRoomAddressProvince;
+    }
+
+    public void setBgRoomAddressProvince(String bgRoomAddressProvince) {
+        this.bgRoomAddressProvince = bgRoomAddressProvince;
     }
 }

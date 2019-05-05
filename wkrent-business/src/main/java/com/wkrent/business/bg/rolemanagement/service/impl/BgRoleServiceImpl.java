@@ -177,6 +177,16 @@ public class BgRoleServiceImpl implements BgRoleService {
     public void update(BgRoleVO roleVO, String loginAccount) {
             //校验角色信息
         if(checkRoleInfo(roleVO)){
+            //校验当前角色是否已被删除
+            BgRole roleInfo = bgRoleDao.selectByPrimaryKey(roleVO.getBgRoleId());
+            if(roleInfo == null){
+                throw new WkRentException("修改角色失败，角色已被删除！");
+            }
+            //校验角色名是否存在
+            BgRole existUser = bgRoleDao.findRoleByName(roleVO.getBgRoleName());
+            if(existUser != null && !StringUtils.equals(existUser.getBgRoleId(), roleInfo.getBgRoleId())){
+                throw new WkRentException("修改角色失败，角色名已存在！");
+            }
             BgRole bgRole = BeanUtil.copyBean(roleVO, BgRole.class);
             OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, bgRole, loginAccount);
             int result = bgRoleDao.update(bgRole);

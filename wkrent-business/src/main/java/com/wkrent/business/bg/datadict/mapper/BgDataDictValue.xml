@@ -141,7 +141,7 @@
         <include refid="Query_Column_List" />
         from bg_data_dict_value VAL
         <include refid="Query_Condition"/>
-        ORDER BY VAL.create_time, VAL.bg_data_dict_value_id
+        ORDER BY VAL.create_time, VAL.bg_data_dict_value_id DESC
         <if test="page != null">
             LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
         </if>

@@ -6,6 +6,7 @@
     <result column="bg_room_number" jdbcType="VARCHAR" property="bgRoomNumber" />
     <result column="bg_room_name" jdbcType="VARCHAR" property="bgRoomName" />
     <result column="bg_room_address_country" jdbcType="VARCHAR" property="bgRoomAddressCountry" />
+    <result column="bg_room_address_province" jdbcType="VARCHAR" property="bgRoomAddressProvince" />
     <result column="bg_room_address_city" jdbcType="VARCHAR" property="bgRoomAddressCity" />
     <result column="bg_room_address_detail" jdbcType="VARCHAR" property="bgRoomAddressDetail" />
     <result column="bg_room_address_x" jdbcType="DOUBLE" property="bgRoomAddressX" />
@@ -36,7 +37,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    bg_room_id, bg_room_number, bg_room_name, bg_room_address_country, bg_room_address_city, 
+    bg_room_id, bg_room_number, bg_room_name, bg_room_address_country, bg_room_address_city, bg_room_address_province,
     bg_room_address_detail, bg_room_address_x, bg_room_address_y, bg_room_price, bg_room_price_unit, 
     bg_room_status, bg_room_max_appoint_num, bg_room_recommend, bg_room_tips, bg_room_merchant_id, 
     bg_room_property, bg_room_type, bg_room_detail, is_delete, description, create_by, 
@@ -45,7 +46,7 @@
 
   <sql id="Query_Column_List">
     ro.bg_room_id, ro.bg_room_number, ro.bg_room_name, ro.bg_room_address_country,
-    ro.bg_room_address_city, ro.bg_room_address_detail, ro.bg_room_address_x,
+    ro.bg_room_address_city, ro.bg_room_address_province, ro.bg_room_address_detail, ro.bg_room_address_x,
     ro.bg_room_address_y, ro.bg_room_price, ro.bg_room_price_unit,
     ro.bg_room_status, ro.bg_room_max_appoint_num, ro.bg_room_recommend,
     ro.bg_room_tips, ro.bg_room_merchant_id, ro.bg_room_property,
@@ -94,7 +95,7 @@
   </update>
   <insert id="insert" parameterType="com.wkrent.common.entity.po.BgRoom">
     insert into bg_room (bg_room_id, bg_room_number, bg_room_name,
-      bg_room_address_country, bg_room_address_city,
+      bg_room_address_country, bg_room_address_city, bg_room_address_province,
       bg_room_address_detail, bg_room_address_x, bg_room_address_y,
       bg_room_price, bg_room_price_unit, bg_room_status,
       bg_room_max_appoint_num, bg_room_recommend, bg_room_tips,
@@ -103,7 +104,7 @@
       create_by, create_time, update_by,
       update_time, remark)
     values (#{bgRoomId,jdbcType=VARCHAR}, #{bgRoomNumber,jdbcType=VARCHAR}, #{bgRoomName,jdbcType=VARCHAR},
-      #{bgRoomAddressCountry,jdbcType=VARCHAR}, #{bgRoomAddressCity,jdbcType=VARCHAR},
+      #{bgRoomAddressCountry,jdbcType=VARCHAR}, #{bgRoomAddressCity,jdbcType=VARCHAR}, #{bgRoomAddressProvince,jdbcType=VARCHAR},
       #{bgRoomAddressDetail,jdbcType=VARCHAR}, #{bgRoomAddressX,jdbcType=DOUBLE}, #{bgRoomAddressY,jdbcType=DOUBLE},
       #{bgRoomPrice,jdbcType=DOUBLE}, #{bgRoomPriceUnit,jdbcType=VARCHAR}, #{bgRoomStatus,jdbcType=VARCHAR},
       #{bgRoomMaxAppointNum,jdbcType=TINYINT}, #{bgRoomRecommend,jdbcType=CHAR}, #{bgRoomTips,jdbcType=VARCHAR},
@@ -118,6 +119,7 @@
       bg_room_name = #{bgRoomName,jdbcType=VARCHAR},
       bg_room_address_country = #{bgRoomAddressCountry,jdbcType=VARCHAR},
       bg_room_address_city = #{bgRoomAddressCity,jdbcType=VARCHAR},
+      bg_room_address_province = #{bgRoomAddressProvince,jdbcType=VARCHAR},
       bg_room_address_detail = #{bgRoomAddressDetail,jdbcType=VARCHAR},
       bg_room_address_x = #{bgRoomAddressX,jdbcType=DOUBLE},
       bg_room_address_y = #{bgRoomAddressY,jdbcType=DOUBLE},
@@ -145,7 +147,7 @@
     left JOIN bg_room_info roi on ro.bg_room_id = roi.bg_room_id
     LEFT JOIN bg_merchant mer on ro.bg_room_merchant_id = mer.bg_merchant_id
     <include refid="Base_Condition_Where" />
-    ORDER BY create_time,bg_room_id
+    ORDER BY create_time,bg_room_id desc
     LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
   </select>
 

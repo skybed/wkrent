@@ -46,7 +46,17 @@ public class Constant {
 	 * 手机验证码校验失败，请重试！
 	 */
 	public static final String RESULT_PHONE_CODE_ERROR_MSG = "手机验证码校验失败，请重试！";
-	
+
+	/**
+	 * 手机验证码不存在，请重试！
+	 */
+	public static final String RESULT_PHONE_CODE_NOT_EXIST_MSG = "手机验证码不存在，请重新输入！";
+
+	/**
+	 * 手机验证码已失效，请重新发送验证码！
+	 */
+	public static final String RESULT_PHONE_CODE_INVALID_MSG = "手机验证码已失效，请重新发送验证码！";
+
 	/**
 	 * 状态码 402
 	 */

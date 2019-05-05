@@ -67,6 +67,7 @@ public class RentRoomServiceImpl implements RentRoomService {
 					roomInfo.setRoomName(roomInfos.get(i).getBgRoomName());
 					roomInfo.setAddressCountry(roomInfos.get(i).getBgRoomAddressCountry());
 					roomInfo.setAddressCity(roomInfos.get(i).getBgRoomAddressCity());
+					roomInfo.setAddressProvince(roomInfos.get(i).getBgRoomAddressProvince());
 					roomInfo.setAddressDetail(roomInfos.get(i).getBgRoomAddressDetail());
 					roomInfo.setPrice(roomInfos.get(i).getBgRoomPrice() + "/" + getPriceUnit(roomInfos.get(i).getBgRoomPriceUnit()));
 					roomInfo.setStatus(roomInfos.get(i).getBgRoomStatus());

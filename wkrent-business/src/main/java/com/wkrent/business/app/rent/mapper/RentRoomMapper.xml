@@ -6,6 +6,7 @@
     <result column="bg_room_number" jdbcType="VARCHAR" property="bgRoomNumber" />
     <result column="bg_room_name" jdbcType="VARCHAR" property="bgRoomName" />
     <result column="bg_room_address_country" jdbcType="VARCHAR" property="bgRoomAddressCountry" />
+    <result column="bg_room_address_province" jdbcType="VARCHAR" property="bgRoomAddressProvince" />
     <result column="bg_room_address_city" jdbcType="VARCHAR" property="bgRoomAddressCity" />
     <result column="bg_room_address_detail" jdbcType="VARCHAR" property="bgRoomAddressDetail" />
     <result column="bg_room_address_x" jdbcType="DOUBLE" property="bgRoomAddressX" />
@@ -29,7 +30,7 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Base_Column_List">
-    bg_room_id, bg_room_number, bg_room_name, bg_room_address_country, bg_room_address_city, 
+    bg_room_id, bg_room_number, bg_room_name, bg_room_address_country, bg_room_address_city, bg_room_address_province,
     bg_room_address_detail, bg_room_address_x, bg_room_address_y, bg_room_price, bg_room_price_unit, 
     bg_room_status, bg_room_max_appoint_num, bg_room_recommend, bg_room_tips, bg_room_merchant_id, 
     bg_room_property, bg_room_type, bg_room_detail, is_delete, description, create_by, 
@@ -43,13 +44,18 @@
 	<if test="recommend != null and recommend != ''">
 	  and bg_room_recommend = #{recommend,jdbcType=CHAR} 
 	</if>
-	<if test="minPrice != null and minPrice != '' and maxPrice != null and maxPrice != ''">
-	  and bg_room_price &gt;= #{minPrice,jdbcType=DOUBLE} and bg_room_price &lt;= #{maxPrice,jdbcType=DOUBLE} 
-	</if>
+    <if test="minPrice != null and maxPrice != null">
+      and bg_room_price <![CDATA[ >= ]]> #{minPrice,jdbcType=DOUBLE} and bg_room_price <![CDATA[ <= ]]> #{maxPrice,jdbcType=DOUBLE}
+    </if>
 	<if test="roomType != null and roomType != ''">
 	  and bg_room_type = #{roomType,jdbcType=VARCHAR}
 	</if>
-	
+    <if test="roomTypes != null and roomTypes.size() > 0">
+      and bg_room_type IN
+      <foreach item="item" index="index" collection="roomTypes" open="(" separator="," close=")">
+          #{item,jdbcType=VARCHAR}
+      </foreach>
+    </if>
 	<if test='(timeSort == null or timeSort == "") and "0" eq priceSort'>
 	  order by bg_room_price asc 
 	</if>
@@ -84,11 +90,17 @@
 	<if test="recommend != null and recommend != ''">
 	  and bg_room_recommend = #{recommend,jdbcType=CHAR} 
 	</if>
-	<if test="minPrice != null and minPrice != '' and maxPrice != null and maxPrice != ''">
-	  and bg_room_price &gt;= #{minPrice,jdbcType=DOUBLE} and bg_room_price &lt;= #{maxPrice,jdbcType=DOUBLE} 
+	<if test="minPrice != null and maxPrice != null">
+	  and bg_room_price <![CDATA[ >= ]]> #{minPrice,jdbcType=DOUBLE} and bg_room_price <![CDATA[ <= ]]> #{maxPrice,jdbcType=DOUBLE}
 	</if>
     <if test="roomType != null and roomType != ''">
       and bg_room_type = #{roomType,jdbcType=VARCHAR}
+    </if>
+    <if test="roomTypes != null and roomTypes.size() > 0">
+      and bg_room_type IN
+      <foreach item="item" index="index" collection="roomTypes" open="(" separator="," close=")">
+          #{item,jdbcType=VARCHAR}
+      </foreach>
     </if>
   </select>
   
@@ -110,6 +122,9 @@
       </if>
       <if test="bgRoomAddressCountry != null">
         bg_room_address_country = #{bgRoomAddressCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="bgRoomAddressProvince != null">
+          bg_room_address_province = #{bgRoomAddressProvince,jdbcType=VARCHAR},
       </if>
       <if test="bgRoomAddressCity != null">
         bg_room_address_city = #{bgRoomAddressCity,jdbcType=VARCHAR},

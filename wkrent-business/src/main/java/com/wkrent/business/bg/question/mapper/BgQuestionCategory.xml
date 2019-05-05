@@ -29,7 +29,7 @@
     <where>
       is_delete = '0'
       <if test="bgQuestionCatName != null and bgQuestionCatName !=''">
-        AND bg_question_cat_name LIKE  '%' || #{bgQuestionCatName,jdbcType=VARCHAR} || '%'
+        AND bg_question_cat_name LIKE  concat('%',#{bgQuestionCatName,jdbcType=VARCHAR},'%')
       </if>
     </where>
   </sql>

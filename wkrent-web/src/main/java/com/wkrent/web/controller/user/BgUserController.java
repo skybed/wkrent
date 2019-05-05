@@ -43,8 +43,14 @@ public class BgUserController extends BaseController {
     @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
     @ResponseBody
     public PageResult<BgUserVO> findByCondition(@RequestBody @ApiParam(name = "bgUserVO", value = "查询条件")
+
                                                             BgUserVO bgUserVO){
-        return bgUserService.findByCondition(bgUserVO);
+        try {
+            return bgUserService.findByCondition(bgUserVO);
+        }catch (Exception e){
+            log.error("条件查询用户信息失败，系统异常", e, bgUserVO);
+            return new PageResult<>();
+        }
     }
 
     @ApiOperation(value = "新增平台账号信息", notes = "新增平台账号信息")

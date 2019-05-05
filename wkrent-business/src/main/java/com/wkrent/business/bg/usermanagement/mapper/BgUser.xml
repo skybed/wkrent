@@ -60,13 +60,13 @@
     <where>
       bu.is_delete = '0'
       <if test="bgUserName != null and bgUserName !=''">
-        AND bu.bg_user_name LIKE  '%' || #{bgUserName,jdbcType=VARCHAR} || '%'
+        AND bu.bg_user_name LIKE  concat('%',#{bgUserName,jdbcType=VARCHAR},'%')
       </if>
       <if test="bgUserPhone != null and bgUserPhone !=''">
-        AND bu.bg_user_phone LIKE  '%' || #{bgUserPhone,jdbcType=VARCHAR} || '%'
+        AND bu.bg_user_phone LIKE  concat('%',#{bgUserPhone,jdbcType=VARCHAR},'%')
       </if>
       <if test="bgUserEmpId != null and bgUserEmpId !=''">
-        AND bu.bg_user_emp_id LIKE  '%' || #{bgUserEmpId,jdbcType=VARCHAR} || '%'
+        AND bu.bg_user_emp_id = #{bgUserEmpId,jdbcType=VARCHAR}
       </if>
       <if test="startDate != null">
         AND bu.create_time <![CDATA[ >= ]]> #{startDate,jdbcType=DATE}
@@ -88,7 +88,7 @@
     <include refid="Query_Column_List" />
     from bg_user bu
     <include refid="Base_Condition_Where" />
-    ORDER BY bu.create_time, bu.bg_user_id
+    ORDER BY bu.create_time, bu.bg_user_id DESC
     LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
   </select>
 

@@ -94,7 +94,7 @@
     <include refid="Base_Column_List" />
     from bg_merchant
     <include refid="Base_Condition_Where" />
-    ORDER BY create_time,bg_merchant_id
+    ORDER BY create_time,bg_merchant_id DESC
     LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
   </select>
 

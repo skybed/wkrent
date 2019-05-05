@@ -28,7 +28,12 @@ public class RoomInfo implements Serializable {
 	
 	//所属国家
 	private String addressCountry;
-	
+
+	/**
+	 * 所属省份
+	 */
+	private String addressProvince;
+
 	//所属城市
 	private String addressCity;
 	
@@ -80,6 +85,14 @@ public class RoomInfo implements Serializable {
 
 	public String getRoomTips() {
 		return roomTips;
+	}
+
+	public String getAddressProvince() {
+		return addressProvince;
+	}
+
+	public void setAddressProvince(String addressProvince) {
+		this.addressProvince = addressProvince;
 	}
 
 	public void setRoomTips(String roomTips) {

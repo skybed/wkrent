@@ -22,7 +22,7 @@
     <where>
       is_delete = '0'
       <if test="bgRoleName != null and bgRoleName !=''">
-        AND bg_role_name LIKE  '%' || #{bgRoleName,jdbcType=VARCHAR} || '%'
+        AND bg_role_name LIKE  concat('%',#{bgRoleName,jdbcType=VARCHAR},'%')
       </if>
       <if test="startDate != null">
         AND create_time <![CDATA[ >= ]]> #{startDate,jdbcType=DATE}
@@ -66,7 +66,7 @@
     <include refid="Base_Column_List" />
     from bg_role
     <include refid="Base_Condition_Where" />
-    ORDER BY create_time,bg_role_id
+    ORDER BY create_time,bg_role_id DESC
     LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
   </select>
 

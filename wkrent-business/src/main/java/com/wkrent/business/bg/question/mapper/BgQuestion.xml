@@ -45,7 +45,7 @@
             q.is_delete = '0'
             AND cat.is_delete = '0'
             <if test="bgQuestion != null and bgQuestion !=''">
-                AND q.bg_question LIKE  '%' || #{bgQuestion,jdbcType=VARCHAR} || '%'
+                AND q.bg_question LIKE  concat('%',#{bgQuestion,jdbcType=VARCHAR},'%')
             </if>
             <if test="bgQuestionCatId != null and bgQuestionCatId !=''">
                 AND q.bg_question_cat_id  = #{bgQuestionCatId,jdbcType=VARCHAR}

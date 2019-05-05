@@ -42,6 +42,12 @@ public class BgRoom implements Serializable {
     private String bgRoomAddressCountry;
 
     /**
+     * 所属省份
+     */
+    private String bgRoomAddressProvince;
+
+
+    /**
      * 所属城市
      */
     private String bgRoomAddressCity;
@@ -208,6 +214,14 @@ public class BgRoom implements Serializable {
      */
     public void setBgRoomAddressCountry(String bgRoomAddressCountry) {
         this.bgRoomAddressCountry = bgRoomAddressCountry == null ? null : bgRoomAddressCountry.trim();
+    }
+
+    public String getBgRoomAddressProvince() {
+        return bgRoomAddressProvince;
+    }
+
+    public void setBgRoomAddressProvince(String bgRoomAddressProvince) {
+        this.bgRoomAddressProvince = bgRoomAddressProvince == null ? null : bgRoomAddressProvince.trim();
     }
 
     /**
