@@ -147,7 +147,7 @@
     left JOIN bg_room_info roi on ro.bg_room_id = roi.bg_room_id
     LEFT JOIN bg_merchant mer on ro.bg_room_merchant_id = mer.bg_merchant_id
     <include refid="Base_Condition_Where" />
-    ORDER BY create_time,bg_room_id desc
+    ORDER BY ro.create_time desc
     LIMIT #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
   </select>
 
