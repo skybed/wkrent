@@ -41,6 +41,13 @@ public interface BgQuestionCategoryDao {
     int updateByPrimaryKey(BgQuestionCategory record);
 
     /**
+     * 根据id更新问题分类排序信息
+     * @param record 问题分类信息
+     * @return 更新条数
+     */
+    int updateIndexByPrimaryKey(BgQuestionCategory record);
+
+    /**
      * 条件查询问题分类信息
      * @param questionCategoryVO 查询条件（目前是dataDictType）
      * @return 符合条件信息

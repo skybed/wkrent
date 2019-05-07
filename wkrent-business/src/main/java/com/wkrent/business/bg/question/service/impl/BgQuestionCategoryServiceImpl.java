@@ -213,7 +213,7 @@ public class BgQuestionCategoryServiceImpl implements BgQuestionCategoryService{
             bgQuestionCategory.setBgQuestionCatId(bgQuestionCategoryVO.getBgQuestionCatId());
             bgQuestionCategory.setBgQuestionCatIndex(bgQuestionCategoryVO.getBgQuestionCatIndex());
             OperatorUtil.setOperatorInfo(OperatorUtil.OperationType.Update, bgQuestionCategory, loginAccount);
-            bgQuestionCategoryDao.updateByPrimaryKey(bgQuestionCategory);
+            bgQuestionCategoryDao.updateIndexByPrimaryKey(bgQuestionCategory);
         }
         return baseAjaxVO;
     }

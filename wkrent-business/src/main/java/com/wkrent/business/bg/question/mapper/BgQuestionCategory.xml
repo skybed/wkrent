@@ -135,4 +135,14 @@
       is_delete = '0'
   </select>
 
+  <update id="updateIndexByPrimaryKey" parameterType="com.wkrent.common.entity.po.BgQuestionCategory">
+    update bg_question_category
+    set
+    bg_question_cat_index = #{bgQuestionCatIndex,jdbcType=INTEGER},
+    update_by = #{updateBy,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where
+    bg_question_cat_id = #{bgQuestionCatId,jdbcType=VARCHAR} AND  is_delete = '0'
+  </update>
+
 </mapper>
