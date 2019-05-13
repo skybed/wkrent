@@ -64,7 +64,7 @@
       <if test="roomStatusList != null and roomStatusList.size() > 0">
         AND ro.bg_room_status IN
         <foreach collection="roomStatusList" open="(" close=")" separator=", " item="roomStatus">
-          #{bgRoomStatus,jdbcType=VARCHAR}
+          #{roomStatus,jdbcType=VARCHAR}
         </foreach>
       </if>
       <if test="bgRoomMerchantId != null and bgRoomMerchantId !=''">
