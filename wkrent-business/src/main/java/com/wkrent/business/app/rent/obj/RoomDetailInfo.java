@@ -27,6 +27,11 @@ public class RoomDetailInfo {
 	
 	//所属城市
 	private String addressCity;
+
+	/**
+	 * 所属地区（省份）
+	 */
+	private String addressProvince;
 	
 	//详细地址
 	private String addressDetail;
@@ -146,5 +151,12 @@ public class RoomDetailInfo {
 	public void setIsAttention(String isAttention) {
 		this.isAttention = isAttention;
 	}
-	
+
+	public String getAddressProvince() {
+		return addressProvince;
+	}
+
+	public void setAddressProvince(String addressProvince) {
+		this.addressProvince = addressProvince;
+	}
 }

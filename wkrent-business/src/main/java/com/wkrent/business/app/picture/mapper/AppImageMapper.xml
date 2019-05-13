@@ -27,7 +27,8 @@
     select 
     <include refid="Base_Column_List" />
     from bg_pic_attach
-    where pic_attach_owner = #{ownerId,jdbcType=VARCHAR} and is_delete = '0';
+    where pic_attach_owner = #{ownerId,jdbcType=VARCHAR} and is_delete = '0'
+    ORDER BY create_time ASC
   </select>
   
   <insert id="insertSelective" parameterType="com.wkrent.common.entity.BgPicAttach">
@@ -126,7 +127,8 @@
     select 
     <include refid="Base_Column_List" />
     from bg_pic_attach
-    where pic_attach_id = #{picAttachId,jdbcType=VARCHAR} and is_delete = '0';
+    where pic_attach_id = #{picAttachId,jdbcType=VARCHAR} and is_delete = '0'
+    ORDER BY create_time ASC
   </select>
   
   <update id="deletePicAttach" parameterType="java.lang.String">
@@ -151,7 +153,8 @@
     select 
     <include refid="Base_Column_List" />
     from bg_pic_attach
-    where pic_attach_type = #{attachType,jdbcType=VARCHAR} and is_delete = '0';
+    where pic_attach_type = #{attachType,jdbcType=VARCHAR} and is_delete = '0'
+    ORDER BY create_time ASC
   </select>
   
 </mapper>

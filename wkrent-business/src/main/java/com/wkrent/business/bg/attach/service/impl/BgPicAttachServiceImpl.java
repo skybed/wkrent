@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -142,6 +143,8 @@ public class BgPicAttachServiceImpl implements BgPicAttachService{
                 picAttach.setPicAttachUrl(fileURL);
                 picAttach.setPicAttachFileType(prefix);
                 picAttach.setPicAttachType(fileOwnerType);
+                picAttach.setCreateTime(new Date());
+                picAttach.setUpdateTime(new Date());
                 picAttach.setPicAttachFileVolume(String.valueOf(uploadFile.getSize()));
                 bgPicAttachDao.insertSelective(picAttach);
                 return BeanUtil.copyBean(picAttach, BgPicAttachVO.class);

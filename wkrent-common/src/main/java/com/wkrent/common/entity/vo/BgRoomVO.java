@@ -215,6 +215,11 @@ public class BgRoomVO implements Serializable {
     private String bgMerchantName;
 
     /**
+     * 房源状态List
+     */
+    private List<String> roomStatusList;
+
+    /**
      * 
      * @return bg_room_id 后台房源id,唯一标识
      */
@@ -716,5 +721,13 @@ public class BgRoomVO implements Serializable {
 
     public void setBgRoomAddressProvince(String bgRoomAddressProvince) {
         this.bgRoomAddressProvince = bgRoomAddressProvince;
+    }
+
+    public List<String> getRoomStatusList() {
+        return roomStatusList;
+    }
+
+    public void setRoomStatusList(List<String> roomStatusList) {
+        this.roomStatusList = roomStatusList;
     }
 }

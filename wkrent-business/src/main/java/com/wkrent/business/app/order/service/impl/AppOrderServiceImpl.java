@@ -56,7 +56,11 @@ public class AppOrderServiceImpl implements AppOrderService {
 				BgRoom room = rentRoomDao.selectByPrimaryKey(bgOrders.get(i).getBgOrderRoomId());
 				if(room != null) {
 					order.setRoomName(room.getBgRoomName());
-					
+					order.setAddressCountry(room.getBgRoomAddressCountry());
+					order.setAddressProvince(room.getBgRoomAddressProvince());
+					order.setAddressCity(room.getBgRoomAddressCity());
+					order.setAddressDetail(room.getBgRoomAddressDetail());
+
 					String roomTips = "";
 					List<DataDict> dataDicts = appDataDictValueService.queryDictValueList("房源标签");
 					for(int j = 0; j < dataDicts.size(); j++) {

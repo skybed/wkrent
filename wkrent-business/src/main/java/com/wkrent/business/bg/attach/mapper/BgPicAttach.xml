@@ -27,7 +27,8 @@
     select 
     <include refid="Base_Column_List" />
     from bg_pic_attach
-    where pic_attach_owner = #{ownerId,jdbcType=VARCHAR} and is_delete = '0';
+    where pic_attach_owner = #{ownerId,jdbcType=VARCHAR} and is_delete = '0'
+    ORDER BY create_time ASC
   </select>
 
   <select id="selectByOwnerIdList" parameterType="list" resultMap="BaseResultMap">
@@ -39,6 +40,7 @@
       <foreach collection="ownerIdList" open="(" close=")" separator="," item="ownerId">
         #{ownerId,jdbcType=VARCHAR}
       </foreach>
+      ORDER BY create_time ASC
     </where>
   </select>
 
@@ -134,7 +136,7 @@
     select 
     <include refid="Base_Column_List" />
     from bg_pic_attach
-    where pic_attach_id = #{picAttachId,jdbcType=VARCHAR} and is_delete = '0';
+    where pic_attach_id = #{picAttachId,jdbcType=VARCHAR} and is_delete = '0'
   </select>
   
   <update id="deletePicAttach" parameterType="java.lang.String">
