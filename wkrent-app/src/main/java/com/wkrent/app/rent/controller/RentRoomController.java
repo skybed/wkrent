@@ -159,6 +159,7 @@ public class RentRoomController {
 				
 				detailInfo.setAddressCountry(room.getBgRoomAddressCountry());
 				detailInfo.setAddressCity(room.getBgRoomAddressCity());
+				detailInfo.setAddressProvince(room.getBgRoomAddressProvince());
 				detailInfo.setAddressDetail(room.getBgRoomAddressDetail());
 				detailInfo.setAddressX(room.getBgRoomAddressX() + "");
 				detailInfo.setAddressY(room.getBgRoomAddressY() + "");
